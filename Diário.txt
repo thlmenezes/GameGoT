@@ -1,0 +1,158 @@
+================================================================================
+04/11/2017 22:05
+	Tirei a tarde/noite para começar o trabalho
+	Ainda não recebemos o projeto do professor
+	Organizei o projeto em múltiplos arquivos separados em múltiplas pastas
+	e montei um makefile
+	Começei de verdade o estruturas.h e Implementei as funções:
+	var_elemento*  aloca_elemento(void);
+
+	var_lista*     aloca_lista   (void);
+
+	void           free_lista    (var_lista* lista);
+
+	bool           lista_vazia   (var_lista* lista);
+
+	void           insere_final  (void* info, var_lista* lista, int codigo);
+
+	void           deleta_ultimo (var_lista* lista);
+
+	void           print_lista   (var_lista* lista, int codigo);
+	Proponho o seguinte Smoketest:
+	#include "../headers/estruturas.h"
+	#include <stdio.h>
+	int main (void){
+		var_lista* lista = aloca_lista();
+
+		var_elemento* elemento = aloca_elemento();
+
+		scanf("%d", (int*) elemento->dados);
+		//Input: 3\n
+		insere_final(elemento->dados,lista,INSERE_DADO_HEAP);
+
+		scanf("%d", (int*) elemento->dados);
+		//Input: 6\n
+		insere_final(elemento->dados,lista,INSERE_VAR_ELEMENTO);
+
+		deleta_ultimo(lista);
+		//Esperado que o 6 seja deletado
+
+		print_lista(lista,INT);
+
+		free_lista(lista);
+		return 0;
+	}
+	Ao executar o programa acima é esperado que ao final não existam
+	vazamentos e seja impresso no terminal "1. 3".
+	Checklist
+		Primeira Tentativa 04/11/2017
+		Resultado: Falha de Segmentação após o primeiro input
+================================================================================
+06/11/2017 10:00
+	Começei o dia depurando as funções escritas no sábado com gdb e valgrind
+	Erro encontrado:
+		'aloca_elemento', conforme especificado, inicia os ponteiros com valor
+		"NULL", portanto tentar escrever no endereço "NULL" gera uma falha de
+		segmentação.
+		Correção:
+			inserir o comando "elemento->dados = (void*) malloc(sizeof(int));"
+	Erro encontrado:
+		'insere_final' foi chamado com o código de inserção de var_elemento,
+		entretanto,	recebe um (void*).
+		Correção:
+			inserir "elemento" como parâmetro ao invés de "elemento->dados"
+	Comportamento não desejado:
+		Função 'print_lista' imprime índices de forma decrescente.
+		Correção:
+			"indice" é inicializado com valor 0 e "indice++" é substituído por
+			"++indice"
+	Comportamento não desejado:
+		A função 'insere_final' independente do comando, vincula a informação
+		com o ponteiro, ou seja, se na origem da chamada da função eu liberar
+		a memória do parâmetro enviado a função ele libera a informação na
+		lista.
+		Correção temporária:
+			Os parâmetros informados devem ser "presenteados" a função,
+			não havendo nenhuma modificação àquela área de memória posterior
+			a chamada da função.
+	Erro encontrado:
+		'free_lista' não considera áreas de memória alocadas dinamicamente
+		dependentes, ou seja, que estão ligadas ao "var_elemento"
+		Correção:
+			inserir a linha "free(cursor->dados);" antes de "free(cursor);"
+	Erro encontrado:
+		Erro de natureza semelhante ao anterior encontrado em 'deleta_ultimo'
+		Correção:
+			inserir a linha "if(lista->ultimo->dados != NULL)
+			{free(lista->ultimo->dados);}" antes de "free(lista->ultimo);"
+	Proponho as seguintes correções no Smoketest sugerido anterormente:
+	#include "../headers/estruturas.h"
+	#include <stdlib.h>
+	#include <stdio.h>
+
+	int main (void){
+		var_lista* lista = aloca_lista();
+
+		var_elemento* elemento = aloca_elemento();
+
+		elemento->dados = (void*) malloc(sizeof(int));
+
+		scanf("%d", (int*) elemento->dados);
+		//Input: 3\n
+		insere_final(elemento->dados,lista,INSERE_DADO_HEAP);
+		/*A área de memória apontada por elemento->dados
+		nesse momento foi entregue a função*/
+
+		elemento->dados = (void*) malloc(sizeof(int));
+
+		scanf("%d", (int*) elemento->dados);
+		//Input: 6\n
+		insere_final(elemento,lista,INSERE_VAR_ELEMENTO);
+
+		deleta_ultimo(lista);
+		//Esperado que o 6 seja deletado
+
+		print_lista(lista,INT);
+
+		free_lista(lista);
+
+		return 0;
+	}
+	Ao executar o programa acima é esperado que ao final não existam
+	vazamentos e seja impresso no terminal "1. 3".
+	Checklist
+		Segunda Tentativa 06/11/2017
+		Resultado: Sucesso, sem vazamentos de memória.
+	Ao final da tarde começei a implementar uma função para terceirizar
+	o processo de alocação de memória para os principais tipos usados
+	durante a solução do problema.
+	Entretanto achei estéticamente feio e pouco prático, então retirei.
+================================================================================
+08/11/2017 17:00
+	Recebi o pedido para o trabalho ontem
+	Modificarei a definição de lista simplemente encadeada implementada
+	para uma lista duplamente encadeada:
+
+	typedef struct elemento{
+		void* dados;
+		struct elemento* anterior;
+	    struct elemento* proximo;
+	} var_elemento;
+
+	Incluindo modificações nas seguintes funções:
+	var_elemento*	aloca_elemento (void)
+
+	void			insere_final (void* info, var_lista* lista, int codigo);
+
+	Ampliando a função 'insere_final' surgiu:
+	void			insere (int finalouinicio, void* info, var_lista* lista,
+ int codigo);
+
+	Smoketest para lista uplamente encadeada:
+	Proponho a repetição do Smoketest do dia 06/11 com as alterações
+	feitas no programa:
+	Checklist
+		Primeira Tentativa 08/11/2017
+		Resultado: Sucesso, testando com ambas inserções no ínicio e no final
+	Começei a implementar a biblioteca 'character.h'
+	

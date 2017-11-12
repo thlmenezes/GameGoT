@@ -1,0 +1,21 @@
+/** 
+ * CIC 116319 - Estruturas de Dados - Turma A
+ * Prof.: Marcos F. Caetano
+ * Alun.: Thales Lima Menezes
+ * Matr.: 17/0045919
+ */
+
+Para compilar o programa executar no terminal
+o comando "make".
+
+Caso existam arquivos *.c, *.h ou *.o fora 
+das pastas src, headers e obj, respectivamente
+executar "make organize".
+===ATENÇÃO===
+Comando funciona levando em consideração, além
+das pastas referidas anteriormente, Documenta-
+ção, sem observar mais a fundo nas "pastas fi-
+lhas" mais internas;e a pasta raiz.
+
+Para limpar todos os arquivos compilados
+anteriormente, executar "make clean".
