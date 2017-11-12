@@ -155,4 +155,36 @@
 		Primeira Tentativa 08/11/2017
 		Resultado: Sucesso, testando com ambas inserções no ínicio e no final
 	Começei a implementar a biblioteca 'character.h'
-	
+================================================================================
+12/11/2017 15:30
+	Começei a tarde criando um repositório
+	https://github.com/thaleslim/GameGoT.git
+	e começarei a testar as funções que imaginei enquanto
+	estava impossibilitado de trabalhar no projeto,
+	pretendo implementar uma fila e depurar as seguintes funções:
+	t_node*     node_create(void);
+
+	t_node*     tree_create(void);
+
+	t_node*     aloca_arvore(int total_de_nos);
+
+	void        tree_free(t_node* tree);
+
+	void        tree_print_preorder(t_node* root);
+
+	Resolvi compartimentar cada estrutura de dados em seu próprio
+	cabeçalho
+	Proponho o seguinte Smoketest:
+	int main(void)
+	{
+		t_node* node = node_create();
+		tree_free(node);
+		tree_free(tree_create());
+		return 0;
+	}
+	No qual é esperado a criação e liberação de um único nó e
+	a criação e liberação de uma árvore binária completa de 4
+	níveis, sem vazamentos ou erros.
+	Checklist
+		Primeira Tentativa 12/11/2017
+		Resultado: Sucesso, sem vazamentos de memória.

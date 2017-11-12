@@ -1,18 +1,19 @@
-#include "../headers/estruturas.h"
+#include "../headers/lista_dupla.h"
 #include <stdlib.h>
 #include <stdio.h>
 
 
 
-//TOD
+//TODO:Verificar insere()
 //--------------------------------------------------------------
 var_elemento*  aloca_elemento (void)
 {
 
 	/**
-	 * Função que aloca, dinamicamente, um 'var_elemento'
+	 * @brief Função que aloca, dinamicamente, um 'var_elemento'
 	 * seguindo alguns padrões: ponteiros são iniciados
 	 * com valor NULL.
+	 * @return Endereço do elemento alocado
 	 */
 
 	var_elemento* elemento = (var_elemento*) malloc(sizeof(var_elemento));
@@ -31,10 +32,12 @@ var_lista*  aloca_lista (void)
 {
 
 	/**
-	 * Função que aloca, dinamicamente, uma lista encadeda de
-	 * 'var_elemento's, que por sua vez também serão alocados
-	 * dinamicamente, seguindo alguns padrões: "primeiro" e
-	 * "ultimo" são inicializados com o valor NULL.
+	 * Função que aloca, dinamicamente, uma lista duplamente
+	 * encadeda de 'var_elemento's, que por sua vez também
+	 * serão alocados dinamicamente, seguindo alguns padrões:
+	 * "primeiro" e "ultimo" são inicializados com o valor
+	 * NULL.
+	 * @return Endereço da lista alocada
 	 */
 
 	var_lista* lista = (var_lista*) malloc(sizeof(var_lista));
@@ -87,6 +90,8 @@ bool  lista_vazia (var_lista* lista)
 	 * Função que retorna 'true', ou seja, não zero,
 	 * caso a lista esteja vazia. Também poderia ter
 	 * sido usada a variável 'lista->tamanho'.
+	 * @return Booleano com a resposta da pergunta
+	 * "a lista está vazia ?"
 	 */
 
 	return (lista->primeiro == NULL && lista->ultimo == NULL);
@@ -98,7 +103,16 @@ bool  lista_vazia (var_lista* lista)
 void  insere (int finalouinicio, void* info, var_lista* lista, int codigo)
 {
 	//NOTE: Essa função toma para si a área de memória recebida pelo parâmetro info
-	//TODO: Procurar uma função que gere um clone de uma área da memória heap
+	/*TODO: usar função (memcpy - copy memory area) para generalizar uso de insere
+	SYNOPSIS
+	       #include <string.h>
+
+	       void *memcpy(void *dest, const void *src, size_t n);
+
+	DESCRIPTION
+	       The  memcpy()  function  copies  n bytes from memory area src to memory
+	       area dest.
+	*/
 	/**    Função PRIVADA, para uso interno da função 'push'
 	 * @param info é IMPORTANTE que info tenha sido alocado dinamicamente previamente.
 	 * @brief Função que insere um dado ao final de uma lista encadeada

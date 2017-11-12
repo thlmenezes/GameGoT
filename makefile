@@ -10,7 +10,7 @@
 ##############################################################
 SOURCES := $(shell ls src/*.c)
 SUBST1	:= $(subst src/,obj/,$(SOURCES))
-OBJECTS := $(subst .c,.o,$(SOURCES))
+OBJECTS := $(subst .c,.o,$(SUBST1))
 HEADERS := $(shell ls headers/*.h)
 CC = gcc
 LFLAGS   = -g -I headers/ -o programa -Wall -pedantic
@@ -21,13 +21,15 @@ CFLAGS   = -g -I headers/ -c -Wall -pedantic
 # All objects 'n all headers are include in this process
 ##############################################################
 programa:    $(OBJECTS) $(HEADERS)
-	$(CC) $(LFLAGS) $(OBJECTS)
-	mv $(shell ls src/*.o) obj/
+	$(CC) $(LFLAGS) $(OBJECTS) -lm
 
 #  Every "*.c" in the folder "src" must compile in to an
 #	"*.o" in the "obj" and has a dependecy only to it's matching
 #	source file ... except main.c, that it's dependent of all
 #	headers
+obj/arvore.o:	src/arvore.c
+	$(CC) $(CFLAGS) -lm $< -o $@
+
 obj/main.o: $(HEADERS)
 
 
@@ -98,9 +100,11 @@ endif
 clean:
 
 ifneq ($(shell ls obj/*.o),)
-ifneq ($(findstring ./programa, $(shell find . -maxdepth 1 -perm -111 -type f)),)
-	rm obj/*.o programa
+	rm obj/*.o
 endif
+
+ifneq ($(findstring ./programa, $(shell find . -maxdepth 1 -perm -111 -type f)),)
+	rm programa
 endif
 
 ##############################################################
