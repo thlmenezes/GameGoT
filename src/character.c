@@ -1,3 +1,11 @@
+/**
+ * @file   character.c
+ * @author Thales Lima Menezes
+ * @date   08/11/2017
+ * @brief  Arquivo que contém a implementação de todas as funções
+ * referentes aos personagens e suas informações.
+ */
+
 #include "../headers/character.h"
 #include <stdlib.h>
 #include <string.h>

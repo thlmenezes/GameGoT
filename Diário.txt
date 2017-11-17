@@ -161,7 +161,7 @@
 	https://github.com/thaleslim/GameGoT.git
 	e começarei a testar as funções que imaginei enquanto
 	estava impossibilitado de trabalhar no projeto,
-	pretendo implementar uma fila e depurar as seguintes funções:
+	pretendo depurar as seguintes funções:
 	t_node*     node_create(void);
 
 	t_node*     tree_create(void);
@@ -175,6 +175,7 @@
 	Resolvi compartimentar cada estrutura de dados em seu próprio
 	cabeçalho
 	Proponho o seguinte Smoketest:
+	#include "../headers/arvore.h"
 	int main(void)
 	{
 		t_node* node = node_create();
@@ -188,3 +189,76 @@
 	Checklist
 		Primeira Tentativa 12/11/2017
 		Resultado: Sucesso, sem vazamentos de memória.
+	Observação: existe a possibilidade,apesar de minima, de existirem erros de construção
+	  			da estrutura de árvore.
+================================================================================
+16/11/2017 14:30
+	Objetivos: implementar a estrutura de fila
+	usando listas duplamente encadeadas.
+	Testar modificações para
+	generalizar o comportamento de inserir adicionando
+	uma variável, que seria a quantidade de bytes da
+	informação que o usuário quer inserir.
+	E começar a implementar funções mais específicas de
+	modelagem do jogo.
+
+	Proponho o seguinte Smoketest para os 2 primeiros objetivos:
+	#include "../headers/fila.h"
+	#include <stdio.h>
+
+	int main(void)
+	{
+		var_fila* fila = aloca_fila();
+
+		int numero = 4;
+
+		print_fila(fila, INT);
+
+		entrar_fila(&numero, sizeof(int), fila);
+
+		numero = 7;
+
+		entrar_fila(&numero, sizeof(int), fila);
+
+		print_fila(fila, INT);
+
+		int* ponteiro_numero = (int*) sair_fila(fila);
+
+		printf("%d", *ponteiro_numero);
+
+		free_fila(fila);
+
+		free(ponteiro_numero);
+
+		return 0;
+	}
+	Resultado esperado: imprimi LISTA VAZIA,
+	 					enfileira 4 e 7,
+						imprimi 1. 4
+								2. 7
+						desenfileira 4
+						resta na fila 7
+						imprimi 4
+						libera fila sem vazamentos.
+	Checklist
+		Primeira Tentativa 16/11/2017
+		Resultado: Falha de Segmentação após imprimir LISTA VAZIA.
+================================================================================
+16/11/2017 18:00
+	Objetivos:  Depurar estrutura de fila;
+				Atualizar git repo;
+				Voltar a desenvolver funções mais especificas do jogo em si.
+	Erro: 'insere_lista' causa vazamento de memória
+		Correção: usar chaves para abranger as 2 linhas de código
+				do elseif caso contrário "memcpy(elemento, info, size_of_memory);"
+				é executado todas as vezes.
+	Comportamento não desejado: 'sair_fila' retorna um 'var_elemento'
+		Correção: adicionar as seguintes ações"void *resultado=elemento->dados;
+				free(elemento);"
+	Estética: substituir LISTA VAZIA por VAZIA
+			Como estamos usando print_lista para mais de uma estrutura, faz mais
+			sentido dessa forma.
+			Checklist
+				Segunda Tentativa 17/11/2017
+				Resultado: Sucesso, sem vazamentos de memória.
+	

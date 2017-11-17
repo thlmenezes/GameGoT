@@ -1,5 +1,5 @@
 /**
- * @file   estruturas.h
+ * @file   arvore.h
  * @author Thales Lima Menezes
  * @date   12/11/2017
  * @brief  Arquivo que contém a definição de uma
@@ -8,6 +8,8 @@
 
 #ifndef __ARVORE_H__
 #define __ARVORE_H__
+
+
 #include "character.h"
 
 typedef struct node{
@@ -16,7 +18,7 @@ typedef struct node{
 	struct node* right;
 } t_node;
 
-//Funções de Arvore
+//Funções de Árvore
 t_node*     node_create(void);
 
 t_node*     tree_create(void);
@@ -30,5 +32,5 @@ void        tree_print_preorder(t_node* root);
 #endif
 
 /*
- * Área para cometário sobre as definições e estruturas do cabeçalho
+ * Área para comentário sobre as definições e estruturas do cabeçalho
  */

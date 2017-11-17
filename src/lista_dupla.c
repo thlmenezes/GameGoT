@@ -1,19 +1,28 @@
+/**
+ * @file   lista_dupla.c
+ * @author Thales Lima Menezes
+ * @date   31/10/2017
+ * @brief  Arquivo que contém a implementação de uma
+ * lista duplamente encadeada e suas funções auxiliares.
+ */
+
 #include "../headers/lista_dupla.h"
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 
 
 
-//TODO:Verificar insere()
+//TOD:
 //--------------------------------------------------------------
 var_elemento*  aloca_elemento (void)
 {
 
 	/**
-	 * @brief Função que aloca, dinamicamente, um 'var_elemento'
+	 * @brief Aloca, dinamicamente, um var_elemento
 	 * seguindo alguns padrões: ponteiros são iniciados
 	 * com valor NULL.
-	 * @return Endereço do elemento alocado
+	 * @return Endereço do elemento alocado.
 	 */
 
 	var_elemento* elemento = (var_elemento*) malloc(sizeof(var_elemento));
@@ -32,12 +41,12 @@ var_lista*  aloca_lista (void)
 {
 
 	/**
-	 * Função que aloca, dinamicamente, uma lista duplamente
-	 * encadeda de 'var_elemento's, que por sua vez também
+	 * Aloca, dinamicamente, uma lista duplamente
+	 * encadeda de var_elemento, que por sua vez também
 	 * serão alocados dinamicamente, seguindo alguns padrões:
-	 * "primeiro" e "ultimo" são inicializados com o valor
-	 * NULL.
-	 * @return Endereço da lista alocada
+	 * var_elemento::primeiro e var_elemento::ultimo são
+	 * inicializados com o valor NULL.
+	 * @return Endereço da lista alocada.
 	 */
 
 	var_lista* lista = (var_lista*) malloc(sizeof(var_lista));
@@ -57,7 +66,7 @@ void  free_lista (var_lista* lista)
 
 	/**
 	 * Libera a memória que outrora fora alocada dinamicamente
-	 * para uma lista encadeada seguindo os parametros de
+	 * para uma lista encadeada seguindo os parâmetros de
 	 * aloca_lista() e aloca_elemento()
 	 */
 
@@ -87,11 +96,11 @@ bool  lista_vazia (var_lista* lista)
 {
 
 	/**
-	 * Função que retorna 'true', ou seja, não zero,
+	 * @brief Retorna booleano com a resposta à pergunta:
+	 * A lista está vazia?
+	 * @return Retorna 'true', ou seja, não zero,
 	 * caso a lista esteja vazia. Também poderia ter
 	 * sido usada a variável 'lista->tamanho'.
-	 * @return Booleano com a resposta da pergunta
-	 * "a lista está vazia ?"
 	 */
 
 	return (lista->primeiro == NULL && lista->ultimo == NULL);
@@ -100,23 +109,24 @@ bool  lista_vazia (var_lista* lista)
 
 
 //--------------------------------------------------------------
-void  insere (int finalouinicio, void* info, var_lista* lista, int codigo)
+void  insere_lista (int finalouinicio, void* info, int size_of_memory, var_lista* lista, int codigo)
 {
-	//NOTE: Essa função toma para si a área de memória recebida pelo parâmetro info
-	/*TODO: usar função (memcpy - copy memory area) para generalizar uso de insere
-	SYNOPSIS
-	       #include <string.h>
 
-	       void *memcpy(void *dest, const void *src, size_t n);
-
-	DESCRIPTION
-	       The  memcpy()  function  copies  n bytes from memory area src to memory
-	       area dest.
-	*/
-	/**    Função PRIVADA, para uso interno da função 'push'
-	 * @param info é IMPORTANTE que info tenha sido alocado dinamicamente previamente.
-	 * @brief Função que insere um dado ao final de uma lista encadeada
-	 * previamente alocada dinamicamente.
+	/**
+	 * @brief Insere um dado em uma lista duplamente encadeada
+	 * previamente alocada dinamicamente. Recomendado observar
+	 * a composição de um var_elemento.
+	 * @param finalouinicio Define se o elemento/dado será inserido ao final ou
+	 * ao início da lista.
+	 * @param info Ponteiro genérico para um var_elemento::dados ou
+	 * var_elemento previamente montado.
+	 * @param size_of_memory Tamanho da informação, em bytes, a ser inserida na
+	 * lista.
+	 * @param lista Ponteiro para uma var_lista na qual será inserida a informa
+	 * ção.
+	 * @param codigo Informa se o ponteiro genérico aponta para uma informação
+	 * do tipo var_elemento::dados ou se é um var_elemento previamente
+	 * montado.
 	 */
 
 	var_elemento* elemento;
@@ -126,13 +136,19 @@ void  insere (int finalouinicio, void* info, var_lista* lista, int codigo)
 		//Caso tenhamos recebido um "dado" como parâmetro "info"
 		elemento = aloca_elemento();
 		//Alocamos o elemento dinamicamente
-		elemento->dados = info;
-		//Fazemos o link da informação recebida
+		elemento->dados = (void*) malloc(size_of_memory);
+		//Alocamos uma área de memória para dados de acordo com input
+		memcpy(elemento->dados, info, size_of_memory);
+		//Fazemos uma cópia da informação recebida
 	}
 	else if(codigo == INSERE_VAR_ELEMENTO)
+	{
 		//Caso tenhamos recebido um 'var_elemento' pronto
-		elemento = info;
+		elemento  = (void*) malloc(size_of_memory);
+		//Alocamos uma área de memória para dados de acordo com input
+		memcpy(elemento, info, size_of_memory);
 		//Passamos o endereço do 'var_elemento' recebido
+	}
 
 	if(lista_vazia(lista))
 	{
@@ -172,7 +188,7 @@ void  deleta_ultimo (var_lista* lista)
 {
 
 	/**
-	 * Função que apaga o ultimo elemento de uma lista; e
+	 * Apaga o último var_elemento de uma lista; e
 	 * caso a lista esteja vazia não faz nada.
 	 */
 
@@ -211,12 +227,12 @@ void  print_lista (var_lista* lista, int codigo)
 {
 
 	/**
-	 * @brief Função que imprime a lista armazenada.
-	 * @param codigo Diz como deverá ser tratada a lista para impressão.
+	 * @brief Imprime a lista armazenada segundo aloca_lista().
+	 * @param codigo Diz como deverão ser interpretados cada var_elemento::dados da lista para impressão.
 	 */
 
 	if(lista_vazia(lista))
-		printf("Lista Vazia\n");
+		printf("Vazia\n");
 	else
 	{
 		var_elemento* cursor = lista->primeiro;

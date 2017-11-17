@@ -1,5 +1,5 @@
 /**
- * @file   characteres.h
+ * @file   character.h
  * @author Thales Lima Menezes
  * @date   08/11/2017
  * @brief  Arquivo que contém a definição de todas as funções

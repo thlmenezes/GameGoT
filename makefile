@@ -27,6 +27,9 @@ programa:    $(OBJECTS) $(HEADERS)
 #	"*.o" in the "obj" and has a dependecy only to it's matching
 #	source file ... except main.c, that it's dependent of all
 #	headers
+#obj/fila.o:	    src/fila.c obj/lista_dupla.o
+#	$(CC) $(CFLAGS) $< -o $@ obj/lista_dupla.o
+
 obj/arvore.o:	src/arvore.c
 	$(CC) $(CFLAGS) -lm $< -o $@
 

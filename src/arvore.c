@@ -1,13 +1,23 @@
+/**
+ * @file   arvore.c
+ * @author Thales Lima Menezes
+ * @date   12/11/2017
+ * @brief  Arquivo que contém a implementação de uma
+ * árvore binária e suas funções auxiliares.
+ */
+
 #include "../headers/arvore.h"
 #include <stdlib.h>
 #include <math.h>
+
+
 
 //TOD
 //--------------------------------------------------------------
 t_node*  node_create (void)
 {
 	/**
-	 * @brief Aloca um nó baseado na estrutura "t_node" segundo
+	 * @brief Aloca um nó baseado na estrutura t_node segundo
 	 * alguns parâmetros de inicialização: Todos os ponteiros
 	 * (character, left e right) são inicializados com o valor
 	 * NULL.
@@ -29,9 +39,9 @@ t_node*  node_create (void)
 t_node*  tree_create (void)
 {
 	/**
-	 * @brief Aloca uma arvore binária completa de 4 niveis
+	 * @brief Aloca uma arvore binária completa de 4 níveis
 	 * segundo alguns parâmetros de inicialização: Todos os
-	 * nós da árvore apresentam o atributo "character"
+	 * nós da árvore apresentam o atributo Character::character
 	 * apontado para NULL.
 	 * @return Endereço para o nó raiz da árvore binária.
 	 */
@@ -51,7 +61,7 @@ t_node*  aloca_arvore (int total_de_nos)
 {
 	/**
 	 * @brief Aloca dinamicamente uma árvore binária de nós criados por
-	 * 'node_create'.
+	 * node_create().
 	 * @param total_de_nos Número de nós que irão compor a árvore binária.
 	 * @return Endereço para a raiz da árvore binária.
 	 */
@@ -79,9 +89,10 @@ t_node*  aloca_arvore (int total_de_nos)
 //--------------------------------------------------------------
 void  tree_free (t_node* tree)
 {
-	/**TODO: IMPLEMENTAR a funcionalidade de limpar os 'character' das folhas primeiro
+	//TODO: IMPLEMENTAR a funcionalidade de limpar os 'character' das folhas primeiro
+	/**
 	 * @brief Libera uma árvore binária que outrora fora aloca dinamicamente
-	 * de acordo com os padrões definidos por 'aloca_arvore'.
+	 * de acordo com os padrões definidos por aloca_arvore().
 	 * @param tree Endereço para a raiz da árvore binária.
 	 */
 
@@ -99,8 +110,8 @@ void  tree_print_preorder (t_node* root)
 {
 	/**
 	 * @brief Percorre uma árvore binária, que outrora fora aloca dinamicamente
-	 * de acordo com os padrões definidos por 'aloca_arvore'; em pré-ordem, im
-	 * primindo os personagens referenciados em character.
+	 * de acordo com os padrões definidos por aloca_arvore(); em pré-ordem,
+	 * imprimindo os personagens referenciados em Character::character.
 	 * @param root Endereço para a raiz da árvore binária.
 	 */
 
