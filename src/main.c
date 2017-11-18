@@ -17,37 +17,8 @@
 //http://www.gnu.org/software/make/manual/make.html
 //https://stackoverflow.com/questions/3585846/color-text-in-terminal-applications-in-unix
 //https://stackoverflow.com/questions/1139271/makefiles-with-source-files-in-different-directories
-#include "../headers/fila.h"
 #include <stdlib.h>
-#include <stdio.h>
 
-int main(void)
-{
-	var_fila* fila = aloca_fila();
-
-	int numero = 4;
-
-	print_fila(fila, INT);
-
-	entrar_fila(&numero, sizeof(int), fila);
-
-	numero = 7;
-
-	entrar_fila(&numero, sizeof(int), fila);
-
-	print_fila(fila, INT);
-
-	int* ponteiro_numero = (int*) sair_fila(fila);
-
-	printf("%d\n", *ponteiro_numero);
-
-	free_fila(fila);
-
-	free(ponteiro_numero);
-
-	return 0;
-}
-/*
 int main (void)
 {
 	char _name[9] = malloc, _house[6];
@@ -56,4 +27,3 @@ int main (void)
 	Character* chara = character_create(_name, _house, _agility, _strenght, _intelligence, _health);
 	return 0;
 }
-*/

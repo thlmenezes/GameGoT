@@ -244,7 +244,7 @@
 		Primeira Tentativa 16/11/2017
 		Resultado: Falha de Segmentação após imprimir LISTA VAZIA.
 ================================================================================
-16/11/2017 18:00
+17/11/2017 18:00
 	Objetivos:  Depurar estrutura de fila;
 				Atualizar git repo;
 				Voltar a desenvolver funções mais especificas do jogo em si.
@@ -258,7 +258,14 @@
 	Estética: substituir LISTA VAZIA por VAZIA
 			Como estamos usando print_lista para mais de uma estrutura, faz mais
 			sentido dessa forma.
-			Checklist
-				Segunda Tentativa 17/11/2017
-				Resultado: Sucesso, sem vazamentos de memória.
-	
+	Checklist
+		Segunda Tentativa 17/11/2017
+		Resultado: Sucesso, sem vazamentos de memória.
+================================================================================
+18/11/2017 12:15
+	Objetivos:	Começar a modelar o gameloop
+				Implementar funções de busca e impressão na árvore
+	Começei criando o arquivo Sketch.c
+	Esse arquivo contém o q eu imagino que seja necessário para
+	a montagem do gameloop
+	Irei testar função character_create()
