@@ -2,7 +2,7 @@
  * @file   lista_dupla.c
  * @author Thales Lima Menezes
  * @date   31/10/2017
- * @brief  Arquivo que contém a implementação de uma
+ * @brief  Contém a implementação de uma
  * lista duplamente encadeada e suas funções auxiliares.
  */
 
@@ -44,7 +44,7 @@ var_lista*  aloca_lista (void)
 	 * Aloca, dinamicamente, uma lista duplamente
 	 * encadeda de var_elemento, que por sua vez também
 	 * serão alocados dinamicamente, seguindo alguns padrões:
-	 * var_elemento::primeiro e var_elemento::ultimo são
+	 * var_lista::primeiro e var_lista::ultimo são
 	 * inicializados com o valor NULL.
 	 * @return Endereço da lista alocada.
 	 */
@@ -118,14 +118,14 @@ void  insere_lista (int finalouinicio, void* info, int size_of_memory, var_lista
 	 * a composição de um var_elemento.
 	 * @param finalouinicio Define se o elemento/dado será inserido ao final ou
 	 * ao início da lista.
-	 * @param info Ponteiro genérico para um var_elemento::dados ou
+	 * @param info Ponteiro genérico para um elemento::dados ou
 	 * var_elemento previamente montado.
 	 * @param size_of_memory Tamanho da informação, em bytes, a ser inserida na
 	 * lista.
 	 * @param lista Ponteiro para uma var_lista na qual será inserida a informa
 	 * ção.
 	 * @param codigo Informa se o ponteiro genérico aponta para uma informação
-	 * do tipo var_elemento::dados ou se é um var_elemento previamente
+	 * do tipo elemento::dados ou se é um var_elemento previamente
 	 * montado.
 	 */
 
@@ -228,7 +228,7 @@ void  print_lista (var_lista* lista, int codigo)
 
 	/**
 	 * @brief Imprime a lista armazenada segundo aloca_lista().
-	 * @param codigo Diz como deverão ser interpretados cada var_elemento::dados da lista para impressão.
+	 * @param codigo Diz como deverão ser interpretados cada elemento::dados da lista para impressão.
 	 */
 
 	if(lista_vazia(lista))

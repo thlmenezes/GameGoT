@@ -2,7 +2,7 @@
  * @file   arvore.c
  * @author Thales Lima Menezes
  * @date   12/11/2017
- * @brief  Arquivo que contém a implementação de uma
+ * @brief  Contém a implementação de uma
  * árvore binária e suas funções auxiliares.
  */
 

@@ -3,7 +3,7 @@
  * @file   informacoes_uso_geral.h
  * @author Thales Lima Menezes
  * @date   16/10/2017
- * @brief  Arquivo que contém informações utilizadas em
+ * @brief  Contém informações utilizadas em
  * múltiplos arquivos.
  */
 

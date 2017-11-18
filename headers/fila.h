@@ -3,7 +3,7 @@
  * @file   fila.h
  * @author Thales Lima Menezes
  * @date   16/11/2017
- * @brief  Arquivo que contém a definição de uma
+ * @brief  Contém a definição de uma
  * fila baseada em uma lista duplamente encadeada
  * e suas funções auxiliares.
  */

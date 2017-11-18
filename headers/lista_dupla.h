@@ -3,7 +3,7 @@
  * @file   lista_dupla.h
  * @author Thales Lima Menezes
  * @date   31/10/2017
- * @brief  Arquivo que contém a definição de uma
+ * @brief  Contém a definição de uma
  * lista duplamente encadeada e suas funções auxiliares.
  */
 

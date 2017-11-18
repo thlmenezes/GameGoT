@@ -2,7 +2,7 @@
  * @file   fila.c
  * @author Thales Lima Menezes
  * @date   16/11/2017
- * @brief  Arquivo que contém a implementação de uma
+ * @brief  Contém a implementação de uma
  * fila baseada em uma lista duplamente encadeada
  * e suas funções auxiliares.
  */
@@ -66,7 +66,7 @@ void  entrar_fila (void* info, int size_of_memory, var_fila* fila)
 
 	/**
 	 * @brief Insere no final da fila uma informação, podendo ser
-	 * um var_elemento::dados ou var_elemento.
+	 * um elemento::dados ou var_elemento.
 	 * @param size_of_memory Tamanho em bytes da área de memória
 	 * apontada pelo ponteiro genérico "info".
 	 */
@@ -81,7 +81,7 @@ void*  sair_fila (var_fila* fila)
 {
 
 	/**
-	 * Retira do início da fila um var_elemento::dados.
+	 * Retira do início da fila um elemento::dados.
 	 */
 
 	if(fila_vazia(fila))

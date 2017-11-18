@@ -2,8 +2,8 @@
  * @file   arvore.h
  * @author Thales Lima Menezes
  * @date   12/11/2017
- * @brief  Arquivo que contém a definição de uma
- * árvore binária e suas funções auxiliares.
+ * @brief  Contém a definição de uma árvore binária
+ * e suas funções auxiliares.
  */
 
 #ifndef __ARVORE_H__
@@ -31,6 +31,13 @@ void        tree_print_preorder(t_node* root);
 
 #endif
 
-/*
- * Área para comentário sobre as definições e estruturas do cabeçalho
+/**
+ * @struct node
+ * @var node::character ponteiro para variável do
+ * tipo Character que armazena toda a ficha de um
+ * personagem.
+ * @var node::left ponteiro para o nó à esquerda
+ * do nó atual dentro da árvore.
+ * @var node::right ponteiro para o nó à direita
+ * do nó atual dentro da árvore.
  */

@@ -2,8 +2,8 @@
  * @file   character.h
  * @author Thales Lima Menezes
  * @date   08/11/2017
- * @brief  Arquivo que contém a definição de todas as funções
- * referentes aos personagens e suas informações.
+ * @brief  Contém todas as definições, informações e funções
+ * relacionadas com os personagens e suas interações.
  */
 
 #ifndef __CHARACTER_H__

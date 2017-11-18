@@ -2,11 +2,15 @@
  * @file   main.c
  * @author Thales Lima Menezes
  * @date   01/11/2017
- * @brief  Arquivo para execução das funções das bibliotecas criadas
+ * @brief  executa funções das bibliotecas criadas
  *
- * @mainpage Segundo Trabalho de Estrutura de Dados
+ * @mainpage Segundo Trabalho da Disciplina Estrutura de Dados
  * @section intro_sec Introdução
  * Disciplina CIC 116319 - Estruturas de Dados - Turma A do Professor Marcos F. Caetano.
+ * @section dev_team_sec Desenvolvedores
+ * Projeto desenvolvido em conjunto pelos alunos:\n
+	• Fernanda Macedo de Sousa - 17/0010058\n
+	• Thales Lima Menezes - 17/0045919
  */
 //https://stackoverflow.com/questions/8013471/how-to-use-rand-to-generate-numbers-in-a-range
 //http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
