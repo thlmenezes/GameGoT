@@ -268,4 +268,43 @@
 	Começei criando o arquivo Sketch.c
 	Esse arquivo contém o q eu imagino que seja necessário para
 	a montagem do gameloop
-	Irei testar função character_create()
+================================================================================
+22/11/2017 21:56
+	Objetivos:	Testar character_create()
+				Implementar LoadFromFile(), função mencionada em sketch.c
+	Proponho o seguinte SmokeTest:
+	#include "../headers/character.h"
+	int main (void)
+	{
+		char _name[] = "Jon Snow", _house[] = "Snow";
+		int _agility = 40, _strength = 30 , _intelligence = 20, _health = 10;
+		character_free(character_create(_name, _house, _agility, _strength,
+		_intelligence, _health));
+		return 0;
+	}
+	Resultado esperado: Alocar uma estrutura Character e liberá-la sem falhas
+						ou vazamentos.
+	CheckList:
+				Primeira Tentativa 22/11/2017 22:00
+				Resultado: Sucesso, sem falhas ou vazamentos.
+	Resultados do dia:
+
+	Character* character_create(char* _name, char* _house, int _agility,
+	int _strength, int _intelligence, int _health);
+
+	void       character_free(Character* character);
+
+	Character* fight(Character* fighter_one, Character* fighter_two,
+	int atribute);
+
+	void       print_character(Character* character, void* nerfs_n_buffs);
+
+	Funções implementadas e testadas, entretanto print_character()
+	será expandida para facilitar o trabalho de impressão levando
+	em consideração dinâmicas do jogo, nesse caso imprimir
+	"X) XXXXXX: XX" no atributo "exaurido" pelo usuário na batalha
+	anterior.
+
+	Testes realizados usando as seguintes estruturas Character:
+	KungLao, Lao, 100, 30, 20, 100
+	ChunLee, Lee, 15, 100, 100, 20
