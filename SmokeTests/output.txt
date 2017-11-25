@@ -1,0 +1,19 @@
+
+Kung Lao da Casa Lao
+1) Agility      : 100
+2) Strength     : 90
+3) Intelligence : 10
+4) Health       : 5
+
+Chun Li da Casa Li
+1) Agility      : 100
+2) Strength     : 95
+3) Intelligence : 80
+4) Health       : 100
+
+Thales Lima Menezes da Casa Menezes
+1) Agility      : 100
+2) Strength     : 35
+3) Intelligence : 99
+4) Health       : 50
+

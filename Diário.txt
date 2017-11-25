@@ -326,4 +326,12 @@
 			As funções de liberação passam a retornar o ponteiro NULL
 			Exceto character_free(), já que foi especificado pelo
 			trabalho o seu comportamento, nesse caso recomendo cautela.
-	
+================================================================================
+25/11/2017 11:15
+	Objetivos:	Depurar funções criadas ontem
+				Revisar documentação
+				Avançar no gameloop
+	Começei o dia criando um padrão para me ajudar, todo arquivo de cabeçalho
+	tem em sua primeira um link para o manual do Doxygen
+	Depois organizei todos os Smoketest e Checklist em uma pasta com seu próprio
+	makefile

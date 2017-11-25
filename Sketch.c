@@ -2,9 +2,7 @@
 
 int main (void)
 {
-	FILE *personagens;
-	personagens = fopen("personagens.txt","r");
-	var_lista* Data = LoadFromFile(personagens);
+	var_lista* Data = LoadFromFile("personagens.txt");
 	/*Função: LoadFromFile
 	  Brief: Retorna uma lista com todas
 	  as estruturas Character presentes no
@@ -12,7 +10,7 @@ int main (void)
 	  (name, house, agility, strenght,
 	  intelligence, health) montadas e
 	  prontas para acesso.
-	  Parâmetros FILE *fichas_de_personagens
+	  Parâmetros char* nome do arquivo fonte
 	  Return var_lista*personagens*/
 	fclose(personagens);
 	var_lista* playableCharacters = random_roullete(16, Data);
@@ -130,4 +128,3 @@ int main (void)
 
 	return 0;
 }
-

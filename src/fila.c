@@ -7,6 +7,7 @@
  * e suas funções auxiliares.
  */
 
+#include "../headers/lista_dupla.h"
 #include "../headers/fila.h"
 #include <stdlib.h>
 
