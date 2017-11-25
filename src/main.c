@@ -17,27 +17,34 @@
 //http://www.gnu.org/software/make/manual/make.html
 //https://stackoverflow.com/questions/3585846/color-text-in-terminal-applications-in-unix
 //https://stackoverflow.com/questions/1139271/makefiles-with-source-files-in-different-directories
+//https://www.tutorialspoint.com/c_standard_library/c_function_fscanf.htm
+//http://www.theasciicode.com.ar/extended-ascii-code/box-drawings-single-horizontal-line-character-ascii-code-196.html
 #include "../headers/character.h"
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
+
+//TODO: atualizar funções de liberação para retornar ponteiro NULL
 int main (void)
 {
-	char _name[20], _house[20];
-	int _agility, _strength, _intelligence, _health;
+	char string[] = "personagens.txt";
+	var_lista* personagens_jogaveis = LoadFromFile(string);
 
-	scanf("%s %s %d %d %d %d", _name, _house, &_agility, &_strength, &_intelligence, &_health);
+	printf("\n");
+	var_elemento* cursor = personagens_jogaveis->primeiro;
 
-	Character* kungLao = character_create(_name, _house, _agility, _strength, _intelligence, _health);
+	while(cursor != NULL)
+	{
+		print_character(cursor->dados,NULL);
+		printf("\n");
+		character_free(cursor->dados);
+		cursor->dados = NULL;
+		cursor = cursor->proximo;
+	}
 
-	scanf("%s %s %d %d %d %d", _name, _house, &_agility, &_strength, &_intelligence, &_health);
+	//esvazia_listaChar(personagens_jogaveis);
 
-	Character* chunLee = character_create(_name, _house, _agility, _strength, _intelligence, _health);
-
-	print_character(fight(kungLao,chunLee,2), NULL);
-
-	character_free(kungLao);
-	character_free(chunLee);
+	free_lista(personagens_jogaveis);
 
 	return 0;
 }

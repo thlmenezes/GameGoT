@@ -20,4 +20,6 @@ enum lista_defines
  INSERE_INICIO,
  INSERE_FINAL };
 
+void  limpa_buffer(void);
+
 #endif

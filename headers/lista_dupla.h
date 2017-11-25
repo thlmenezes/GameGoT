@@ -32,7 +32,9 @@ var_elemento*  aloca_elemento(void);
 
 var_lista*     aloca_lista   (void);
 
-void           free_lista    (var_lista* lista);
+void*          free_elemento (var_elemento* elemento);
+
+void*          free_lista    (var_lista* lista);
 
 bool           lista_vazia   (var_lista* lista);
 

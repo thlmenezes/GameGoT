@@ -8,6 +8,7 @@
 
 #ifndef __CHARACTER_H__
 #define __CHARACTER_H__
+#include "lista_dupla.h"
 
 
 typedef struct {
@@ -29,5 +30,9 @@ Character* fight(Character* fighter_one, Character* fighter_two,
 int atribute);
 
 void       print_character(Character* character, void* nerfs_n_buffs);
+
+var_lista* LoadFromFile(char* src_personagens);
+
+void       esvazia_listaChar(var_lista* lista);
 
 #endif

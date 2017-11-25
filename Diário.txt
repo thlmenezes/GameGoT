@@ -308,3 +308,22 @@
 	Testes realizados usando as seguintes estruturas Character:
 	KungLao, Lao, 100, 30, 20, 100
 	ChunLee, Lee, 15, 100, 100, 20
+================================================================================
+24/11/2017 20:53
+	Obtive sucesso na leitura do arquivo personagens,
+	havia encontrado alguma dificuldade por meu código
+	não estar preparado para lidar com o char '\r'
+	(Return Carriage); e não compreender completamente
+	o retorno da função fscanf().
+	Comportamento não desejado:
+		Ainda não sei a abrangência desse caso, entretanto descobri
+		que ao usarmos as funções de liberação (free_lista(),
+		character_free(), etc) não excluímos o potencial para erros
+		secundários, já que os ponteiros passados como argumentos,
+		passam a apontar para uma área de memória previamente libe-
+		rada, ou seja, existe a possibilidade de acessos indevidos.
+		Correção:
+			As funções de liberação passam a retornar o ponteiro NULL
+			Exceto character_free(), já que foi especificado pelo
+			trabalho o seu comportamento, nesse caso recomendo cautela.
+	

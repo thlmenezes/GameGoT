@@ -59,9 +59,25 @@ var_lista*  aloca_lista (void)
 
 }//End aloca_lista()
 
+//--------------------------------------------------------------
+void*  free_elemento (var_elemento* elemento)
+{
+	if(elemento != NULL)
+	{
+		if(elemento->dados != NULL)
+			free(elemento->dados);
+		/*Liberamos quaisquer memoria dependente do var_elemento*/
+		free(elemento);
+		//Liberamos a área de memória em destaque
+	}
+
+	return NULL;
+
+}//end free_elemento()
+
 
 //--------------------------------------------------------------
-void  free_lista (var_lista* lista)
+void*  free_lista (var_lista* lista)
 {
 
 	/**
@@ -77,16 +93,15 @@ void  free_lista (var_lista* lista)
 		lista->primeiro = cursor->proximo;
 		/*Desvinculamos o primeiro elemento da lista para evitar
 		ponteiros para áreas de memória que não controlamos mais*/
-		free(cursor->dados);
-		/*Liberamos quaisquer memoria dependente do var_elemento*/
-		free(cursor);
-		//Liberamos a área de memória em destaque
+		cursor = free_elemento(cursor);
+		//Liberamos o elemento
 		cursor = lista->primeiro;
 		//Atualizamos o cursor para a próxima vítima
 	}//end while(cursor != NULL)
 
 	free(lista);
 	//Após liberarmos todos os compenentes liberamos a "var_lista"
+	return NULL;
 
 }//End free_lista()
 
