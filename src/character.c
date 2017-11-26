@@ -66,7 +66,6 @@ void  character_free(Character* character)
 		if(character->house != NULL)
 			free(character->house);
 		free(character);
-		character = NULL;
 	}
 
 }//End character_free()
@@ -256,31 +255,36 @@ var_lista* LoadFromFile(char* src_personagens)
 
 
 //--------------------------------------------------------------
-void esvazia_listaChar(var_lista* lista)
+void free_ListaCharacter(var_lista* lista)
 {
 	/**
-	 * @brief Libera os elemento::dados e
-	 * todos os var_elemento que a compõe.
+	 * @brief ñ sei dizer ainda.
 	 */
 
 	var_elemento* cursor = lista->primeiro;
-	//Primeiro libera todos os char
+	//Primeiro libera todas as áreas de memória vinculadas à Character
 	while(cursor != NULL)
 	{
-		character_free(cursor->dados);
-		cursor->dados = NULL;
-		/*^^^Evita a existência de um ponteiro
-		para uma área de mémória previamente
-		liberada*/
+		if( ((Character*) cursor->dados)->name  != NULL)
+		{
+			free( ((Character*) cursor->dados)->name );
+			((Character*) cursor->dados)->name = NULL;
+		}
+
+		if( ((Character*) cursor->dados)->house != NULL)
+		{
+			free( ((Character*) cursor->dados)->house );
+			((Character*) cursor->dados)->house = NULL;
+		}
+
 		cursor = cursor->proximo;
 	}
 
-	cursor = lista->primeiro;
-	//Depois liberamos os var_elemento um a um
-	while(cursor != NULL)
-	{
-		free_elemento(cursor);
-		cursor = cursor->proximo;
-	}
+	//esvazia_lista(lista,true);
+	/*excluir todos os var_elementos presentes na lista,
+	com sinal positivo(true) para exclusão das áreas
+	de memória*/
+
+	free_lista(lista);
 
 }

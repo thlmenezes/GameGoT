@@ -238,6 +238,12 @@ void  deleta_ultimo (var_lista* lista)
 
 
 //--------------------------------------------------------------
+void  esvazia_lista (var_lista* lista, bool devo_liberar_memória);
+{
+	//TODO: implementar função esvazia_lista()
+}//End esvazia_lista()
+
+//--------------------------------------------------------------
 void  print_lista (var_lista* lista, int codigo)
 {
 

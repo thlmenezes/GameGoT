@@ -22,18 +22,18 @@ typedef struct {
 } Character;
 
 
-Character* character_create(char* _name, char* _house, int _agility,
+Character* character_create   (char* _name, char* _house, int _agility,
 int _strength, int _intelligence, int _health);
 
-void       character_free(Character* character);
+void       character_free     (Character* character);
 
-Character* fight(Character* fighter_one, Character* fighter_two,
+Character* fight              (Character* fighter_one, Character* fighter_two,
 int atribute);
 
-void       print_character(Character* character, void* nerfs_n_buffs);
+void       print_character    (Character* character, void* nerfs_n_buffs);
 
-var_lista* LoadFromFile(char* src_personagens);
+var_lista* LoadFromFile       (char* src_personagens);
 
-void       esvazia_listaChar(var_lista* lista);
+void       free_ListaCharacter(var_lista* lista);
 
 #endif

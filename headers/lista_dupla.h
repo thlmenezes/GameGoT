@@ -42,6 +42,8 @@ void           insere_lista  (int finalouinicio, void* info, int size_of_memory,
 
 void           deleta_ultimo (var_lista* lista);
 
+void           esvazia_lista (var_lista* lista, bool devo_liberar_memória);
+
 void           print_lista   (var_lista* lista, int codigo);
 
 #endif

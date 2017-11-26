@@ -22,21 +22,17 @@
 int main (void)
 {
 	var_lista* personagens_jogaveis = LoadFromFile("personagens.txt");
-
+	printf("\n");
 	var_elemento* cursor = personagens_jogaveis->primeiro;
 
 	while(cursor != NULL)
 	{
 		print_character(cursor->dados,NULL);
 		printf("\n");
-		character_free(cursor->dados);
-		cursor->dados = NULL;
 		cursor = cursor->proximo;
 	}
 
-	//esvazia_listaChar(personagens_jogaveis);
-
-	free_lista(personagens_jogaveis);
+	free_ListaCharacter(personagens_jogaveis);
 
 	return 0;
 }
