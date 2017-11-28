@@ -8,6 +8,7 @@
 #include "../headers/informacoes_uso_geral.h"
 #include "../headers/lista_dupla.h"
 #include "../headers/character.h"
+#include "../headers/arvore.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -16,7 +17,7 @@
 
 //TODO: expandir função print_character() para usar nerfs_n_buffs
 //--------------------------------------------------------------
-Character*  character_create(char* _name, char* _house, int _agility,
+Character*  character_create (char* _name, char* _house, int _agility,
 int _strength, int _intelligence, int _health)
 {
 	/**
@@ -52,7 +53,7 @@ int _strength, int _intelligence, int _health)
 
 
 //--------------------------------------------------------------
-void  character_free(Character* character)
+void  character_free (Character* character)
 {
 	/**
 	 * @brief Libera a memória alocada segundo character_create().
@@ -72,7 +73,7 @@ void  character_free(Character* character)
 
 
 //--------------------------------------------------------------
-Character* fight(Character* fighter_one, Character* fighter_two,
+Character* fight (Character* fighter_one, Character* fighter_two,
 int atribute)
 {
 	/**
@@ -109,30 +110,32 @@ int atribute)
 
 
 //--------------------------------------------------------------
-void  print_character(Character* character, void* nerfs_n_buffs)
+void  print_character (Character* character, void* nerfs_n_buffs)
 {
 	/**
 	 * @brief Imprime estruturas Character alocadas segundo
 	 * character_create() e de acordo com as restrições de
 	 * escolha de atributo, regra imposta a jogabilidade.
 	 */
+	if(character != NULL)
+	{
 
-	printf("%s da Casa %s\n", character->name, character->house);
+		printf("%s da Casa %s\n", character->name, character->house);
 
-	if(nerfs_n_buffs != NULL)
-		return;
+		if(nerfs_n_buffs != NULL)
+			return;
 
-	printf("1) Agility      : %d\n", character->agility);
-	printf("2) Strength     : %d\n", character->strength);
-	printf("3) Intelligence : %d\n", character->intelligence);
-	printf("4) Health       : %d\n", character->health);
+		printf("1) Agility      : %d\n", character->agility);
+		printf("2) Strength     : %d\n", character->strength);
+		printf("3) Intelligence : %d\n", character->intelligence);
+		printf("4) Health       : %d\n", character->health);
+	}
 
 }//End print_character()
 
 
-
 //--------------------------------------------------------------
-var_lista* LoadFromFile(char* src_personagens)
+var_lista*  LoadFromFile (char* src_personagens)
 {
 	/**
 	 * @brief Retorna uma lista com todas
@@ -255,14 +258,15 @@ var_lista* LoadFromFile(char* src_personagens)
 
 
 //--------------------------------------------------------------
-void free_ListaCharacter(var_lista* lista)
+void  free_listaCharacter (var_lista* lista)
 {
 	/**
 	 * @brief ñ sei dizer ainda.
 	 */
 
 	var_elemento* cursor = lista->primeiro;
-	//Primeiro libera todas as áreas de memória vinculadas à Character
+	/*Primeiro libera todas as áreas de memória vinculadas à
+	Character e atualiza os ponteiros para as áreas liberadas*/
 	while(cursor != NULL)
 	{
 		if( ((Character*) cursor->dados)->name  != NULL)
@@ -280,11 +284,39 @@ void free_ListaCharacter(var_lista* lista)
 		cursor = cursor->proximo;
 	}
 
-	//esvazia_lista(lista,true);
+	esvazia_lista( lista, true );
 	/*excluir todos os var_elementos presentes na lista,
 	com sinal positivo(true) para exclusão das áreas
-	de memória*/
+	de memória elemento::dados*/
 
 	free_lista(lista);
 
 }
+
+
+//--------------------------------------------------------------
+void  LoadFighters (t_node* torneio, var_lista* personagens_jogaveis)
+{
+	var_fila* folhas = enfileira_folhas(torneio);
+	/*Retorna uma fila com elemento::dados sendo t_node*
+	para todas as folhas da árvore*/
+
+	var_elemento* cursor_lista = personagens_jogaveis->primeiro;
+
+	t_node** cursor_fila = (t_node**) sair_fila(folhas);
+
+	while(cursor_fila != NULL)
+	{
+		(*cursor_fila)->character = (Character*) cursor_lista->dados;
+
+		free(cursor_fila);
+
+		cursor_fila = (t_node**) sair_fila(folhas);
+
+		cursor_lista = cursor_lista->proximo;
+
+	}
+
+	free_fila(folhas);
+
+}//End LoadFighters()

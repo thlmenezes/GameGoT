@@ -2,26 +2,11 @@
 
 int main (void)
 {
-	var_lista* Data = LoadFromFile("personagens.txt");
-	/*Função: LoadFromFile
-	  Brief: Retorna uma lista com todas
-	  as estruturas Character presentes no
-	  arquivo segundo o formato correto
-	  (name, house, agility, strenght,
-	  intelligence, health) montadas e
-	  prontas para acesso.
-	  Parâmetros char* nome do arquivo fonte
-	  Return var_lista*personagens*/
-	fclose(personagens);
-	var_lista* playableCharacters = random_roullete(16, Data);
-	/*Função: random_roullete
-	  Brief: Seleciona um numero X, 1ºparam,
-	  de elementos de uma lista Y, 2ºparam,
-	  entregando os resultados em uma lista.
-	  Seleção é randomica.
-	  Parâmetros: int X, var_lista* Y
-	  Return: var_lista* results*/
-	free_lista(Data);
+	var_lista* data = LoadFromFile("personagens.txt");
+
+	var_lista* playableCharacters = random_roullete(16, data);
+
+	free_listaCharacter(data);
 
 	t_node* torneio = tree_create();
 

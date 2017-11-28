@@ -1,3 +1,16 @@
-Kung Lao, Lao, 100, 90, 10, 5
-Chun Li, Li, 100, 95, 80, 100
+Kung Lao, Mortal Kombat, 100, 90, 10, 5
+Chun Li, Street Fighter, 100, 95, 80, 100
+Ryu Hoshi, Street Fighter, 50, 50, 50, 50
+Kenneth Masters, Street Fighter, 50, 50, 50, 50
+Rock Lee, Naruto, 100, 94, 79, 99
+Raiden, Mortal Kombat, 100, 20, 70, 20
+Virgil Ovid Hawkins, Static Shock (Super Choque), 100, 20, 70, 40
+Frank Castle, Justiceiro, 20, 99, 75, 30
+Bruce Wayne, Bátima, 60, 99, 80, 100
+Lúcio Correia dos Santos, Overwatch (Lúcio), 100, 20, 95, 30
+Amélie Lacroix née Guillard, Overwatch (Widowmaker), 70, 20, 95, 60
+Samus Aran, Metroid, 100, 70, 100, 60
 Thales Lima Menezes, Menezes, 100, 35, 99, 50
+Lala R. P., Stalkin' Beauty, 100, 40, 99, 30
+T. L. M., M., 60, 100, 99, 50
+V. R., R., 61, 100, 100, 51

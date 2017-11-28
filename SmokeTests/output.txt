@@ -1,19 +1,96 @@
-
-Kung Lao da Casa Lao
+Kung Lao da Casa Mortal Kombat
 1) Agility      : 100
 2) Strength     : 90
 3) Intelligence : 10
 4) Health       : 5
 
-Chun Li da Casa Li
+Chun Li da Casa Street Fighter
 1) Agility      : 100
 2) Strength     : 95
 3) Intelligence : 80
 4) Health       : 100
+
+Ryu Hoshi da Casa Street Fighter
+1) Agility      : 50
+2) Strength     : 50
+3) Intelligence : 50
+4) Health       : 50
+
+Kenneth Masters da Casa Street Fighter
+1) Agility      : 50
+2) Strength     : 50
+3) Intelligence : 50
+4) Health       : 50
+
+Rock Lee da Casa Naruto
+1) Agility      : 100
+2) Strength     : 94
+3) Intelligence : 79
+4) Health       : 99
+
+Raiden da Casa Mortal Kombat
+1) Agility      : 100
+2) Strength     : 20
+3) Intelligence : 70
+4) Health       : 20
+
+Virgil Ovid Hawkins da Casa Static Shock (Super Choque)
+1) Agility      : 100
+2) Strength     : 20
+3) Intelligence : 70
+4) Health       : 40
+
+Frank Castle da Casa Justiceiro
+1) Agility      : 20
+2) Strength     : 99
+3) Intelligence : 75
+4) Health       : 30
+
+Bruce Wayne da Casa Bátima
+1) Agility      : 60
+2) Strength     : 99
+3) Intelligence : 80
+4) Health       : 100
+
+Lúcio Correia dos Santos da Casa Overwatch (Lúcio)
+1) Agility      : 100
+2) Strength     : 20
+3) Intelligence : 95
+4) Health       : 30
+
+Amélie Lacroix née Guillard da Casa Overwatch (Widowmaker)
+1) Agility      : 70
+2) Strength     : 20
+3) Intelligence : 95
+4) Health       : 60
+
+Samus Aran da Casa Metroid
+1) Agility      : 100
+2) Strength     : 70
+3) Intelligence : 100
+4) Health       : 60
 
 Thales Lima Menezes da Casa Menezes
 1) Agility      : 100
 2) Strength     : 35
 3) Intelligence : 99
 4) Health       : 50
+
+Lala R. P. da Casa Stalkin' Beauty
+1) Agility      : 100
+2) Strength     : 40
+3) Intelligence : 99
+4) Health       : 30
+
+T. L. M. da Casa M.
+1) Agility      : 60
+2) Strength     : 100
+3) Intelligence : 99
+4) Health       : 50
+
+V. R. da Casa R.
+1) Agility      : 61
+2) Strength     : 100
+3) Intelligence : 100
+4) Health       : 51
 

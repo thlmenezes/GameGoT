@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <time.h>
 
 
 
@@ -199,6 +200,61 @@ void  insere_lista (int finalouinicio, void* info, int size_of_memory, var_lista
 
 
 //--------------------------------------------------------------
+void*  pop_lista (var_lista* lista, int indice)
+{
+	/**
+	 * @param indice Número entre 0 e (var_lista::tamanho -1).
+	 */
+
+	if(lista_vazia(lista) || indice < 0)
+ 		return NULL;
+
+	int posicao = indice+1;
+
+	var_elemento* pop_return;
+
+	if(posicao == 1)
+	{
+		pop_return = lista->primeiro;
+		lista->primeiro = pop_return->proximo;
+		lista->primeiro->anterior = NULL;
+	}
+	else
+	{
+		var_elemento* atual = lista->primeiro;
+		int iindice;
+
+		for(iindice = 0; iindice < (posicao-2) && atual != NULL; iindice++ )
+			atual = atual->proximo;
+
+		if(atual != NULL)
+		{
+			pop_return = atual->proximo;
+
+			atual->proximo = pop_return->proximo;
+
+			if(pop_return == lista->ultimo)
+				lista->ultimo = atual;
+			else
+				pop_return->proximo->anterior = atual;
+		}
+	}
+
+	/*Neste momento a lista deve estar completamente
+	linkada separada do elemento apontado por pop_return*/
+
+ 	lista->tamanho--;
+
+ 	void* dados = pop_return->dados;
+
+ 	free(pop_return);
+
+ 	return dados;
+
+}//End pop_lista()
+
+
+//--------------------------------------------------------------
 void  deleta_ultimo (var_lista* lista)
 {
 
@@ -238,10 +294,110 @@ void  deleta_ultimo (var_lista* lista)
 
 
 //--------------------------------------------------------------
-void  esvazia_lista (var_lista* lista, bool devo_liberar_memória);
+void  apaga_elemento (var_lista* lista, int posicao){
+	/**
+	 * @autor Fernanda Macedo de Sousa
+	 * @brief Apaga um elemento em uma certa posicao da lista
+	 */
+
+	if(posicao == 1){
+		var_elemento* lixeira     = lista->primeiro;
+		lista->primeiro           = lixeira->proximo;
+		lista->primeiro->anterior = NULL;
+		free(lixeira->dados);
+		free(lixeira);
+	}else if(posicao > 1){
+		var_elemento* atual = lista->primeiro;
+		int i;
+
+		for(i = 0; i < (posicao-2) && atual != NULL; i++ )
+			atual = atual->proximo;
+
+		if(atual != NULL){
+			var_elemento* lixeira = atual->proximo;
+
+			atual->proximo = lixeira->proximo;
+
+			if(lixeira == lista->ultimo){
+				lista->ultimo = atual;
+				atual->proximo = NULL; // Thales: Redundante mas ok
+			}else{
+				lixeira->proximo->anterior = atual;
+			}
+
+			free(lixeira->dados);
+			free(lixeira);
+
+		}//end if
+
+	}//end else
+
+}//end apaga_elemento
+
+
+//--------------------------------------------------------------
+void  esvazia_lista (var_lista* lista, bool devo_liberar_memoria)
 {
-	//TODO: implementar função esvazia_lista()
+
+	var_elemento* cursor = lista->primeiro;
+	while( cursor != NULL )
+	{
+		lista->primeiro = cursor->proximo;
+		/*Desvinculamos o primeiro elemento da lista para evitar
+		ponteiros para áreas de memória que não controlamos mais*/
+		lista->tamanho--;
+		//Decrementamos o tamanho da lista;
+		if(devo_liberar_memoria)
+			free_elemento(cursor);
+		//Caso possamos liberar a memória associada a elemento::dados
+		else
+			free(cursor);
+		//E sempre liberamos a memória do elemento
+		cursor = lista->primeiro;
+	}
+
+	lista->primeiro = lista->ultimo = NULL;
+
 }//End esvazia_lista()
+
+
+//--------------------------------------------------------------
+var_lista*  random_roullete(int quantidade, int size_of_memory, var_lista* src_lista)
+{
+	/**
+	 * @brief Seleciona um número X, 1ºparam,
+	 * de elementos de uma lista Y, 2ºparam,
+	 * entregando os resultados em uma lista.
+	 * Seleção é randomica.
+	 * @param quantidade Quantidade de elementos que serão selecionados
+	 * @param src_lista  Lista da qual serão retirados os elementos
+	 * @return var_lista* resultado*/
+	if(quantidade >= src_lista->tamanho)
+		return NULL;
+		//Insira aqui posteriormente opção de avisar quantos elementos faltam
+		//Ajudar o usuário
+	var_lista* resultado = aloca_lista();
+	time_t t;
+	/* Intializes random number generator */
+	srand((unsigned) time(&t));
+
+	while(quantidade-- > 0)
+	{
+		void* elemento = pop_lista(src_lista, rand() % (src_lista->tamanho - 1));
+
+		insere_lista   (INSERE_FINAL,
+						elemento,
+						size_of_memory,
+						resultado,
+						INSERE_DADO_HEAP);
+
+		free(elemento);
+	}
+	// rand() % (src_lista->tamanho - 1)
+	// Gera número entre 0 e (var_lista::tamanho -1)
+	return resultado;
+
+}//End random_roullete();
 
 //--------------------------------------------------------------
 void  print_lista (var_lista* lista, int codigo)

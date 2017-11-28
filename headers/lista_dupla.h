@@ -28,23 +28,29 @@ typedef struct{
 } var_lista;
 
 //Funções de Lista Duplamente Encadeada
-var_elemento*  aloca_elemento(void);
+var_elemento*  aloca_elemento (void);
 
-var_lista*     aloca_lista   (void);
+var_lista*     aloca_lista    (void);
 
-void*          free_elemento (var_elemento* elemento);
+void*          free_elemento  (var_elemento* elemento);
 
-void*          free_lista    (var_lista* lista);
+void*          free_lista     (var_lista* lista);
 
-bool           lista_vazia   (var_lista* lista);
+bool           lista_vazia    (var_lista* lista);
 
-void           insere_lista  (int finalouinicio, void* info, int size_of_memory, var_lista* lista, int codigo);
+void           insere_lista   (int finalouinicio, void* info, int size_of_memory, var_lista* lista, int codigo);
 
-void           deleta_ultimo (var_lista* lista);
+void*          pop_lista      (var_lista* lista, int indice);
 
-void           esvazia_lista (var_lista* lista, bool devo_liberar_memória);
+void           deleta_ultimo  (var_lista* lista);
 
-void           print_lista   (var_lista* lista, int codigo);
+void           apaga_elemento (var_lista* lista, int posicao);
+
+void           esvazia_lista  (var_lista* lista, bool devo_liberar_memoria);
+
+var_lista*     random_roullete(int quantidade, int size_of_memory, var_lista* src_lista);
+
+void           print_lista    (var_lista* lista, int codigo);
 
 #endif
 

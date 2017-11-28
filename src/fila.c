@@ -92,7 +92,10 @@ void*  sair_fila (var_fila* fila)
 
 	fila->primeiro = elemento->proximo;
 
-	fila->primeiro->anterior = NULL;
+	if(fila->primeiro == NULL)
+		fila->ultimo = fila->primeiro;
+	else
+		fila->primeiro->anterior = NULL;
 
 	fila->tamanho--;
 

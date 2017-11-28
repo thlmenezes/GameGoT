@@ -192,3 +192,37 @@
 	IDEIAS: Usar arquivo texto para armazenar as informações dos rounds;
 			Criar função que esvazia a lista e que receba um sinal que lhe
 			informe sobre a liberação da memória de var_elemento;
+================================================================================
+26/11/2017 20:52
+	Implementei função de esvaziar a lista,pop_lista,free_elemento
+	E random_roullete, sendo que essa última ainda está causando vazamentos
+	de memória que não consigo explicar
+	IDEIA: é possivel que a memória vazada seja elemento::dados
+================================================================================
+26/11/2017 16:30
+	Erro:	random_roullete() não considera que insere_lista() faz uma
+			cópia do elemento
+			Correção:	alocar uma variável temporária que irá receber
+						o ponteiro de pop_lista() para posteriormente liberar.
+	Objetivos: continuar avançando no gameloop
+	Resumo do dia:
+		Consegui implementar as funções random_roullete e LoadFighters;
+		Para isso criei uma função que enfileira as folhas de uma árvore
+		Corrigi um detalhe na função de esvaziar_lista(): o ponteiro ultimo
+			ainda apontava para uma área de memória previamente liberada
+		Corrigi também um detalhe na função sair_fila() : ela não respondia
+			bem no caso em que var_lista::tamanho = 1
+		Criei uma função chamada pop_lista, para trabalhar com random_roullete
+	Falhas: Tenho deixado comentários e Smoketests um pouco de lado para tentar
+			avançar mais rapidamente no desenvolvimento, necessito voltar com
+			esse hábito e também preciso realizar as seguintes ações:
+			-> atualizar funções de liberação para retornar ponteiro NULL
+			-> expandir função print_character() para usar nerfs_n_buffs
+			-> a função tree_free() também tem que liberar a memória de
+				seus Character
+				IDEIA: criar função node_free() para terceirizar o trabalho
+						de liberação.
+				IDEIA: usar função que enfileira_folhas, liberar as areas de
+					   Character e depois ir liberando a arvore.
+	Voltar a programar o Doxygen urgentemente.
+	

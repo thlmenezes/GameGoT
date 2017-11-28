@@ -1,3 +1,24 @@
-Kung Lao, Lao, 100, 90, 10, 5
-Chun Li, Li, 100, 95, 80, 100
+Jon Snow, Stark, 58, 61, 30, 50
+Ned, Stark, 40, 60, 60, 80
+Sansa, Stark, 20, 20, 46, 25
+The Hound, Clegane, 50, 70, 25, 92
+The Mountain, Clegane, 30, 80, 30, 100
+Daenerys, Targaryen, 20, 30, 66, 32
+Tyrion, Lannister, 40, 50, 80, 61
+Jaime, Lannister, 55, 60, 62, 72
+Cercei, Lannister, 35, 26, 70, 35
+Theon, Greyjoy, 35, 40, 42, 57
+Hodor, Stark, 25, 70, 33, 85
+Khal Drogo, Dothraki, 53, 72, 30, 75
+Ryu Hoshi, Street Fighter, 50, 50, 50, 50
+Kenneth Masters, Street Fighter, 50, 50, 50, 50
+Rock Lee, Naruto, 100, 94, 79, 99
+Raiden, Mortal Kombat, 100, 20, 70, 20
+Lala R. P., Stalkin' Beauty, 100, 40, 99, 30
+Virgil Ovid Hawkins, Static Shock (Super Choque), 100, 20, 70, 40
+Frank Castle, Justiceiro, 20, 99, 75, 30
 Thales Lima Menezes, Menezes, 100, 35, 99, 50
+Bruce Wayne, Bátima, 60, 99, 80, 100
+Lúcio Correia dos Santos, Overwatch (Lúcio), 100, 20, 95, 30
+Amélie Lacroix née Guillard, Overwatch (Widowmaker), 70, 20, 95, 60
+Samus Aran, Metroid, 100, 70, 100, 60

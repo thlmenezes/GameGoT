@@ -5,8 +5,9 @@
  * @brief  Contém a implementação de uma
  * árvore binária e suas funções auxiliares.
  */
-
+#include "../headers/informacoes_uso_geral.h"
 #include "../headers/arvore.h"
+//#include "../headers/fila.h"
 #include <stdlib.h>
 #include <math.h>
 
@@ -125,3 +126,47 @@ void  tree_print_preorder (t_node* root)
 	tree_print_preorder(root->right);
 
 }//End tree_print_preorder()
+
+//--------------------------------------------------------------
+var_fila*  enfileira_folhas (t_node* root)
+{
+	//Ao final resultado deve armazenar todas as folhas da árvore, e no caso especifico do jogo, resultado armazena os ponteiros com todas as próximas lutas/
+	var_fila* resultado = aloca_fila();
+
+	bool chegou_nas_folhas = false;
+
+	int numero_de_folhas = 0;
+
+	entrar_fila(&root, sizeof(t_node *), resultado);
+
+	while( !fila_vazia(resultado) )
+	{
+		if(chegou_nas_folhas)
+			if(resultado->tamanho == numero_de_folhas)
+				break;
+		t_node** pop_fila = (t_node**) sair_fila(resultado);
+
+		t_node* no_destacado = *pop_fila;
+
+		t_node* no_filho = no_destacado->left;
+
+		if( no_filho->left == NULL && no_filho->right == NULL && !chegou_nas_folhas)
+		{
+			chegou_nas_folhas = true;
+			//Tudo que será enfileirado à partir de agora
+			//é folha da arvore
+			numero_de_folhas = (resultado->tamanho + 1) * 2;
+		}
+
+		if( no_destacado->left != NULL )
+			entrar_fila(&no_destacado->left, sizeof(t_node *), resultado);
+
+		if( no_destacado->right != NULL )
+			entrar_fila(&no_destacado->right, sizeof(t_node *), resultado);
+
+		free(pop_fila);
+	}
+
+	return resultado;
+
+}//End enfileira_folhas()

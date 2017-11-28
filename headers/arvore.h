@@ -10,25 +10,22 @@
 #ifndef __ARVORE_H__
 #define __ARVORE_H__
 
-
 #include "character.h"
 
-typedef struct node{
-	Character* character;
-	struct node* left;
-	struct node* right;
-} t_node;
+#include "fila.h"
 
 //Funções de Árvore
-t_node*     node_create(void);
+t_node*     node_create        (void);
 
-t_node*     tree_create(void);
+t_node*     tree_create        (void);
 
-t_node*     aloca_arvore(int total_de_nos);
+t_node*     aloca_arvore       (int total_de_nos);
 
-void        tree_free(t_node* tree);
+void        tree_free          (t_node* tree);
 
 void        tree_print_preorder(t_node* root);
+
+var_fila*   enfileira_folhas   (t_node* root);
 
 #endif
 

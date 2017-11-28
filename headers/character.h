@@ -9,8 +9,8 @@
 
 #ifndef __CHARACTER_H__
 #define __CHARACTER_H__
-#include "lista_dupla.h"
 
+#include "lista_dupla.h"
 
 typedef struct {
 	char* name;
@@ -21,6 +21,13 @@ typedef struct {
 	int health;
 } Character;
 
+typedef struct node{
+	Character* character;
+	struct node* left;
+	struct node* right;
+} t_node;
+
+#include "arvore.h"
 
 Character* character_create   (char* _name, char* _house, int _agility,
 int _strength, int _intelligence, int _health);
@@ -34,6 +41,8 @@ void       print_character    (Character* character, void* nerfs_n_buffs);
 
 var_lista* LoadFromFile       (char* src_personagens);
 
-void       free_ListaCharacter(var_lista* lista);
+void       LoadFighters       (t_node* torneio, var_lista* personagens_jogaveis);
+
+void       free_listaCharacter(var_lista* lista);
 
 #endif
