@@ -119,7 +119,7 @@ void  tree_print_preorder (t_node* root)
 	if(root == NULL)
 			return;
 
-	//print_character(root);
+	print_character(root,NULL);
 
 	tree_print_preorder(root->left);
 
@@ -130,7 +130,13 @@ void  tree_print_preorder (t_node* root)
 //--------------------------------------------------------------
 var_fila*  enfileira_folhas (t_node* root)
 {
-	//Ao final resultado deve armazenar todas as folhas da árvore, e no caso especifico do jogo, resultado armazena os ponteiros com todas as próximas lutas/
+
+	/**
+	 * Retorna uma fila com elemento::dados do tipo t_node**
+	 * em que cada um de seus ponteiros, quando desreferenciados,
+	 * apontam para as folhas da árvore de raiz t_node* root.
+	 */
+
 	var_fila* resultado = aloca_fila();
 
 	bool chegou_nas_folhas = false;
@@ -150,11 +156,11 @@ var_fila*  enfileira_folhas (t_node* root)
 
 		t_node* no_filho = no_destacado->left;
 
-		if( no_filho->left == NULL && no_filho->right == NULL && !chegou_nas_folhas)
+		if( !chegou_nas_folhas && no_filho->left == NULL && no_filho->right == NULL )
 		{
 			chegou_nas_folhas = true;
 			//Tudo que será enfileirado à partir de agora
-			//é folha da arvore
+			//são as folhas da arvore
 			numero_de_folhas = (resultado->tamanho + 1) * 2;
 		}
 

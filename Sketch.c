@@ -2,21 +2,18 @@
 
 int main (void)
 {
+
 	var_lista* data = LoadFromFile("personagens.txt");
 
-	var_lista* playableCharacters = random_roullete(16, data);
+	var_lista* personagensJogaveis = random_roullete(16, sizeof(Character), data);
 
 	free_listaCharacter(data);
 
 	t_node* torneio = tree_create();
 
-	LoadFighters(torneio,playableCharacters);
-	/*Função: LoadFighters
-	  Brief: Carrega nas folhas da árvore, 1ºparam
-	  os participantes do torneio, 2ºparam.
-	  Parâmetros: t_node* arvore, var_lista* fighters
-	  Return: void*/
-	Character* users_choice = character_selection(playableCharacters);
+	LoadFighters(torneio, personagensJogaveis);
+
+	Character* users_choice = character_selection(personagensJogaveis);
 	/*Função: character_selection
 	  Brief: Imprime na tela todos os PlayableCharacter's(PC's)
 	  ocultando seus nomes e suas casa, mostrando ao
@@ -34,13 +31,14 @@ int main (void)
 	  Return: var_lista* round_anterior*/
 	var_lista* nerfs_n_buffs = aloca_lista();
 	//TODO: Funções para elemento->dados do tipo nerfs_n_buffs
-	var_lista* rounds = aloca_lista();
-	//TODO: Funções para elemento->dados do tipo rounds
-	//IDEA: cada elemento->dados de rounds armazena
-	//IDEA: informações sobre todas as lutas do round anterior
-	/*
-	rounds->round->string luta
-	*/
+
+	char nomeArquivoRounds[] = "rounds.txt";
+	remove(nomeArquivoRounds);
+	//Recebe nome do arquivo e retorna 0 em caso de sucesso
+
+	FILE* rounds;
+	int roundNumero = 1;
+
 	while(esta_vivo(users_choice,torneio_status))
 	{
 	/*Função: esta_vivo
@@ -52,12 +50,17 @@ int main (void)
 					t_node* torneio.
 	  Return: bool esta_vivo*/
 		system("reset");
+
+		rounds = fopen(nomeArquivoRounds,"a");
+		fprintf(rounds,"Round %d\r\n", roundNumero++);
+		fclose(rounds);
+
 		battle_round(users_choice, rounds, nerfs_n_buffs, torneio);
 		/*Função: battle_round
 		  Brief: Busca o personagem do usuário, faz a sua luta; e
 		  Gerencia as lutas dos NonPlayableCharacter's(NPC's).
 		  Parâmetros:   Character* users_choice,
-						var_lista* rounds,
+						char* rounds,
 						var_lista* nerfs_n_buffs,
 						t_node* torneio.
 		  Return: void*/
@@ -69,7 +72,9 @@ int main (void)
 			  atributo. Atualiza nerfs_n_buffs e rounds.
 			  TODO:Preciso de algum lugar que armazene os nerfs/buffs
 			  IDEA:Pode ser criado uma nova estrutura formada de Character* personagem e int nerfs
-			  Parâmetros: Character* users_choice,t_node* torneio
+			  Parâmetros:	Character* fighter_one,fighter_two
+			  				char* rounds
+			  				t_node* torneio
 			  Return: void*/
 				update_nerfs(TIRED, player_one, atributo, nerfs_n_buffs);
 				/*Função: update_nerfs
@@ -88,28 +93,21 @@ int main (void)
 								var_lista* nerfs_n_buffs.
 				  Return: void*/
 				update_rounds(player_one, player_two, atributo, rounds);
-				/*Função: update_rounds
-				  Brief: Registra a luta numa string do padrão
-				  vencedor(inteiro nomeatributo) vs perdedor(inteiro nomeatributo).
-				  Parâmetros:   Character* fighter1,
-								Character* fighter2,
-								int atributo_usado,
-								var_lista* rounds.
-				  Return: void*/
+
 		torneio_status = round_anterior(torneio);
 	}
 	//TODO: imprimir o status de todo o torneio;
-	print_rounds(rounds);
+	print_file(rounds);
 
 	tree_free(torneio);
 
 	free_lista(torneio_status);
 
-	deletar todos os elementos e liberar playableCharacters
+	esvazia_lista(personagensJogaveis, false);
+
+	free_lista(personagensJogaveis);
 
 	free_nerfs(nerfs_n_buffs);
-
-	free_rounds(rounds);
 
 	return 0;
 }

@@ -22,4 +22,6 @@ enum lista_defines
 
 void  limpa_buffer(void);
 
+void  print_file  (char* file);
+
 #endif

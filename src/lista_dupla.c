@@ -60,9 +60,15 @@ var_lista*  aloca_lista (void)
 
 }//End aloca_lista()
 
+
 //--------------------------------------------------------------
 void*  free_elemento (var_elemento* elemento)
 {
+	/**
+	 * Libera memória previamente alocada para um var_elemento
+	 * de acordo com os padrões de aloca_elemento().
+	 */
+
 	if(elemento != NULL)
 	{
 		if(elemento->dados != NULL)
@@ -203,6 +209,7 @@ void  insere_lista (int finalouinicio, void* info, int size_of_memory, var_lista
 void*  pop_lista (var_lista* lista, int indice)
 {
 	/**
+	 * Retira um elemento da lista da posição indice.
 	 * @param indice Número entre 0 e (var_lista::tamanho -1).
 	 */
 
@@ -338,8 +345,15 @@ void  apaga_elemento (var_lista* lista, int posicao){
 //--------------------------------------------------------------
 void  esvazia_lista (var_lista* lista, bool devo_liberar_memoria)
 {
+	/**
+	 * @brief Exclui todos os var_elementos de uma var_lista,
+	 * ou seja, ao final lista_vazia(var_lista* lista) retorna true.
+	 * @param devo_liberar_memoria Booleano que informa se devemos
+	 * liberar a memória de elemento::dados.
+	 */
 
 	var_elemento* cursor = lista->primeiro;
+
 	while( cursor != NULL )
 	{
 		lista->primeiro = cursor->proximo;
@@ -365,20 +379,21 @@ void  esvazia_lista (var_lista* lista, bool devo_liberar_memoria)
 var_lista*  random_roullete(int quantidade, int size_of_memory, var_lista* src_lista)
 {
 	/**
-	 * @brief Seleciona um número X, 1ºparam,
-	 * de elementos de uma lista Y, 2ºparam,
-	 * entregando os resultados em uma lista.
-	 * Seleção é randomica.
+	 * @brief Seleciona um número X, 1º param, de elementos de uma
+	 * lista Y, 2º param, entregando os resultados em uma lista. O
+	 * processo de seleção é randômico.
 	 * @param quantidade Quantidade de elementos que serão selecionados
 	 * @param src_lista  Lista da qual serão retirados os elementos
-	 * @return var_lista* resultado*/
+	 * @return var_lista *resultado
+	 */
+
 	if(quantidade >= src_lista->tamanho)
 		return NULL;
 		//Insira aqui posteriormente opção de avisar quantos elementos faltam
 		//Ajudar o usuário
 	var_lista* resultado = aloca_lista();
+
 	time_t t;
-	/* Intializes random number generator */
 	srand((unsigned) time(&t));
 
 	while(quantidade-- > 0)

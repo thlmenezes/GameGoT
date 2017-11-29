@@ -12,11 +12,12 @@
 	• Fernanda Macedo de Sousa - 17/0010058\n
 	• Thales Lima Menezes - 17/0045919
  */
-//#include "../headers/informacoes_uso_geral.h"
+#include "../headers/informacoes_uso_geral.h"
 #include "../headers/lista_dupla.h"
 #include "../headers/character.h"
 #include "../headers/arvore.h"
 #include "../headers/fila.h"
+#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
@@ -28,15 +29,34 @@ int main (void)
 {
 	var_lista* data =  LoadFromFile("personagens.txt");
 
-	var_lista* personagens_jogaveis = random_roullete(16, sizeof(Character), data);
+	var_lista* personagens_jogaveis = random_roullete(2, sizeof(Character), data);
 
 	free_listaCharacter(data);
 
-	t_node* torneio = tree_create();
+	char nomeArquivoRounds[] = "rounds.txt";
+	remove(nomeArquivoRounds);
+
+	FILE* rounds;
+	int roundNumero = 1;
+	rounds = fopen(nomeArquivoRounds,"a");
+
+	fprintf(rounds,"Round %d:\r\n", roundNumero++);
+
+	fclose(rounds);
+
+	update_rounds(  (Character*) personagens_jogaveis->primeiro->dados,
+					(Character*) personagens_jogaveis->ultimo->dados,
+					2, nomeArquivoRounds);
+
+	print_file(nomeArquivoRounds);
+
+	free_listaCharacter(personagens_jogaveis);
+
+/*	t_node* torneio = tree_create();
 
 	LoadFighters(torneio, personagens_jogaveis);
 
-	/*var_fila* print = enfileira_folhas(torneio);
+	var_fila* print = enfileira_folhas(torneio);
 
 	t_node** cursor = (t_node**)sair_fila(print);
 
@@ -47,12 +67,12 @@ int main (void)
 		free(cursor);
 		cursor = (t_node**)sair_fila(print);
 	}
-	free_fila(print);*/
+	free_fila(print);
 
 	free_listaCharacter(personagens_jogaveis);
 
 	tree_free(torneio);
-
+*/
 	return 0;
 }
 /*var_elemento* cursor = personagens_jogaveis->primeiro;

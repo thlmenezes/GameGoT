@@ -39,10 +39,13 @@ int atribute);
 
 void       print_character    (Character* character, void* nerfs_n_buffs);
 
-var_lista* LoadFromFile       (char* src_personagens);
+var_lista* loadFromFile       (char* src_personagens);
 
-void       LoadFighters       (t_node* torneio, var_lista* personagens_jogaveis);
+void       loadFighters       (t_node* torneio, var_lista* personagens_jogaveis);
 
 void       free_listaCharacter(var_lista* lista);
+
+void       update_rounds      (Character* player_one, Character* player_two,
+int atributo_usado, char* src_rounds);
 
 #endif

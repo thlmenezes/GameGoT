@@ -225,4 +225,48 @@
 				IDEIA: usar função que enfileira_folhas, liberar as areas de
 					   Character e depois ir liberando a arvore.
 	Voltar a programar o Doxygen urgentemente.
-	
+================================================================================
+28/11/2017 22:36
+	Começei a trabalhar na parte de armazenar as informações dos rounds.
+	Escolhi usar um arquivo (rounds.txt) para tal.
+	O arquivo só será apagado antes de ser usado novamente, dessa forma
+	o usuário pode ter acesso ao último round jogado.
+
+	Funções que precisam ser comentadas ou atualizadas o comportamento:
+		#Informacoes Uso Geral
+			limpa_buffer() OK
+			print_file() OK
+		#Character
+			free_listaCharacter() OK
+			update_rounds() OK
+			loadFromFile() OK
+			loadFighters() OK
+		#lista
+			free_elemento() OK
+			pop_lista() OK
+			esvazia_lista() OK
+			random_roullete() OK
+		#Arvore
+			enfileira_folhas() OK
+	Implementei as funções:
+		update_rounds() para armazenar cada luta no arquivo.
+		print_file() para imprimir todos os char dentro de um arquivo.
+================================================================================
+29/11/2017 08:50
+	Objetivos:  Testar lógica de vetor para facilitar o trabalho
+				 com ponteiro para atributo em update_rounds().
+				Implementar round_anterior().
+				Implementar character_selection():
+					Atualizar print_character();
+					Criar função de busca na lista;
+				Implementar esta_vivo():
+					Implementar função de busca na árvore;
+				Verificar comportamento:
+					Funções de free;
+					Testar random_roullete com quantidade == lista::tamanho;
+					Testar tree_print_preorder();
+
+Programei um pouco mais o Doxygen e
+Implementei as funções:
+	update_rounds() para armazenar cada luta no arquivo.
+	print_file() para imprimir todos os char dentro de um arquivo.

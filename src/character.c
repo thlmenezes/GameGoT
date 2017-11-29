@@ -135,22 +135,20 @@ void  print_character (Character* character, void* nerfs_n_buffs)
 
 
 //--------------------------------------------------------------
-var_lista*  LoadFromFile (char* src_personagens)
+var_lista*  loadFromFile (char* src_personagens)
 {
 	/**
-	 * @brief Retorna uma lista com todas
-	 * as estruturas Character presentes no
-	 * arquivo segundo o formato correto
-	 * (name, house, agility, strenght,
-	 * intelligence, health) montadas e
-	 * prontas para acesso.
+	 * @brief Retorna uma lista com todas as estruturas Character
+	 * presentes no arquivo segundo o formato correto (name, house,
+	 * agility, strenght, intelligence, health) montadas e prontas
+	 * para acesso.
 	 * @param personagens Nome do arquivo fonte.
-	 * @return var_lista* personagens_jogaveis
+	 * @return var_lista* personagens_jogaveis.
 	 */
 
 	FILE *personagens;
 	personagens = fopen(src_personagens,"r");
-
+	//fopen() retorna NULL em caso de falha
 	if(personagens == NULL)
 	{
 		printf("    ┌─────────────────────────────────────────────────────┐\n");
@@ -254,40 +252,50 @@ var_lista*  LoadFromFile (char* src_personagens)
 
 	return personagens_jogaveis;
 
-}//End LoadFromFile()
+}//End loadFromFile()
 
 
 //--------------------------------------------------------------
 void  free_listaCharacter (var_lista* lista)
 {
 	/**
-	 * @brief ñ sei dizer ainda.
+	 * @brief Libera uma var_lista em que cada elemento::dados
+	 * aponta para um Character.
 	 */
 
 	var_elemento* cursor = lista->primeiro;
-	/*Primeiro libera todas as áreas de memória vinculadas à
-	Character e atualiza os ponteiros para as áreas liberadas*/
+	/*Primeiro liberamos todas as áreas de memória vinculadas à
+	Character e atualizamos os ponteiros das áreas liberadas*/
+
+	Character* personagemDestaque;
+
 	while(cursor != NULL)
 	{
-		if( ((Character*) cursor->dados)->name  != NULL)
+		personagemDestaque = (Character*) cursor->dados;
+
+		if( personagemDestaque->name  != NULL)
 		{
-			free( ((Character*) cursor->dados)->name );
-			((Character*) cursor->dados)->name = NULL;
+			free( personagemDestaque->name );
+			personagemDestaque->name = NULL;
 		}
 
-		if( ((Character*) cursor->dados)->house != NULL)
+		if( personagemDestaque->house != NULL)
 		{
-			free( ((Character*) cursor->dados)->house );
-			((Character*) cursor->dados)->house = NULL;
+			free( personagemDestaque->house );
+			personagemDestaque->house = NULL;
 		}
 
 		cursor = cursor->proximo;
 	}
 
 	esvazia_lista( lista, true );
-	/*excluir todos os var_elementos presentes na lista,
-	com sinal positivo(true) para exclusão das áreas
-	de memória elemento::dados*/
+	/*Liberamos a memória todos os var_elementos presentes
+	na lista, inclusive a area de memória elemento::dados*/
+
+	/**
+	 * Observação: Estou ciente que poderia ter usado a função
+	 * free_lista() diretamente sem antes esvaziar a lista.
+	 */
 
 	free_lista(lista);
 
@@ -295,11 +303,17 @@ void  free_listaCharacter (var_lista* lista)
 
 
 //--------------------------------------------------------------
-void  LoadFighters (t_node* torneio, var_lista* personagens_jogaveis)
+void  loadFighters (t_node* torneio, var_lista* personagens_jogaveis)
 {
+	/**
+	 * Carrega todos os personagens que irão participar do torneio nas
+	 * folhas da arvore binária.
+	 * @param torneio Árvore a ser modificada.
+	 * @param personagens_jogaveis Lista contendo os personagens
+	 * inscritos no torneio.
+	 */
+
 	var_fila* folhas = enfileira_folhas(torneio);
-	/*Retorna uma fila com elemento::dados sendo t_node*
-	para todas as folhas da árvore*/
 
 	var_elemento* cursor_lista = personagens_jogaveis->primeiro;
 
@@ -320,3 +334,70 @@ void  LoadFighters (t_node* torneio, var_lista* personagens_jogaveis)
 	free_fila(folhas);
 
 }//End LoadFighters()
+
+
+//--------------------------------------------------------------
+void  update_rounds (Character* player_one, Character* player_two, int atributo_usado, char* src_rounds)
+{
+	/*IDEIA: Digna de melhoria em relação à captação da informação de atributo
+	Quem sabe usar logica de vetor*/
+	/**
+	 * @brief Registra uma luta em um arquivo seguindo o padrão
+	 * vencedor(inteiro nomeatributo) vs perdedor(inteiro nomeatributo).
+	 * @param rounds Nome do arquivo de destino das informações da luta.
+	 */
+
+	FILE* rounds;
+	rounds = fopen(src_rounds,"a");
+
+	if(rounds == NULL)
+	{
+		printf("    ┌─────────────────────────────────────────────────────┐\n");
+		printf("    ├──ERROR×──»    ¤    File not found   ¤    «──×ERROR──┤\n");
+		printf("    └─────────────────────────────────────────────────────┘\n");
+		getchar();
+		return;
+	}
+
+	char* atributoNome = (char*) malloc(13*sizeof(char));
+	int*  player_atribute;
+
+	switch(atributo_usado)
+	{
+		case 1: strcpy(atributoNome, "Agility");
+				player_atribute = &player_one->agility;
+				break;
+		case 2: strcpy(atributoNome, "Strength");
+				player_atribute = &player_one->strength;
+				break;
+		case 3: strcpy(atributoNome, "Intelligence");
+				player_atribute = &player_one->intelligence;
+				break;
+		case 4: strcpy(atributoNome, "Health");
+				player_atribute = &player_one->health;
+				break;
+	}
+
+	fprintf(rounds,"%s (%d %s)", player_one->name, *player_atribute, atributoNome);
+
+	fprintf(rounds," vs ");
+
+	switch(atributo_usado)
+	{
+		case 1: player_atribute = &player_two->agility;
+				break;
+		case 2: player_atribute = &player_two->strength;
+				break;
+		case 3: player_atribute = &player_two->intelligence;
+				break;
+		case 4: player_atribute = &player_two->health;
+				break;
+	}
+
+	fprintf(rounds,"%s (%d %s)\r\n", player_two->name, *player_atribute, atributoNome);
+
+	fclose(rounds);
+
+	free(atributoNome);
+
+}//End update_rounds()
