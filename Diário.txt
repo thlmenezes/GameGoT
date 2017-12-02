@@ -253,20 +253,59 @@
 		print_file() para imprimir todos os char dentro de um arquivo.
 ================================================================================
 29/11/2017 08:50
-	Objetivos:  Testar lógica de vetor para facilitar o trabalho
+	Objetivos:  1)Testar lógica de vetor para facilitar o trabalho
 				 com ponteiro para atributo em update_rounds().
-				Implementar round_anterior().
-				Implementar character_selection():
+				2)Implementar round_anterior().
+				3)Implementar character_selection():
 					Atualizar print_character();
 					Criar função de busca na lista;
-				Implementar esta_vivo():
+				4)Implementar esta_vivo():
 					Implementar função de busca na árvore;
-				Verificar comportamento:
+				5)Verificar comportamento:
 					Funções de free;
 					Testar random_roullete com quantidade == lista::tamanho;
 					Testar tree_print_preorder();
-
-Programei um pouco mais o Doxygen e
-Implementei as funções:
-	update_rounds() para armazenar cada luta no arquivo.
-	print_file() para imprimir todos os char dentro de um arquivo.
+				6)Escrever mais Smoketests.
+	1) Lógica de vetor funcionou;
+	2)
+================================================================================
+01/12/2017 21:55
+	IDEIAS de melhorias:
+		tree_create() poderia trabalhar com criação baseada em niveis
+			ao invés de quantidade de nós.
+		enfileira_folhas() e round_anterior() poderia usar busca_pai() e um booleano
+			auxiliar para evitar acesso "feio" ex: no->left->character
+	Testar função de busca_pai();
+	Função busca_pai() funcionou;
+	Tentarei usá-la para acabar com as funções com SELO GAMBIARRA;
+	enfileira_folhas() implementada usando busca_pai();
+================================================================================
+02/12/2017 07:49
+	Função round_anterior() funciona;
+	Atualizei smoketests e checklist;
+	Ampliei modos de impressão de Character;
+	Segundo os objetivos do dia 29/11/2017:
+	2) round_anterior() implementado com "excitacao de nó".
+	3) character_selection() implementada:
+		print_character() com 2 modos de impressão:
+			PRINT_FULL: imprime todas as informações do personagem, de acordo
+						com as restrições de escolha ("atributos exauridos").
+			PRINT_LINE: imprime em uma linha as informações do personagem,
+						selecionando randomicamente um dos atributos para
+						mostrar ao usuário.
+		busca_lista() com 3 modos:
+			POSICAO: quando vc informa a posição do elemento procurado;
+			INFORMACAO: quando só temos que comparar elemento::dados com a
+						informação;
+			INFORMACAO_ROUND: quando a lista tem elemento::dados t_node**;
+	4) esta_vivo() implementada.
+	5) Verificar comportamento:
+		Funções de free; NÃO FEITO
+		Testar random_roullete com quantidade == lista::tamanho; NÃO FEITO
+		Testar tree_print_preorder(); TESTADO COM SUCESSO.
+	Implementar:
+		busca_no();
+		battle_round();
+			user_fight();
+			update_nerfs();
+	

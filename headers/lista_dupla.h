@@ -48,6 +48,8 @@ void           apaga_elemento (var_lista* lista, int posicao);
 
 void           esvazia_lista  (var_lista* lista, bool devo_liberar_memoria);
 
+void*          busca_lista    (var_lista* lista, void* info, int codigo_busca);
+
 var_lista*     random_roullete(int quantidade, int size_of_memory, var_lista* src_lista);
 
 void           print_lista    (var_lista* lista, int codigo);

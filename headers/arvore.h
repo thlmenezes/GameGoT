@@ -25,6 +25,10 @@ void        tree_free          (t_node* tree);
 
 void        tree_print_preorder(t_node* root);
 
+t_node*     busca_pai          (t_node* root, t_node* son);
+
+t_node*     busca_no           (t_node* root, Character* focus);
+
 var_fila*   enfileira_folhas   (t_node* root);
 
 #endif

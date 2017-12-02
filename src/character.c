@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <time.h>
 
 
 
@@ -50,6 +51,38 @@ int _strength, int _intelligence, int _health)
 	return personagem;
 
 }//End character_create()
+
+
+//--------------------------------------------------------------
+Steroids*  aloca_steroids (void)
+{
+	Steroids* steroids = (Steroids*) malloc(sizeof(Steroids));
+
+	steroids->character = NULL;
+	steroids->nerf = steroids->buff = 0;
+
+	return steroids;
+
+}//End aloca_steroids()
+
+
+//--------------------------------------------------------------
+void  insere_steroids (var_lista* lista, Character* character, int nerf, int buff)
+{
+	var_elemento* elemento = aloca_elemento();
+
+	Steroids* esteroide = aloca_steroids();
+
+	esteroide->character = character;
+	esteroide->nerf = nerf;
+	esteroide->buff = buff;
+
+	elemento->dados = esteroide;
+
+	insere_lista (FINAL, elemento, sizeof(var_elemento), lista, VAR_ELEMENTO);
+
+	free(elemento);
+}//End insere_steroids()
 
 
 //--------------------------------------------------------------
@@ -110,28 +143,20 @@ int atribute)
 
 
 //--------------------------------------------------------------
-void  print_character (Character* character, void* nerfs_n_buffs)
+bool  esta_vivo (Character* users_choice, var_lista* torneio_status)
 {
 	/**
-	 * @brief Imprime estruturas Character alocadas segundo
-	 * character_create() e de acordo com as restrições de
-	 * escolha de atributo, regra imposta a jogabilidade.
+	 * @brief Busca o personagem na lista do
+	 * status atual do torneio, caso morto é enviado o
+	 * sinal false.
+	 * @return bool O personagem esta vivo?
 	 */
-	if(character != NULL)
-	{
 
-		printf("%s da Casa %s\n", character->name, character->house);
+	if(users_choice != NULL && torneio_status != NULL)
+		return (busca_lista(torneio_status, users_choice, INFORMACAO_ROUND) == users_choice);
+	return false;
 
-		if(nerfs_n_buffs != NULL)
-			return;
-
-		printf("1) Agility      : %d\n", character->agility);
-		printf("2) Strength     : %d\n", character->strength);
-		printf("3) Intelligence : %d\n", character->intelligence);
-		printf("4) Health       : %d\n", character->health);
-	}
-
-}//End print_character()
+}//End esta_vivo()
 
 
 //--------------------------------------------------------------
@@ -238,7 +263,7 @@ var_lista*  loadFromFile (char* src_personagens)
 			// Avança o cursor para o próximo elemento a ser lido
 			fscanf(personagens, "%d", &personagem_status->health);
 
-			insere_lista(INSERE_FINAL,personagem_status,sizeof(Character),personagens_jogaveis,INSERE_DADO_HEAP);
+			insere_lista(FINAL, personagem_status, sizeof(Character), personagens_jogaveis, DADO_HEAP);
 			// Deixo as areas de memórias ligadas a personagem_status no controle da lista
 			personagem_status->name = personagem_status->house = NULL;
 
@@ -339,8 +364,6 @@ void  loadFighters (t_node* torneio, var_lista* personagens_jogaveis)
 //--------------------------------------------------------------
 void  update_rounds (Character* player_one, Character* player_two, int atributo_usado, char* src_rounds)
 {
-	/*IDEIA: Digna de melhoria em relação à captação da informação de atributo
-	Quem sabe usar logica de vetor*/
 	/**
 	 * @brief Registra uma luta em um arquivo seguindo o padrão
 	 * vencedor(inteiro nomeatributo) vs perdedor(inteiro nomeatributo).
@@ -359,45 +382,269 @@ void  update_rounds (Character* player_one, Character* player_two, int atributo_
 		return;
 	}
 
-	char* atributoNome = (char*) malloc(13*sizeof(char));
+	char* atributoNome = (char*) malloc((strlen("Intelligence")+1)*sizeof(char));
 	int*  player_atribute;
 
 	switch(atributo_usado)
 	{
 		case 1: strcpy(atributoNome, "Agility");
-				player_atribute = &player_one->agility;
 				break;
 		case 2: strcpy(atributoNome, "Strength");
-				player_atribute = &player_one->strength;
 				break;
 		case 3: strcpy(atributoNome, "Intelligence");
-				player_atribute = &player_one->intelligence;
 				break;
 		case 4: strcpy(atributoNome, "Health");
-				player_atribute = &player_one->health;
 				break;
 	}
 
-	fprintf(rounds,"%s (%d %s)", player_one->name, *player_atribute, atributoNome);
+	player_atribute = &player_one->agility;
+
+	fprintf(rounds,"%s (%d %s)", player_one->name, player_atribute[atributo_usado-1], atributoNome);
 
 	fprintf(rounds," vs ");
 
-	switch(atributo_usado)
-	{
-		case 1: player_atribute = &player_two->agility;
-				break;
-		case 2: player_atribute = &player_two->strength;
-				break;
-		case 3: player_atribute = &player_two->intelligence;
-				break;
-		case 4: player_atribute = &player_two->health;
-				break;
-	}
+	player_atribute = &player_two->agility;
 
-	fprintf(rounds,"%s (%d %s)\r\n", player_two->name, *player_atribute, atributoNome);
+	fprintf(rounds,"%s (%d %s)\r\n", player_two->name, player_atribute[atributo_usado-1], atributoNome);
 
 	fclose(rounds);
 
 	free(atributoNome);
 
 }//End update_rounds()
+
+
+//--------------------------------------------------------------
+var_lista*  round_anterior (t_node* root)
+{
+	/**
+	 * @brief Percorre a arvore e caso chegue numa folha, ou em
+	 * uma "pseudo-folha"(rastros de lutas já ocorridas na árvore),
+	 * insere na lista.
+	 * @param root Árvore referente ao torneio.
+	 * @return var_lista *round_anterior.
+	 */
+
+	var_lista* resultado = aloca_lista();
+
+	bool chegou_no_round = false;
+
+	bool excita_no = false;
+
+	int numero_de_folhas = 0;
+
+	insere_lista (FINAL, &root, sizeof(t_node*), resultado, DADO_HEAP);
+
+	while( !lista_vazia(resultado) )
+	{
+		if(excita_no)
+			if(resultado->tamanho == numero_de_folhas/2)
+			{
+				chegou_no_round = true;
+				excita_no = false;
+			}
+			//Tudo que será enfileirado à partir de agora
+			//são as folhas da arvore
+
+		if(chegou_no_round)
+			if(resultado->tamanho == numero_de_folhas)
+				break;
+
+		t_node** saiu_lista = (t_node**) pop_lista(resultado, 0);
+
+		t_node* no_destacado = *saiu_lista;
+
+		if( !excita_no && no_destacado->character != NULL )
+		{
+			excita_no = true;
+			numero_de_folhas = resultado->tamanho + 1;
+		}
+
+		if(excita_no)
+		{
+			if( no_destacado != NULL )
+			{
+				t_node* pai_no_destacado = busca_pai(root, no_destacado);
+				entrar_fila(&pai_no_destacado, sizeof(t_node *), resultado);
+			}
+
+			free(sair_fila(resultado));
+			// 1 pai para cada 2 filhos
+		}
+		else
+		{
+			if( no_destacado->left != NULL )
+				insere_lista(FINAL, &no_destacado->left, sizeof(t_node*), resultado, DADO_HEAP);
+
+			if( no_destacado->right != NULL )
+				insere_lista(FINAL, &no_destacado->right, sizeof(t_node*), resultado, DADO_HEAP);
+		}
+
+		free(saiu_lista);
+	}
+
+	return resultado;
+}
+
+//--------------------------------------------------------------
+Character* character_selection(var_lista* personagensJogaveis)
+{
+	/**
+	 * @brief Imprime na tela todos os personagensJogaveis(PC's)
+	 * ocultando seus nomes e suas casas, mostrando ao
+	 * usuário somente 1 de seus 4 atributos, escolhido
+	 * aleatoriamente. e permite que o usuário selecione o seu
+	 * campeão para o torneio.
+	 * @return Retorna um Character* para o
+	 * personagem escolhido pelo usuário.
+	 */
+
+	var_elemento* cursor = personagensJogaveis->primeiro;
+	int indice = 1;
+	while(cursor != NULL)
+	{
+		printf("Personagem %d:\n", indice++);
+		print_character( (Character*)cursor->dados, ONE_LINE, NULL );
+		cursor = cursor->proximo;
+		printf("\n");
+	}
+
+	bool valido = false;
+	printf("Escolha um personagem dentre os listados acima: ");
+	int escolha;
+	do {
+		scanf("%d", &escolha);
+		if(escolha <= personagensJogaveis->tamanho && escolha > 0)
+			valido = true;
+	} while(!valido);
+
+	return (Character*) busca_lista(personagensJogaveis, &escolha, POSICAO);
+
+}//End character_selection()
+
+
+void  user_fight (Character* users_choice, var_lista* esteroids, t_node* torneio)
+{
+	t_node* node_pai = busca_pai(torneio, busca_no(torneio, users_choice));
+	if( node_pai != NULL )
+	{
+		print_character(users_choice, NERFED,esteroids);
+		//imprime nome e casa do adversário
+	//espera input do usuário
+	//caso !lista_vazia(esteroids)
+		//elemento = busca_lista(esteroids, users_choice, INFORMACAO)
+		//caso elemento->nerfs != input => ok
+		//senão volta
+	}
+}//End user_fight()
+
+
+//--------------------------------------------------------------
+void  print_character (Character* character, int print_code, var_lista* esteroids)
+{
+	/**
+	 * @brief Imprime estruturas Character alocadas segundo
+	 * character_create() e de acordo com as restrições de
+	 * escolha de atributo, regra imposta a jogabilidade.
+	 */
+
+	if(character != NULL)
+ 	{
+		if(print_code == FULL || print_code == NAME_ONLY || print_code == NERFED)
+		{
+			printf("%s da Casa %s\n", character->name, character->house);
+
+			if(print_code == NAME_ONLY)
+				return;
+
+			int* status = &character->agility;
+
+			if(print_code == NERFED)
+			{
+				if(esteroids == NULL)
+					return;
+
+				int nerf = ((Steroids*)busca_lista(esteroids, character, INFORMACAO_MODS))->nerf;
+				int indice = 0;
+				char string_exaurido[] = "X) X            : XX";
+
+				if( --nerf != indice)
+					printf("1) Agility      : %d\n", status[indice++]);
+				else
+				{
+					indice++;
+					printf("%s\n", string_exaurido);
+				}
+
+				if( nerf != indice)
+					printf("2) Strength     : %d\n", status[indice++]);
+				else
+				{
+					indice++;
+					printf("%s\n", string_exaurido);
+				}
+
+				if( nerf != indice)
+					printf("3) Intelligence : %d\n", status[indice++]);
+				else
+				{
+					indice++;
+					printf("%s\n", string_exaurido);
+				}
+
+				if( nerf != indice)
+					printf("4) Health       : %d\n", status[indice++]);
+				else
+				{
+					indice++;
+					printf("%s\n", string_exaurido);
+				}
+			}
+			else
+			{
+				printf("1) Agility      : %d\n", status[0]);
+				printf("2) Strength     : %d\n", status[1]);
+				printf("3) Intelligence : %d\n", status[2]);
+				printf("4) Health       : %d\n", status[3]);
+			}
+		}
+
+		if (print_code == ONE_LINE)
+		{
+			struct timespec seed;
+			clock_gettime(CLOCK_REALTIME, &seed);
+			srand(seed.tv_nsec);
+
+			int show = rand() % 4 + 1;
+			int* status = &character->agility;
+
+			printf("Agility:");
+			if(show == 1)
+				printf(" %d  ", status[show-1]);
+			else
+				printf(" ??  ");
+
+			printf("Strength:");
+
+			if(show == 2)
+				printf(" %d  ", status[show-1]);
+			else
+				printf(" ??  ");
+
+			printf("Intelligence:");
+			if(show == 3)
+				printf(" %d  ", status[show-1]);
+			else
+				printf(" ??  ");
+
+			printf("Health:");
+			if(show == 4)
+				printf(" %d  \n", status[show-1]);
+			else
+				printf(" ??  \n");
+
+		}//end if (print_code == PRINT_LINE)
+
+	}//end if (character != NULL)
+
+}//End print_character()

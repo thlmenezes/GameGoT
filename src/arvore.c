@@ -7,7 +7,7 @@
  */
 #include "../headers/informacoes_uso_geral.h"
 #include "../headers/arvore.h"
-//#include "../headers/fila.h"
+#include "../headers/fila.h"
 #include <stdlib.h>
 #include <math.h>
 
@@ -39,6 +39,7 @@ t_node*  node_create (void)
 //--------------------------------------------------------------
 t_node*  tree_create (void)
 {
+	///	SELO PODE SER MELHOR
 	/**
 	 * @brief Aloca uma arvore binária completa de 4 níveis
 	 * segundo alguns parâmetros de inicialização: Todos os
@@ -117,9 +118,9 @@ void  tree_print_preorder (t_node* root)
 	 */
 
 	if(root == NULL)
-			return;
+		return;
 
-	print_character(root,NULL);
+	print_character(root->character, FULL, NULL);
 
 	tree_print_preorder(root->left);
 
@@ -127,10 +128,49 @@ void  tree_print_preorder (t_node* root)
 
 }//End tree_print_preorder()
 
+
+//--------------------------------------------------------------
+t_node*  busca_pai (t_node* root, t_node* son)
+{
+	if( son != NULL )
+	{
+		if( root == NULL || root->left == son || root->right == son )
+			return root;
+
+		t_node* node_return = busca_pai( root->left, son );
+
+		if( node_return == NULL )
+			node_return = busca_pai( root->right, son );
+
+		return node_return;
+	}
+	return son;
+}
+
+
+//--------------------------------------------------------------
+t_node* busca_no(t_node* root, Character* focus)
+{
+
+	if( focus != NULL )
+	{
+		if( root == NULL || root->character == focus )
+			return root;
+
+		t_node* node_return = busca_no( root->left, focus );
+
+		if( node_return == NULL )
+			node_return = busca_no( root->right, focus );
+
+		return node_return;
+	}
+	return NULL;
+
+}//End busca_no()
+
 //--------------------------------------------------------------
 var_fila*  enfileira_folhas (t_node* root)
 {
-
 	/**
 	 * Retorna uma fila com elemento::dados do tipo t_node**
 	 * em que cada um de seus ponteiros, quando desreferenciados,
@@ -141,34 +181,56 @@ var_fila*  enfileira_folhas (t_node* root)
 
 	bool chegou_nas_folhas = false;
 
+	bool excita_no = false;
+
 	int numero_de_folhas = 0;
 
 	entrar_fila(&root, sizeof(t_node *), resultado);
 
 	while( !fila_vazia(resultado) )
 	{
+		if(excita_no)
+			if(resultado->tamanho == numero_de_folhas/2)
+			{
+				chegou_nas_folhas = true;
+				excita_no = false;
+			}
+			//Tudo que será enfileirado à partir de agora
+			//são as folhas da arvore
+
 		if(chegou_nas_folhas)
 			if(resultado->tamanho == numero_de_folhas)
 				break;
+
 		t_node** pop_fila = (t_node**) sair_fila(resultado);
 
 		t_node* no_destacado = *pop_fila;
 
-		t_node* no_filho = no_destacado->left;
-
-		if( !chegou_nas_folhas && no_filho->left == NULL && no_filho->right == NULL )
+		if( !excita_no && no_destacado->left == NULL && no_destacado->right == NULL )
 		{
-			chegou_nas_folhas = true;
-			//Tudo que será enfileirado à partir de agora
-			//são as folhas da arvore
-			numero_de_folhas = (resultado->tamanho + 1) * 2;
+			excita_no = true;
+			numero_de_folhas = resultado->tamanho + 1;
 		}
 
-		if( no_destacado->left != NULL )
-			entrar_fila(&no_destacado->left, sizeof(t_node *), resultado);
+		if(excita_no)
+		{
+			if( no_destacado != NULL )
+			{
+				t_node* pai_no_destacado = busca_pai(root, no_destacado);
+				entrar_fila(&pai_no_destacado, sizeof(t_node *), resultado);
+			}
 
-		if( no_destacado->right != NULL )
-			entrar_fila(&no_destacado->right, sizeof(t_node *), resultado);
+			free(sair_fila(resultado));
+			// 1 pai para cada 2 filhos
+		}
+		else
+		{
+			if( no_destacado->left != NULL )
+				entrar_fila(&no_destacado->left, sizeof(t_node *), resultado);
+
+			if( no_destacado->right != NULL )
+				entrar_fila(&no_destacado->right, sizeof(t_node *), resultado);
+		}
 
 		free(pop_fila);
 	}

@@ -21,6 +21,12 @@ typedef struct {
 	int health;
 } Character;
 
+typedef struct {
+	Character* character;
+	int nerf;
+	int buff;
+} Steroids;
+
 typedef struct node{
 	Character* character;
 	struct node* left;
@@ -32,12 +38,17 @@ typedef struct node{
 Character* character_create   (char* _name, char* _house, int _agility,
 int _strength, int _intelligence, int _health);
 
+Steroids*  aloca_steroids     (void);
+
+void       insere_steroids    (var_lista* lista, Character* character,
+int nerf, int buff);
+
 void       character_free     (Character* character);
 
 Character* fight              (Character* fighter_one, Character* fighter_two,
 int atribute);
 
-void       print_character    (Character* character, void* nerfs_n_buffs);
+bool       esta_vivo          (Character* users_choice, var_lista* torneio_status);
 
 var_lista* loadFromFile       (char* src_personagens);
 
@@ -47,5 +58,13 @@ void       free_listaCharacter(var_lista* lista);
 
 void       update_rounds      (Character* player_one, Character* player_two,
 int atributo_usado, char* src_rounds);
+
+var_lista* round_anterior     (t_node* root);
+
+Character* character_selection(var_lista* personagensJogaveis);
+
+void       user_fight         (Character* users_choice, var_lista* esteroids, t_node* torneio);
+
+void       print_character    (Character* character, int print_code, var_lista* esteroids);
 
 #endif

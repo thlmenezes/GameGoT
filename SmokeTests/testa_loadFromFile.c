@@ -7,7 +7,7 @@
 
 int main (void)
 {
-	var_lista* personagens_jogaveis = LoadFromFile("personagens.txt");
+	var_lista* personagens_jogaveis = loadFromFile("personagens.txt");
 
 	var_elemento* cursor = personagens_jogaveis->primeiro;
 

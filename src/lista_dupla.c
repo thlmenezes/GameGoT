@@ -5,8 +5,8 @@
  * @brief  Contém a implementação de uma
  * lista duplamente encadeada e suas funções auxiliares.
  */
-
 #include "../headers/lista_dupla.h"
+#include "../headers/character.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -80,7 +80,7 @@ void*  free_elemento (var_elemento* elemento)
 
 	return NULL;
 
-}//end free_elemento()
+}//End free_elemento()
 
 
 //--------------------------------------------------------------
@@ -153,7 +153,7 @@ void  insere_lista (int finalouinicio, void* info, int size_of_memory, var_lista
 
 	var_elemento* elemento;
 
-	if(codigo == INSERE_DADO_HEAP)
+	if(codigo == DADO_HEAP)
 	{
 		//Caso tenhamos recebido um "dado" como parâmetro "info"
 		elemento = aloca_elemento();
@@ -163,7 +163,7 @@ void  insere_lista (int finalouinicio, void* info, int size_of_memory, var_lista
 		memcpy(elemento->dados, info, size_of_memory);
 		//Fazemos uma cópia da informação recebida
 	}
-	else if(codigo == INSERE_VAR_ELEMENTO)
+	else if(codigo == VAR_ELEMENTO)
 	{
 		//Caso tenhamos recebido um 'var_elemento' pronto
 		elemento  = (void*) malloc(size_of_memory);
@@ -181,7 +181,7 @@ void  insere_lista (int finalouinicio, void* info, int size_of_memory, var_lista
 		return;
 	}
 
-	if (finalouinicio == INSERE_INICIO)
+	if (finalouinicio == INICIO)
 	{
 		//Senão somente fazemos o link com a "cabeça" da lista
 		elemento->proximo = lista->primeiro;
@@ -189,7 +189,7 @@ void  insere_lista (int finalouinicio, void* info, int size_of_memory, var_lista
 		lista->primeiro = elemento;
 		lista->tamanho++;
 	}
-	else if(finalouinicio == INSERE_FINAL)
+	else if(finalouinicio == FINAL)
 	{
 		//Senão somente fazemos o link com a "cauda" da lista
 		lista->ultimo->proximo = elemento;
@@ -198,8 +198,8 @@ void  insere_lista (int finalouinicio, void* info, int size_of_memory, var_lista
 		lista->tamanho++;
 	}
 
-	if( !(finalouinicio == INSERE_INICIO || finalouinicio == INSERE_FINAL) )
-		if(codigo == INSERE_DADO_HEAP)
+	if( !(finalouinicio == INICIO || finalouinicio == FINAL) )
+		if(codigo == DADO_HEAP)
 			free(elemento);
 
 }//End insere_inicio()
@@ -224,7 +224,11 @@ void*  pop_lista (var_lista* lista, int indice)
 	{
 		pop_return = lista->primeiro;
 		lista->primeiro = pop_return->proximo;
-		lista->primeiro->anterior = NULL;
+
+		if(lista->primeiro == NULL)
+			lista->ultimo = lista->primeiro;
+		else
+			lista->primeiro->anterior = NULL;
 	}
 	else
 	{
@@ -374,6 +378,77 @@ void  esvazia_lista (var_lista* lista, bool devo_liberar_memoria)
 
 }//End esvazia_lista()
 
+//--------------------------------------------------------------
+void*  busca_lista (var_lista* lista, void* info, int codigo_busca)
+{
+	if(lista != NULL && info != NULL)
+	{
+		if( codigo_busca == POSICAO)
+		{
+			int indice = *(int*)info -1;
+			var_elemento* cursor = lista->primeiro;
+
+			while(indice-- > 0 && cursor != NULL)
+				cursor = cursor->proximo;
+
+			if(cursor != NULL)
+				return cursor->dados;
+			else
+				return cursor;
+		}
+		if( codigo_busca == INFORMACAO_MODS)
+		{
+			Character* dado = info;
+
+			var_elemento* cursor = lista->primeiro;
+
+			Character* informacao = ((Steroids*)cursor->dados)->character;
+
+			while( cursor != NULL )
+			{
+				if( informacao == dado)
+					break;
+				else
+				{
+					cursor = cursor->proximo;
+					if(cursor != NULL)
+						informacao = ((Steroids*)cursor->dados)->character;
+				}
+			}
+
+			if(informacao == dado)
+				return cursor->dados;
+			else
+				return NULL;
+		}
+		if( codigo_busca == INFORMACAO_ROUND)
+		{
+			Character* dado = info;
+
+			var_elemento* cursor = lista->primeiro;
+
+			Character* informacao = (*(t_node**)cursor->dados)->character;
+
+			while( cursor != NULL )
+			{
+				if( informacao == dado)
+					break;
+				else
+				{
+					cursor = cursor->proximo;
+					if(cursor != NULL)
+						informacao = (*(t_node**)cursor->dados)->character;
+				}
+			}
+
+			if(informacao == dado)
+				return informacao;
+			else
+				return NULL;
+		}
+	}
+	return NULL;
+}//End busca_lista()
 
 //--------------------------------------------------------------
 var_lista*  random_roullete(int quantidade, int size_of_memory, var_lista* src_lista)
@@ -400,11 +475,11 @@ var_lista*  random_roullete(int quantidade, int size_of_memory, var_lista* src_l
 	{
 		void* elemento = pop_lista(src_lista, rand() % (src_lista->tamanho - 1));
 
-		insere_lista   (INSERE_FINAL,
+		insere_lista   (FINAL,
 						elemento,
 						size_of_memory,
 						resultado,
-						INSERE_DADO_HEAP);
+						DADO_HEAP);
 
 		free(elemento);
 	}
@@ -413,6 +488,7 @@ var_lista*  random_roullete(int quantidade, int size_of_memory, var_lista* src_l
 	return resultado;
 
 }//End random_roullete();
+
 
 //--------------------------------------------------------------
 void  print_lista (var_lista* lista, int codigo)

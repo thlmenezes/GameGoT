@@ -15,10 +15,21 @@ typedef enum { false,	true } bool;
 enum codigos { INT, CHAR, FLOAT };
 
 enum lista_defines
-{INSERE_DADO_HEAP,
- INSERE_VAR_ELEMENTO,
- INSERE_INICIO,
- INSERE_FINAL };
+{INICIO,
+ FINAL,
+ DADO_HEAP,
+ VAR_ELEMENTO};
+
+enum print_defines
+{FULL,
+ NERFED,
+ NAME_ONLY,
+ ONE_LINE};
+
+enum codigo_busca_lista
+{ POSICAO,
+  INFORMACAO_MODS,
+  INFORMACAO_ROUND};
 
 void  limpa_buffer(void);
 

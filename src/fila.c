@@ -72,7 +72,7 @@ void  entrar_fila (void* info, int size_of_memory, var_fila* fila)
 	 * apontada pelo ponteiro genérico "info".
 	 */
 
-	insere_lista (INSERE_FINAL, info, size_of_memory, fila, INSERE_DADO_HEAP);
+	insere_lista (FINAL, info, size_of_memory, fila, DADO_HEAP);
 
 }//End entrar_fila()
 

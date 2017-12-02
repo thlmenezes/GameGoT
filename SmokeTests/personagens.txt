@@ -14,3 +14,5 @@ Thales Lima Menezes, Menezes, 100, 35, 99, 50
 Lala R. P., Stalkin' Beauty, 100, 40, 99, 30
 T. L. M., M., 60, 100, 99, 50
 V. R., R., 61, 100, 100, 51
+Hodor, Stark, 25, 70, 33, 85
+Khal Drogo, Dothraki, 53, 72, 30, 75
