@@ -29,7 +29,8 @@ enum print_defines
 enum codigo_busca_lista
 { POSICAO,
   INFORMACAO_MODS,
-  INFORMACAO_ROUND};
+  INFORMACAO_ROUND,
+  SEARCH};
 
 void  limpa_buffer(void);
 

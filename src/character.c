@@ -401,7 +401,7 @@ void  update_rounds (Character* player_one, Character* player_two, int atributo_
 
 	fprintf(rounds,"%s (%d %s)", player_one->name, player_atribute[atributo_usado-1], atributoNome);
 
-	fprintf(rounds," vs ");
+	fprintf(rounds," X ");
 
 	player_atribute = &player_two->agility;
 
@@ -486,6 +486,7 @@ var_lista*  round_anterior (t_node* root)
 	return resultado;
 }
 
+
 //--------------------------------------------------------------
 Character* character_selection(var_lista* personagensJogaveis)
 {
@@ -523,21 +524,180 @@ Character* character_selection(var_lista* personagensJogaveis)
 }//End character_selection()
 
 
-void  user_fight (Character* users_choice, var_lista* esteroids, t_node* torneio)
+//--------------------------------------------------------------
+void  print_fight (Character* vencedor, Character* adversario, int atributo)
+{
+	if(vencedor != NULL && adversario != NULL)
+	{
+		char* atributoNome = (char*) malloc((strlen("Intelligence")+1)*sizeof(char));
+		int*  player_atribute;
+
+		switch(atributo)
+		{
+			case 1: strcpy(atributoNome, "Agility");
+					break;
+			case 2: strcpy(atributoNome, "Strength");
+					break;
+			case 3: strcpy(atributoNome, "Intelligence");
+					break;
+			case 4: strcpy(atributoNome, "Health");
+					break;
+		}
+
+		player_atribute = &vencedor->agility;
+
+		printf("%s (%d %s)", vencedor->name, player_atribute[atributo-1], atributoNome);
+
+		printf(" vs ");
+
+		player_atribute = &adversario->agility;
+
+		printf("%s (%d %s)\r\n", adversario->name, player_atribute[atributo-1], atributoNome);
+
+		free(atributoNome);
+
+		printf("%s da casa %s foi vitorioso", vencedor->name, vencedor->house);
+
+	}//end if(vencedor != NULL && adversario != NULL)
+
+}//End print_fight()
+
+
+//--------------------------------------------------------------
+void  user_fight (Character* users_choice, var_lista* esteroids, t_node* torneio, int roundNumero, char* rounds)
 {
 	t_node* node_pai = busca_pai(torneio, busca_no(torneio, users_choice));
 	if( node_pai != NULL )
 	{
-		print_character(users_choice, NERFED,esteroids);
-		//imprime nome e casa do adversário
-	//espera input do usuário
-	//caso !lista_vazia(esteroids)
-		//elemento = busca_lista(esteroids, users_choice, INFORMACAO)
-		//caso elemento->nerfs != input => ok
-		//senão volta
-	}
+		printf("Seu personagem: ");print_character(users_choice, NERFED, esteroids);
+
+		Character* adversario;
+		if(node_pai->left->character == users_choice)
+			adversario = node_pai->right->character;
+		else
+			adversario = node_pai->left->character;
+
+		printf("\nO adversário: ");print_character(adversario, NAME_ONLY, NULL);
+
+		printf("\nSelecione um atributo: ");
+
+		bool valid = false;
+		int atributo;
+		int nerf = 0;
+
+		if(!lista_vazia(esteroids))
+			nerf = ((Steroids*)busca_lista(esteroids, users_choice, INFORMACAO_MODS))->nerf;
+
+		do{
+			scanf("%d", &atributo);
+			if(atributo != nerf && atributo > 0 && atributo < 5)
+				valid = true;
+			else
+				printf("Escolha inválida");
+		}while(!valid);
+
+		Character* vencedor = fight(users_choice,adversario,atributo);
+
+		if(vencedor == users_choice)
+		{
+			system("reset");
+			update_rounds(vencedor,adversario,atributo,rounds);
+			printf("Round %d: Resultado\n\n", roundNumero);
+			printf("You Win\n\n");
+			print_fight(vencedor,adversario,atributo);
+		}
+		else
+		{
+			system("reset");
+			update_rounds(vencedor,users_choice,atributo,rounds);
+			printf("Round %d: Resultado\n\n", roundNumero);
+			printf("You Lose\n\n");
+			print_fight(vencedor,users_choice,atributo);
+		}
+
+		node_pai->character = vencedor;
+		printf("\n\nPressione qualquer tecla para prosseguir ");
+		limpa_buffer();getchar();
+
+	}//end if( node_pai != NULL )
+
 }//End user_fight()
 
+
+//--------------------------------------------------------------
+void  fight_judge (Character* fighter_one, Character* fighter_two, t_node* torneio, char* rounds)
+{
+	t_node* node_pai = busca_pai(torneio, busca_no(torneio, fighter_one));
+	if( node_pai != NULL )
+	{
+		if(fighter_one != NULL && fighter_two != NULL)
+		{
+			struct timespec seed;
+			clock_gettime(CLOCK_REALTIME, &seed);
+			srand(seed.tv_nsec);
+			int atributo = rand() % 4 + 1;
+
+			Character* vencedor = fight(fighter_one,fighter_two,atributo);
+
+			if(vencedor == fighter_one)
+				update_rounds(vencedor, fighter_two, atributo, rounds);
+			else
+				update_rounds(vencedor, fighter_one, atributo, rounds);
+
+			node_pai->character = vencedor;
+		}
+	}
+}//End fight_judge()
+
+
+//--------------------------------------------------------------
+void  battle_round (Character* users_choice, var_lista* esteroids,
+t_node* torneio, int roundNumero, char* rounds)
+{
+	///SELO GAMBIARRA
+	//metodo perfeito
+	//remover o usuário e seu adversário da lista non_playable_characters
+	var_lista* non_playable_characters = round_anterior(torneio);
+
+	user_fight(users_choice, esteroids, torneio, roundNumero, rounds);
+	//elemento::dados são t_node**
+
+	t_node* node_pai = busca_pai(torneio, busca_no(torneio, users_choice));
+
+	t_node** source_one, **source_two;
+
+	Character* player_one, *player_two;
+
+	if(torneio->character == NULL)
+	{
+
+		while(!lista_vazia(non_playable_characters))
+		{
+			source_one = (t_node**) pop_lista(non_playable_characters,0);
+			source_two = (t_node**) pop_lista(non_playable_characters,0);
+
+			if( source_one != NULL && source_two != NULL )
+			{
+				player_one = (*source_one)->character;
+				player_two = (*source_two)->character;
+				//gambiarra
+				if(! ( player_one == node_pai->left->character
+					|| player_one == node_pai->right->character
+					|| player_two == node_pai->left->character
+					|| player_two == node_pai->right->character ) )
+				{
+					fight_judge(player_one, player_two, torneio, rounds);
+				}
+
+				free(source_one);
+				free(source_two);
+			}
+		}
+	}
+
+	free_lista(non_playable_characters);
+
+}//End battle_rounds()
 
 //--------------------------------------------------------------
 void  print_character (Character* character, int print_code, var_lista* esteroids)

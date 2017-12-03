@@ -1,9 +1,23 @@
-Round 1:
-Daenerys (66 Intelligence) vs Cercei (70 Intelligence)
-Sansa (25 Health) vs Raiden (20 Health)
-Ned (40 Agility) vs Thales Lima Menezes (100 Agility)
-Tyrion (40 Agility) vs Jon Snow (58 Agility)
-Virgil Ovid Hawkins (100 Agility) vs Theon (35 Agility)
-Jaime (55 Agility) vs Kenneth Masters (50 Agility)
-The Hound (25 Intelligence) vs Frank Castle (75 Intelligence)
-Rock Lee (100 Agility) vs Khal Drogo (53 Agility)
+
+Round 1
+Lúcio Correia dos Santos (100 Agility) X Khal Drogo (53 Agility)
+Rock Lee (94 Strength) X Jaime (60 Strength)
+Ned (80 Health) X Jon Snow (50 Health)
+The Hound (70 Strength) X Daenerys (30 Strength)
+Kenneth Masters (50 Health) X Ryu Hoshi (50 Health)
+Virgil Ovid Hawkins (70 Intelligence) X Hodor (33 Intelligence)
+Bruce Wayne (80 Intelligence) X Sansa (46 Intelligence)
+Tyrion (50 Strength) X Thales Lima Menezes (35 Strength)
+
+Round 2
+Lúcio Correia dos Santos (100 Agility) X Tyrion (40 Agility)
+Rock Lee (99 Health) X Ned (80 Health)
+The Hound (92 Health) X Kenneth Masters (50 Health)
+Bruce Wayne (100 Health) X Virgil Ovid Hawkins (40 Health)
+
+Round 3
+Lúcio Correia dos Santos (100 Agility) X Bruce Wayne (60 Agility)
+Rock Lee (79 Intelligence) X The Hound (25 Intelligence)
+
+Round 4
+Lúcio Correia dos Santos (100 Agility) X Rock Lee (100 Agility)

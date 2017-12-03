@@ -303,9 +303,7 @@
 		Funções de free; NÃO FEITO
 		Testar random_roullete com quantidade == lista::tamanho; NÃO FEITO
 		Testar tree_print_preorder(); TESTADO COM SUCESSO.
-	Implementar:
-		busca_no();
-		battle_round();
-			user_fight();
-			update_nerfs();
-	
+
+	Falta implementar update_nerfs() e alguns detalhes;
+	Observação: battle_round não está usando um comportamento 100%ideal
+				como queria

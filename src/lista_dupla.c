@@ -378,6 +378,7 @@ void  esvazia_lista (var_lista* lista, bool devo_liberar_memoria)
 
 }//End esvazia_lista()
 
+
 //--------------------------------------------------------------
 void*  busca_lista (var_lista* lista, void* info, int codigo_busca)
 {
@@ -446,9 +447,40 @@ void*  busca_lista (var_lista* lista, void* info, int codigo_busca)
 			else
 				return NULL;
 		}
+		if( codigo_busca == SEARCH )
+		{
+			t_node* dado = (t_node*) info;
+
+			int* indice = (int*) malloc(sizeof(int));
+
+			*indice = 0;
+
+			var_elemento* cursor = lista->primeiro;
+
+			t_node* informacao = *(t_node**)cursor->dados;
+
+			while( cursor != NULL )
+			{
+				if( informacao == dado)
+					break;
+				else
+				{
+					*indice += 1;
+					cursor = cursor->proximo;
+					if(cursor != NULL)
+						informacao = *(t_node**)cursor->dados;
+				}
+			}
+
+			if(informacao == dado)
+				return indice;
+			else
+				return NULL;
+		}
 	}
 	return NULL;
 }//End busca_lista()
+
 
 //--------------------------------------------------------------
 var_lista*  random_roullete(int quantidade, int size_of_memory, var_lista* src_lista)
