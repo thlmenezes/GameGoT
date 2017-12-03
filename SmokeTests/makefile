@@ -19,8 +19,8 @@ testa_arvore: ../obj/informacoes_uso_geral.o ../obj/lista_dupla.o ../obj/charact
 testa_loadFromFile: ../obj/informacoes_uso_geral.o ../obj/character.o ../obj/lista_dupla.o ../obj/fila.o ../obj/arvore.o 
 	$(CC) $(LFLAGS) testa_loadFromFile.c ../obj/informacoes_uso_geral.o ../obj/character.o ../obj/lista_dupla.o ../obj/fila.o ../obj/arvore.o -lm
 
-testa_round1: ../obj/informacoes_uso_geral.o ../obj/lista_dupla.o ../obj/fila.o ../obj/character.o ../obj/arvore.o
-	$(CC) $(LFLAGS) testa_round1.c ../obj/informacoes_uso_geral.o ../obj/lista_dupla.o ../obj/character.o ../obj/arvore.o ../obj/fila.o -lm
+testa_round1: ../obj/informacoes_uso_geral.o ../obj/lista_dupla.o ../obj/fila.o ../obj/character.o ../obj/arvore.o ../obj/battle.o
+	$(CC) $(LFLAGS) testa_round1.c ../obj/informacoes_uso_geral.o ../obj/lista_dupla.o ../obj/character.o ../obj/arvore.o ../obj/fila.o ../obj/battle.o -lm
 
 ../obj/arvore.o: ../src/arvore.c
 	$(CC) $(CFLAGS) $< -o $@ -lm

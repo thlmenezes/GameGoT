@@ -3,6 +3,7 @@
 #include "../headers/lista_dupla.h"
 #include "../headers/character.h"
 #include "../headers/arvore.h"
+#include "../headers/battle.h"
 #include "../headers/fila.h"
 #include <stdlib.h>
 #include <stdio.h>

@@ -1,6 +1,8 @@
 /** 
  * CIC 116319 - Estruturas de Dados - Turma A
  * Prof.: Marcos F. Caetano
+ * Alun.: Fernanda Macedo de Sousa
+ * Matr.: 17/0010058
  * Alun.: Thales Lima Menezes
  * Matr.: 17/0045919
  */

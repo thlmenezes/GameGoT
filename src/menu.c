@@ -31,6 +31,14 @@ void  main_menu (char* background)
 			if(input == 1)
 				valido = true;
 			else if(input == 2)
+			{
+				print_file("src_files/help.txt");
+				printf("\nPressione 'Enter' para prosseguir");
+				limpa_buffer();getchar();
+				system_comands(RESET);
+				main_menu(background);
+			}
+			else if(input == 3)
 				exit(0);
 		}
 	}while(!valido);
@@ -46,7 +54,7 @@ void  main_menu (char* background)
 		default:break;
 	}
 
-	printf("\n\nReset? (1)Menu (2)Quit\n");
+	printf("\n\n[1] Back to Main Menu\n[2] Quit Game\n");
 	valido = false;
 	do{
 		if(scanf("%d", &input) < 1)
@@ -58,7 +66,7 @@ void  main_menu (char* background)
 		{
 			if(input == 1)
 			{
-				system("reset");
+				system_comands(RESET);
 				main_menu(background);
 			}else if(input == 2)
 				exit(0);
@@ -94,7 +102,7 @@ int  gameloop (void)
 
 	loadFighters(torneio, personagensJogaveis);
 
-	system("reset");
+	system_comands(RESET);
 	printf("\t\tEscolha seu personagem\n");
 
 	Character* users_choice = character_selection(personagensJogaveis);
@@ -113,7 +121,7 @@ int  gameloop (void)
 
 	while(torneio->character == NULL && esta_vivo(users_choice,torneio_status))
 	{
-		system("reset");
+		system_comands(RESET);
 
 		rounds = fopen(nomeArquivoRounds,"a");
 		printf("Round %d\n\n",roundNumero);
@@ -128,7 +136,7 @@ int  gameloop (void)
 
 	if(torneio->character != users_choice)
 	{
-		printf("Lutas do torneio: ");
+		printf("Lutas do torneio: \n");
 		print_file(nomeArquivoRounds);
 	}
 	exit_game(torneio, personagensJogaveis, steroids, torneio_status);
@@ -197,7 +205,6 @@ var_lista* modificadores, var_lista* torneio_status)
 	{
 		esvazia_lista(participantes, false);
 		free_lista(participantes);
-		//free_listaCharacter(participantes);
 	}
 
 	if (modificadores != NULL)

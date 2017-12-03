@@ -1,0 +1,10 @@
+
+     Bem-vindo ao Torneio pelo Trono de Ferro
+  O combate acontecerá através da comparação entre
+as habilidades de dois personagens, sendo o vence-
+dor aquele que tiver maior pontuação.
+  O vencedor do torneio será aquele que conseguir
+vencer todos os combates e se tornará, enfim, do-
+no do tão sonhado Trono de Ferro.
+
+Que a sorte esteja sempre a vosso favor...

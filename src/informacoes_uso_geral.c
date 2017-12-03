@@ -68,3 +68,22 @@ void  print_error (FILE* screen)
 	}
 
 }//End print_error()
+
+
+//--------------------------------------------------------------
+void  system_comands(int command)
+{
+	switch(command)
+	{
+		case RESET:
+			#ifdef WIN32
+				system("cls");
+			#else
+				system("reset");
+			#endif
+				break;
+		default:
+				break;
+	}
+
+}//End system_commands()

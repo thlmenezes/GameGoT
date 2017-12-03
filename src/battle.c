@@ -232,7 +232,7 @@ void  user_fight (Character* users_choice, var_lista* steroids, t_node* torneio,
 
 		if(vencedor == users_choice)
 		{
-			system("reset");
+			system_comands(RESET);
 			update_rounds(vencedor,adversario,atributo,rounds);
 			update_nerfs(TIRED,users_choice,atributo,steroids);
 			printf("Round %d: Resultado\n\n", roundNumero);
@@ -241,7 +241,7 @@ void  user_fight (Character* users_choice, var_lista* steroids, t_node* torneio,
 		}
 		else
 		{
-			system("reset");
+			system_comands(RESET);
 			update_rounds(vencedor,users_choice,atributo,rounds);
 			update_nerfs(DEAD,users_choice,atributo,steroids);
 			printf("Round %d: Resultado\n\n", roundNumero);

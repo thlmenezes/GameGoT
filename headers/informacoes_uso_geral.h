@@ -38,10 +38,15 @@ enum acoes_update_nerfs
 { TIRED,
   DEAD};
 
-void  limpa_buffer(void);
+enum system_commands
+{RESET};
 
-void  print_file  (char* file);
+void  limpa_buffer  (void);
 
-void  print_error (FILE* screen);
+void  print_file    (char* file);
+
+void  print_error   (FILE* screen);
+
+void  system_comands(int command);
 
 #endif

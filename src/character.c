@@ -116,23 +116,28 @@ void  tree_free (t_node* tree)
 	 * @param tree Endereço para a raiz da árvore binária.
 	 */
 
-	var_fila* folhas = enfileira_folhas(tree);
+	if(tree == NULL)
+ 		return;
 
-	t_node** pop_fila = (t_node**) sair_fila(folhas);
+	//Caso não seja uma folha o ponteiro character pode ser NULL
+	if(tree->left != NULL && tree->right != NULL)
+		tree->character = NULL;
 
-	Character* character;
+ 	tree_free(tree->left);
 
-	while(pop_fila != NULL)
-	{
-		character = (*pop_fila)->character;
-		character_free(character);
-		free(pop_fila);
-		pop_fila = (t_node**) sair_fila(folhas);
-	}
+ 	tree_free(tree->right);
 
-	free_fila(folhas);
-
-	freeTreeAutumn(tree);
+ 	if(tree->left == NULL && tree->right == NULL)
+ 	{
+		if(tree->character != NULL)
+		{
+			character_free(tree->character);
+			tree->character = NULL;
+		}
+		free(tree);
+ 		return;
+ 	}
+	free(tree);
 
 }//End tree_free()
 
