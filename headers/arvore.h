@@ -21,7 +21,7 @@ t_node*     tree_create        (void);
 
 t_node*     aloca_arvore       (int total_de_nos);
 
-void        tree_free          (t_node* tree);
+t_node*     freeTreeAutumn     (t_node* root);
 
 void        tree_print_preorder(t_node* root);
 

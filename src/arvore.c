@@ -89,23 +89,24 @@ t_node*  aloca_arvore (int total_de_nos)
 
 
 //--------------------------------------------------------------
-void  tree_free (t_node* tree)
+t_node*  freeTreeAutumn (t_node* root)
 {
-	//TODO: IMPLEMENTAR a funcionalidade de limpar os 'character' das folhas primeiro
-	/**
-	 * @brief Libera uma árvore binária que outrora fora aloca dinamicamente
-	 * de acordo com os padrões definidos por aloca_arvore().
-	 * @param tree Endereço para a raiz da árvore binária.
-	 */
+	if(root == NULL)
+		return NULL;
 
-	if(tree == NULL)
-		return;
-	tree_free(tree->left);
-	tree_free(tree->right);
-	free(tree);
+	root->left  = freeTreeAutumn(root->left);
 
-}//End tree_free()
+	root->right = freeTreeAutumn(root->right);
 
+	if(root->left == NULL && root->right == NULL)
+	{
+		free(root);
+		return NULL;
+	}
+
+	return root;
+
+}//End free_tree()
 
 //--------------------------------------------------------------
 void  tree_print_preorder (t_node* root)

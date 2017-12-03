@@ -311,12 +311,24 @@
 03/12/2017 08:30
 	Objetivos:	Implementar update_nerfs(); OK
 				Criar biblioteca "battle.h" para separar
-					algumas funções da "character.h";
-				Criar biblioteca "menu.h";
-					main_menu();
-					character_selection();
+					algumas funções da "character.h"; OK
+				Criar biblioteca "menu.h"; OK
+					main_menu(); OK
+					character_selection(); OK
 					gameloop();
-					last_battle();
-					exit_game();
+					print_last_tournament();
+					exit_game(); OK
 				Criar pasta separando arquivos principais do executável;
 				Documentar o código;
+	Se loadFromFile retornar NULL finalizar gameloop;
+	É intencional que o arquivo "rounds.txt" não seja excluído
+	ao final do gameloop;
+	Ampliar depuração do input do usuário; OK
+
+	Testar random_roullete com quantidade == lista::tamanho;
+	com if(...){return NULL} permitindo isso
+	Resultado: Erro exceção de ponto flutuante;
+
+	break lista_dupla.c:random_roullete
+
+	Funções de free;

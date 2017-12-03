@@ -10,6 +10,8 @@
 #ifndef __INFORMACOES_USO_GERAL_H__
 #define __INFORMACOES_USO_GERAL_H__
 
+#include <stdio.h>
+
 typedef enum { false,	true } bool;
 
 enum codigos { INT, CHAR, FLOAT };
@@ -39,5 +41,7 @@ enum acoes_update_nerfs
 void  limpa_buffer(void);
 
 void  print_file  (char* file);
+
+void  print_error (FILE* screen);
 
 #endif

@@ -25,7 +25,7 @@ void  limpa_buffer(void)
 }//End limpa_buffer()
 
 
-//
+//--------------------------------------------------------------
 void  print_file (char* srcFile)
 {
 	/**
@@ -40,10 +40,7 @@ void  print_file (char* srcFile)
 
 	if(arquivo == NULL)
 	{
-		printf("    ┌─────────────────────────────────────────────────────┐\n");
-		printf("    ├──ERROR×──»    ¤    File not found   ¤    «──×ERROR──┤\n");
-		printf("    └─────────────────────────────────────────────────────┘\n");
-		getchar();
+		print_error(arquivo);
 		return;
 	}
 
@@ -55,3 +52,19 @@ void  print_file (char* srcFile)
 	fclose(arquivo);
 
 }//end print_file()
+
+
+//--------------------------------------------------------------
+void  print_error (FILE* screen)
+{
+
+	if(screen == NULL)
+	{
+		printf("    ┌─────────────────────────────────────────────────────┐\n");
+		printf("    ├──ERROR×──»    ¤    File not found   ¤    «──×ERROR──┤\n");
+		printf("    └─────────────────────────────────────────────────────┘\n");
+		getchar();
+		return;
+	}
+
+}//End print_error()
