@@ -38,27 +38,36 @@ typedef struct node{
 Character* character_create   (char* _name, char* _house, int _agility,
 int _strength, int _intelligence, int _health);
 
-Steroids*  aloca_steroids     (void);
+var_lista* loadFromFile       (char* src_personagens);
 
-void       insere_steroids    (var_lista* lista, Character* character,
-int nerf, int buff);
+void       loadFighters       (t_node* torneio, var_lista* personagens_jogaveis);
 
 void       character_free     (Character* character);
 
-void       tree_free          (t_node* tree);
+void       free_listaCharacter(var_lista* lista);
 
 Character* fight              (Character* fighter_one, Character* fighter_two,
 int atribute);
 
 bool       esta_vivo          (Character* users_choice, var_lista* torneio_status);
 
-var_lista* loadFromFile       (char* src_personagens);
+Steroids*  aloca_steroids     (void);
 
-void       loadFighters       (t_node* torneio, var_lista* personagens_jogaveis);
-
-void       free_listaCharacter(var_lista* lista);
+void       insere_steroids    (var_lista* lista, Character* character,
+int nerf, int buff);
 
 void       print_character    (Character* character, int print_code,
 var_lista* steroids);
 
 #endif
+
+/**
+ * @struct node
+ * @var node::character ponteiro para variável do
+ * tipo Character que armazena toda a ficha de um
+ * personagem.
+ * @var node::left ponteiro para o nó à esquerda
+ * do nó atual dentro da árvore.
+ * @var node::right ponteiro para o nó à direita
+ * do nó atual dentro da árvore.
+ */

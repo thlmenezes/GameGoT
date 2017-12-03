@@ -17,9 +17,10 @@
 //--------------------------------------------------------------
 t_node*  node_create (void)
 {
+
 	/**
 	 * @brief Aloca um nó baseado na estrutura t_node segundo
-	 * alguns parâmetros de inicialização: Todos os ponteiros
+	 * alguns parâmetros de inicialização:\nTodos os ponteiros
 	 * (character, left e right) são inicializados com o valor
 	 * NULL.
 	 * @return Endereço para nó alocado dinamicamente.
@@ -39,12 +40,14 @@ t_node*  node_create (void)
 //--------------------------------------------------------------
 t_node*  tree_create (void)
 {
-	///	SELO PODE SER MELHOR
+
 	/**
 	 * @brief Aloca uma arvore binária completa de 4 níveis
-	 * segundo alguns parâmetros de inicialização: Todos os
+	 * segundo alguns parâmetros de inicialização:\n Todos os
 	 * nós da árvore apresentam o atributo Character::character
-	 * apontado para NULL.
+	 * apontado para NULL.\n
+	 * Observação pessoal: Poderia ser melhor; talvez fazer uso
+	 * de um algoritmo mais focado em criação por níveis.
 	 * @return Endereço para o nó raiz da árvore binária.
 	 */
 
@@ -61,6 +64,7 @@ t_node*  tree_create (void)
 //--------------------------------------------------------------
 t_node*  aloca_arvore (int total_de_nos)
 {
+
 	/**
 	 * @brief Aloca dinamicamente uma árvore binária de nós criados por
 	 * node_create().
@@ -89,89 +93,107 @@ t_node*  aloca_arvore (int total_de_nos)
 
 
 //--------------------------------------------------------------
-t_node*  freeTreeAutumn (t_node* root)
+void  tree_free (t_node* tree)
 {
-	if(root == NULL)
-		return NULL;
 
-	root->left  = freeTreeAutumn(root->left);
-
-	root->right = freeTreeAutumn(root->right);
-
-	if(root->left == NULL && root->right == NULL)
-	{
-		free(root);
-		return NULL;
-	}
-
-	return root;
-
-}//End free_tree()
-
-//--------------------------------------------------------------
-void  tree_print_preorder (t_node* root)
-{
 	/**
-	 * @brief Percorre uma árvore binária, que outrora fora aloca dinamicamente
-	 * de acordo com os padrões definidos por aloca_arvore(); em pré-ordem,
-	 * imprimindo os personagens referenciados em Character::character.
-	 * @param root Endereço para a raiz da árvore binária.
+	 * @brief Libera, recursivamente, uma árvore binária que
+	 * outrora fora alocada dinamicamente de acordo com os
+	 * padrões definidos por aloca_arvore().
+	 * @param tree Endereço para a raiz da árvore binária.
 	 */
 
-	if(root == NULL)
-		return;
+	if(tree == NULL)
+ 		return;
 
-	print_character(root->character, FULL, NULL);
+	//Caso não seja uma folha o ponteiro character deve ser NULL
+	if(tree->left != NULL && tree->right != NULL)
+		tree->character = NULL;
 
-	tree_print_preorder(root->left);
+ 	tree_free(tree->left);
 
-	tree_print_preorder(root->right);
+ 	tree_free(tree->right);
 
-}//End tree_print_preorder()
+ 	if(tree->left == NULL && tree->right == NULL)
+ 	{
+		if(tree->character != NULL)
+		{
+			character_free(tree->character);
+			tree->character = NULL;
+		}
+		free(tree);
+ 		return;
+ 	}
+
+	free(tree);
+
+}//End tree_free()
 
 
 //--------------------------------------------------------------
-t_node*  busca_pai (t_node* root, t_node* son)
+t_node*  busca_pai (t_node* node, t_node* son)
 {
+
+	/**
+	 * @brief Busca, em uma árvore binária, o no_pai de um nó.
+	 * @param node Possível no_pai.
+	 * @param son No_filho à procura do no_pai.
+	 * @return Endereço para o no_pai ou, caso não exista, NULL.
+	 */
+
 	if( son != NULL )
 	{
-		if( root == NULL || root->left == son || root->right == son )
-			return root;
+		if( node == NULL || node->left == son || node->right == son )
+			return node;
 
-		t_node* node_return = busca_pai( root->left, son );
+		t_node* node_return = busca_pai( node->left, son );
 
 		if( node_return == NULL )
-			node_return = busca_pai( root->right, son );
+			node_return = busca_pai( node->right, son );
 
 		return node_return;
 	}
+
 	return son;
-}
+
+}//End busca_pai()
 
 
 //--------------------------------------------------------------
-t_node* busca_no(t_node* root, Character* focus)
+t_node* busca_no( t_node* tree, Character* target )
 {
 
-	if( focus != NULL )
-	{
-		if( root == NULL || root->character == focus )
-			return root;
+	/**
+	 * @brief Busca, em uma árvore binária, o endereço de um nó
+	 * que possue em sua composição um Character* informado.
+	 * @param tree Árvore aonde serão conduzidas as buscas.
+	 * @param target Character* que buscamos.
+	 * @return Endereço para o no que corresponde ao perfil ou,
+	 * caso não exista, NULL.
+	 */
 
-		t_node* node_return = busca_no( root->left, focus );
+	if( target  != NULL )
+	{
+		if( tree == NULL || tree->character == target  )
+			return tree;
+
+		t_node* node_return = busca_no( tree->left, target  );
 
 		if( node_return == NULL )
-			node_return = busca_no( root->right, focus );
+			node_return = busca_no( tree->right, target  );
 
 		return node_return;
 	}
-	return NULL;
+
+	return target;
 
 }//End busca_no()
+
 
 //--------------------------------------------------------------
 var_fila*  enfileira_folhas (t_node* root)
 {
+
 	/**
 	 * Retorna uma fila com elemento::dados do tipo t_node**
 	 * em que cada um de seus ponteiros, quando desreferenciados,
@@ -239,3 +261,26 @@ var_fila*  enfileira_folhas (t_node* root)
 	return resultado;
 
 }//End enfileira_folhas()
+
+
+//--------------------------------------------------------------
+void  tree_print_preorder (t_node* root)
+{
+
+	/**
+	 * @brief Percorre uma árvore binária, que outrora fora aloca dinamicamente
+	 * de acordo com os padrões definidos por aloca_arvore(); em pré-ordem,
+	 * imprimindo os personagens referenciados em Character::character.
+	 * @param root Endereço para a raiz da árvore binária.
+	 */
+
+	if(root == NULL)
+		return;
+
+	print_character(root->character, FULL, NULL);
+
+	tree_print_preorder(root->left);
+
+	tree_print_preorder(root->right);
+
+}//End tree_print_preorder()

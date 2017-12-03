@@ -3,7 +3,7 @@
  * @author Thales Lima Menezes
  * @date   03/12/2017
  * @brief  Contém a implementação de todas as funções
- * referentes as lutas e seus gerenciamento.
+ * referentes as lutas e seu gerenciamento.
  */
 #include "../headers/battle.h"
 #include <stdlib.h>
@@ -13,6 +13,142 @@
 
 
 //TOD:
+//--------------------------------------------------------------
+void  battle_round (Character* users_choice, var_lista* steroids,
+t_node* torneio, int roundNumero, char* rounds)
+{
+
+	/**
+	 *
+	 */
+	//metodo perfeito
+	//remover o usuário e seu adversário da lista non_playable_characters
+	var_lista* non_playable_characters = round_anterior(torneio);
+
+	user_fight(users_choice, steroids, torneio, roundNumero, rounds);
+	//elemento::dados são t_node**
+
+	t_node* node_pai = busca_pai(torneio, busca_no(torneio, users_choice));
+
+	t_node** source_one, **source_two;
+
+	Character* player_one, *player_two;
+
+	if(torneio->character == NULL)
+	{
+
+		while(!lista_vazia(non_playable_characters))
+		{
+			source_one = (t_node**) pop_lista(non_playable_characters,0);
+			source_two = (t_node**) pop_lista(non_playable_characters,0);
+
+			if( source_one != NULL && source_two != NULL )
+			{
+				player_one = (*source_one)->character;
+				player_two = (*source_two)->character;
+				//gambiarra
+				if(! ( player_one == node_pai->left->character
+					|| player_one == node_pai->right->character
+					|| player_two == node_pai->left->character
+					|| player_two == node_pai->right->character ) )
+				{
+					fight_judge(player_one, player_two, torneio, rounds);
+				}
+
+				free(source_one);
+				free(source_two);
+			}
+		}
+	}
+
+	free_lista(non_playable_characters);
+
+}//End battle_rounds()
+
+
+//--------------------------------------------------------------
+void  user_fight (Character* users_choice, var_lista* steroids, t_node* torneio, int roundNumero, char* rounds)
+{
+	t_node* node_pai = busca_pai(torneio, busca_no(torneio, users_choice));
+	if( node_pai != NULL )
+	{
+		printf("Seu personagem: ");print_character(users_choice, NERFED, steroids);
+
+		Character* adversario;
+		if(node_pai->left->character == users_choice)
+			adversario = node_pai->right->character;
+		else
+			adversario = node_pai->left->character;
+
+		printf("\nO adversário: ");print_character(adversario, NAME_ONLY, NULL);
+
+		printf("\nSelecione um atributo: ");
+
+		int atributo, nerf = 0;
+		bool valid = false;
+
+		if(!lista_vazia(steroids))
+			nerf = ((Steroids*)busca_lista(steroids, users_choice, INFORMACAO_MODS))->nerf;
+
+		do{
+			if(scanf("%d", &atributo) < 1)
+			{
+				printf("ERROR INVALID USER INPUT ERROR\n");
+				limpa_buffer();
+			}
+			else
+			{
+				if(atributo != nerf && atributo > 0 && atributo < 5)
+					valid = true;
+				else
+					printf("ERROR USER INPUT OUT OF RANGE ERROR\n");
+			}
+		}while(!valid);
+
+		Character* vencedor = fight(users_choice,adversario,atributo);
+
+		if(vencedor == users_choice)
+		{
+			system_comands(RESET);
+			update_rounds(vencedor,adversario,atributo,rounds);
+			update_nerfs(TIRED,users_choice,atributo,steroids);
+			printf("Round %d: Resultado\n\n", roundNumero);
+			print_file("src_files/you_win.txt");
+			print_fight(vencedor,adversario,atributo);
+		}
+		else
+		{
+			system_comands(RESET);
+			update_rounds(vencedor,users_choice,atributo,rounds);
+			update_nerfs(DEAD,users_choice,atributo,steroids);
+			printf("Round %d: Resultado\n\n", roundNumero);
+			print_file("src_files/you_lose.txt");
+			print_fight(vencedor,users_choice,atributo);
+		}
+
+		node_pai->character = vencedor;
+		printf("\n\nPressione 'Enter' para prosseguir ");
+		limpa_buffer();getchar();
+
+	}//end if( node_pai != NULL )
+
+}//End user_fight()
+
+
+//--------------------------------------------------------------
+void  update_nerfs (int codigo_da_acao, Character* character,
+int atributo_usado, var_lista* steroids)
+{
+	Steroids* setup = ((Steroids*)busca_lista(steroids, character, INFORMACAO_MODS));
+
+	if(codigo_da_acao == TIRED)
+		setup->nerf = atributo_usado;
+	if(codigo_da_acao == DEAD)
+		esvazia_lista(steroids,true);
+
+}//End update_nerfs()
+
+
 //--------------------------------------------------------------
 void  update_rounds (Character* player_one, Character* player_two, int atributo_usado, char* src_rounds)
 {
@@ -61,6 +197,32 @@ void  update_rounds (Character* player_one, Character* player_two, int atributo_
 	free(atributoNome);
 
 }//End update_rounds()
+
+
+//--------------------------------------------------------------
+void  fight_judge (Character* fighter_one, Character* fighter_two, t_node* torneio, char* rounds)
+{
+	t_node* node_pai = busca_pai(torneio, busca_no(torneio, fighter_one));
+	if( node_pai != NULL )
+	{
+		if(fighter_one != NULL && fighter_two != NULL)
+		{
+			struct timespec seed;
+			clock_gettime(CLOCK_REALTIME, &seed);
+			srand(seed.tv_nsec);
+			int atributo = rand() % 4 + 1;
+
+			Character* vencedor = fight(fighter_one,fighter_two,atributo);
+
+			if(vencedor == fighter_one)
+				update_rounds(vencedor, fighter_two, atributo, rounds);
+			else
+				update_rounds(vencedor, fighter_one, atributo, rounds);
+
+			node_pai->character = vencedor;
+		}
+	}
+}//End fight_judge()
 
 
 //--------------------------------------------------------------
@@ -173,162 +335,3 @@ void  print_fight (Character* vencedor, Character* adversario, int atributo)
 	}//end if(vencedor != NULL && adversario != NULL)
 
 }//End print_fight()
-
-
-//--------------------------------------------------------------
-void  update_nerfs (int codigo_da_acao, Character* character,
-int atributo_usado, var_lista* steroids)
-{
-	Steroids* setup = ((Steroids*)busca_lista(steroids, character, INFORMACAO_MODS));
-
-	if(codigo_da_acao == TIRED)
-		setup->nerf = atributo_usado;
-	if(codigo_da_acao == DEAD)
-		esvazia_lista(steroids,true);
-
-}//End update_nerfs()
-
-
-//--------------------------------------------------------------
-void  user_fight (Character* users_choice, var_lista* steroids, t_node* torneio, int roundNumero, char* rounds)
-{
-	t_node* node_pai = busca_pai(torneio, busca_no(torneio, users_choice));
-	if( node_pai != NULL )
-	{
-		printf("Seu personagem: ");print_character(users_choice, NERFED, steroids);
-
-		Character* adversario;
-		if(node_pai->left->character == users_choice)
-			adversario = node_pai->right->character;
-		else
-			adversario = node_pai->left->character;
-
-		printf("\nO adversário: ");print_character(adversario, NAME_ONLY, NULL);
-
-		printf("\nSelecione um atributo: ");
-
-		int atributo, nerf = 0;
-		bool valid = false;
-
-		if(!lista_vazia(steroids))
-			nerf = ((Steroids*)busca_lista(steroids, users_choice, INFORMACAO_MODS))->nerf;
-
-		do{
-			if(scanf("%d", &atributo) < 1)
-			{
-				printf("ERROR INVALID USER INPUT ERROR\n");
-				limpa_buffer();
-			}
-			else
-			{
-				if(atributo != nerf && atributo > 0 && atributo < 5)
-					valid = true;
-				else
-					printf("ERROR USER INPUT OUT OF RANGE ERROR\n");
-			}
-		}while(!valid);
-
-		Character* vencedor = fight(users_choice,adversario,atributo);
-
-		if(vencedor == users_choice)
-		{
-			system_comands(RESET);
-			update_rounds(vencedor,adversario,atributo,rounds);
-			update_nerfs(TIRED,users_choice,atributo,steroids);
-			printf("Round %d: Resultado\n\n", roundNumero);
-			print_file("src_files/you_win.txt");
-			print_fight(vencedor,adversario,atributo);
-		}
-		else
-		{
-			system_comands(RESET);
-			update_rounds(vencedor,users_choice,atributo,rounds);
-			update_nerfs(DEAD,users_choice,atributo,steroids);
-			printf("Round %d: Resultado\n\n", roundNumero);
-			print_file("src_files/you_lose.txt");
-			print_fight(vencedor,users_choice,atributo);
-		}
-
-		node_pai->character = vencedor;
-		printf("\n\nPressione 'Enter' para prosseguir ");
-		limpa_buffer();getchar();
-
-	}//end if( node_pai != NULL )
-
-}//End user_fight()
-
-
-//--------------------------------------------------------------
-void  fight_judge (Character* fighter_one, Character* fighter_two, t_node* torneio, char* rounds)
-{
-	t_node* node_pai = busca_pai(torneio, busca_no(torneio, fighter_one));
-	if( node_pai != NULL )
-	{
-		if(fighter_one != NULL && fighter_two != NULL)
-		{
-			struct timespec seed;
-			clock_gettime(CLOCK_REALTIME, &seed);
-			srand(seed.tv_nsec);
-			int atributo = rand() % 4 + 1;
-
-			Character* vencedor = fight(fighter_one,fighter_two,atributo);
-
-			if(vencedor == fighter_one)
-				update_rounds(vencedor, fighter_two, atributo, rounds);
-			else
-				update_rounds(vencedor, fighter_one, atributo, rounds);
-
-			node_pai->character = vencedor;
-		}
-	}
-}//End fight_judge()
-
-
-//--------------------------------------------------------------
-void  battle_round (Character* users_choice, var_lista* steroids,
-t_node* torneio, int roundNumero, char* rounds)
-{
-	///SELO GAMBIARRA
-	//metodo perfeito
-	//remover o usuário e seu adversário da lista non_playable_characters
-	var_lista* non_playable_characters = round_anterior(torneio);
-
-	user_fight(users_choice, steroids, torneio, roundNumero, rounds);
-	//elemento::dados são t_node**
-
-	t_node* node_pai = busca_pai(torneio, busca_no(torneio, users_choice));
-
-	t_node** source_one, **source_two;
-
-	Character* player_one, *player_two;
-
-	if(torneio->character == NULL)
-	{
-
-		while(!lista_vazia(non_playable_characters))
-		{
-			source_one = (t_node**) pop_lista(non_playable_characters,0);
-			source_two = (t_node**) pop_lista(non_playable_characters,0);
-
-			if( source_one != NULL && source_two != NULL )
-			{
-				player_one = (*source_one)->character;
-				player_two = (*source_two)->character;
-				//gambiarra
-				if(! ( player_one == node_pai->left->character
-					|| player_one == node_pai->right->character
-					|| player_two == node_pai->left->character
-					|| player_two == node_pai->right->character ) )
-				{
-					fight_judge(player_one, player_two, torneio, rounds);
-				}
-
-				free(source_one);
-				free(source_two);
-			}
-		}
-	}
-
-	free_lista(non_playable_characters);
-
-}//End battle_rounds()

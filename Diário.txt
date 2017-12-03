@@ -1,10 +1,8 @@
 ================================================================================
 04/11/2017 22:05
-	Tirei a tarde/noite para começar o trabalho
-	Ainda não recebemos o projeto do professor
-	Organizei o projeto em múltiplos arquivos separados em múltiplas pastas
-	e montei um makefile
-	Começei de verdade o estruturas.h e Implementei as funções:
+	Trabalho inicializado, embora o professor ainda não entregou a proposta 
+do projeto.
+	Foi inicializado o arquivo estruturas.h e implementadas as funções:
 	var_elemento*  aloca_elemento(void);
 
 	var_lista*     aloca_lista   (void);
@@ -20,7 +18,7 @@
 	void           print_lista   (var_lista* lista, int codigo);
 ================================================================================
 06/11/2017 10:00
-	Começei o dia depurando as funções escritas no sábado com gdb e valgrind
+	Foram depuradas as funções escritas já escritas, com gdb e valgrind, no início do dia.
 	Erro encontrado:
 		'aloca_elemento', conforme especificado, inicia os ponteiros com valor
 		"NULL", portanto tentar escrever no endereço "NULL" gera uma falha de
@@ -56,14 +54,14 @@
 		Correção:
 			inserir a linha "if(lista->ultimo->dados != NULL)
 			{free(lista->ultimo->dados);}" antes de "free(lista->ultimo);"
-	Ao final da tarde começei a implementar uma função para terceirizar
+	Ao final da tarde, foi inicializada a implementação de uma função para terceirizar
 	o processo de alocação de memória para os principais tipos usados
 	durante a solução do problema.
-	Entretanto achei estéticamente feio e pouco prático, então retirei.
+	Entretanto, devido julgado estéticamente feio e pouco prático, foi retirada.
 ================================================================================
 08/11/2017 17:00
-	Recebi o pedido para o trabalho ontem
-	Modificarei a definição de lista simplemente encadeada implementada
+	Recebido o pedido para o trabalho ontem.
+	A definição de lista simplemente encadeada implementada será modificada
 	para uma lista duplamente encadeada:
 
 	typedef struct elemento{
@@ -81,14 +79,13 @@
 	void			insere (int finalouinicio, void* info, var_lista* lista,
  int codigo);
 
-	Começei a implementar a biblioteca 'character.h'
+	Começo da implementação da biblioteca 'character.h'
 ================================================================================
 12/11/2017 15:30
-	Começei a tarde criando um repositório
+	Criado um repositório:
 	https://github.com/thaleslim/GameGoT.git
-	e começarei a testar as funções que imaginei enquanto
-	estava impossibilitado de trabalhar no projeto,
-	pretendo depurar as seguintes funções:
+	
+	Pretende-se depurar as seguintes funções:
 	t_node*     node_create(void);
 
 	t_node*     tree_create(void);
@@ -99,8 +96,8 @@
 
 	void        tree_print_preorder(t_node* root);
 
-	Resolvi compartimentar cada estrutura de dados em seu próprio
-	cabeçalho
+	Cada estrutura de dados foi compartimentada em seu próprio
+	cabeçalho.
 	Observação: existe a possibilidade,apesar de minima, de existirem erros de construção
 	  			da estrutura de árvore.
 ================================================================================
@@ -116,7 +113,7 @@
 ================================================================================
 17/11/2017 18:00
 	Objetivos:  Depurar estrutura de fila;
-				Atualizar git repo;
+				Atualizar git repositório;
 				Voltar a desenvolver funções mais especificas do jogo em si.
 	Erro: 'insere_lista' causa vazamento de memória
 		Correção: usar chaves para abranger as 2 linhas de código
@@ -132,9 +129,9 @@
 18/11/2017 12:15
 	Objetivos:	Começar a modelar o gameloop
 				Implementar funções de busca e impressão na árvore
-	Começei criando o arquivo Sketch.c
-	Esse arquivo contém o q eu imagino que seja necessário para
-	a montagem do gameloop
+	Criado o arquivo Sketch.c
+	Esse arquivo contém o que imagina-se que seja necessário para
+	a montagem do gameloop.
 ================================================================================
 22/11/2017 21:56
 	Objetivos:	Testar character_create()
@@ -162,13 +159,13 @@
 	ChunLee, Lee, 15, 100, 100, 20
 ================================================================================
 24/11/2017 20:53
-	Obtive sucesso na leitura do arquivo personagens,
-	havia encontrado alguma dificuldade por meu código
+	Sucesso obtido na leitura do arquivo personagens,
+	havia encontrado alguma dificuldade devido o código
 	não estar preparado para lidar com o char '\r'
 	(Return Carriage); e não compreender completamente
 	o retorno da função fscanf().
 	Comportamento não desejado:
-		Ainda não sei a abrangência desse caso, entretanto descobri
+		Ainda não se sabe a abrangência desse caso, entretanto foi descoberto
 		que ao usarmos as funções de liberação (free_lista(),
 		character_free(), etc) não excluímos o potencial para erros
 		secundários, já que os ponteiros passados como argumentos,
@@ -183,20 +180,20 @@
 	Objetivos:	Depurar funções criadas ontem
 				Revisar documentação
 				Avançar no gameloop
-	Começei o dia criando um padrão para me ajudar, todo arquivo de cabeçalho
+	Foi criado um padrão para ajudar, todo arquivo de cabeçalho
 	tem em sua primeira um link para o manual do Doxygen
-	Depois organizei todos os Smoketest e Checklist em uma pasta com seu próprio
+	Depois foram organizados todos os Smoketest e Checklist em uma pasta com seu próprio
 	makefile.
-	Removi todos os SmokeTests e Checklists do Diário, com o objetivo de
+	Foram removidos todos os SmokeTests e Checklists do Diário, com o objetivo de
 	deixá-lo mais objetivo.
 	IDEIAS: Usar arquivo texto para armazenar as informações dos rounds;
 			Criar função que esvazia a lista e que receba um sinal que lhe
 			informe sobre a liberação da memória de var_elemento;
 ================================================================================
 26/11/2017 20:52
-	Implementei função de esvaziar a lista,pop_lista,free_elemento
-	E random_roullete, sendo que essa última ainda está causando vazamentos
-	de memória que não consigo explicar
+	Implementada função de esvaziar a lista, pop_lista,free_elemento
+	e random_roullete, sendo que essa última ainda está causando vazamentos
+	de memória ainda não compreendidos.
 	IDEIA: é possivel que a memória vazada seja elemento::dados
 ================================================================================
 26/11/2017 16:30
@@ -206,16 +203,16 @@
 						o ponteiro de pop_lista() para posteriormente liberar.
 	Objetivos: continuar avançando no gameloop
 	Resumo do dia:
-		Consegui implementar as funções random_roullete e LoadFighters;
-		Para isso criei uma função que enfileira as folhas de uma árvore
-		Corrigi um detalhe na função de esvaziar_lista(): o ponteiro ultimo
+		Implementadas as funções random_roullete e LoadFighters;
+		Para isso, fora criada uma função que enfileira as folhas de uma árvore
+		Corrigido um detalhe na função de esvaziar_lista(): o ponteiro ultimo
 			ainda apontava para uma área de memória previamente liberada
-		Corrigi também um detalhe na função sair_fila() : ela não respondia
+		Corrigido também um detalhe na função sair_fila() : ela não respondia
 			bem no caso em que var_lista::tamanho = 1
-		Criei uma função chamada pop_lista, para trabalhar com random_roullete
-	Falhas: Tenho deixado comentários e Smoketests um pouco de lado para tentar
-			avançar mais rapidamente no desenvolvimento, necessito voltar com
-			esse hábito e também preciso realizar as seguintes ações:
+		Criada uma função chamada pop_lista, para trabalhar com random_roullete
+	Falhas: Os comentários e Smoketests estão um pouco de lado, para tentar
+			avançar mais rapidamente no desenvolvimento, necessita-se voltar com
+			esse hábito e também é preciso realizar as seguintes ações:
 			-> atualizar funções de liberação para retornar ponteiro NULL
 			-> expandir função print_character() para usar nerfs_n_buffs
 			-> a função tree_free() também tem que liberar a memória de
@@ -227,8 +224,8 @@
 	Voltar a programar o Doxygen urgentemente.
 ================================================================================
 28/11/2017 22:36
-	Começei a trabalhar na parte de armazenar as informações dos rounds.
-	Escolhi usar um arquivo (rounds.txt) para tal.
+	Inicializou-se a dedicação com respeito à parte de armazenar as informações dos rounds.
+	Decidido usar um arquivo (rounds.txt) para tal.
 	O arquivo só será apagado antes de ser usado novamente, dessa forma
 	o usuário pode ter acesso ao último round jogado.
 
@@ -248,7 +245,7 @@
 			random_roullete() OK
 		#Arvore
 			enfileira_folhas() OK
-	Implementei as funções:
+	Implementadas as funções:
 		update_rounds() para armazenar cada luta no arquivo.
 		print_file() para imprimir todos os char dentro de um arquivo.
 ================================================================================
@@ -267,7 +264,7 @@
 					Testar tree_print_preorder();
 				6)Escrever mais Smoketests.
 	1) Lógica de vetor funcionou;
-	2)
+	2) 
 ================================================================================
 01/12/2017 21:55
 	IDEIAS de melhorias:
@@ -277,13 +274,13 @@
 			auxiliar para evitar acesso "feio" ex: no->left->character
 	Testar função de busca_pai();
 	Função busca_pai() funcionou;
-	Tentarei usá-la para acabar com as funções com SELO GAMBIARRA;
+	Será testado usá-la para acabar com as funções com SELO GAMBIARRA;
 	enfileira_folhas() implementada usando busca_pai();
 ================================================================================
 02/12/2017 07:49
 	Função round_anterior() funciona;
-	Atualizei smoketests e checklist;
-	Ampliei modos de impressão de Character;
+	Smoketests e checklist atualizados;
+	Ampliado os modos de impressão de Character;
 	Segundo os objetivos do dia 29/11/2017:
 	2) round_anterior() implementado com "excitacao de nó".
 	3) character_selection() implementada:
@@ -305,8 +302,8 @@
 		Testar tree_print_preorder(); TESTADO COM SUCESSO.
 
 	Falta implementar update_nerfs() e alguns detalhes;
-	Observação: battle_round não está usando um comportamento 100%ideal
-				como queria
+	Observação: battle_round não está usando um comportamento 100% ideal
+			
 ================================================================================
 03/12/2017 08:30
 	Objetivos:	Implementar update_nerfs(); OK

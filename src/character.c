@@ -107,42 +107,6 @@ void  character_free (Character* character)
 
 
 //--------------------------------------------------------------
-void  tree_free (t_node* tree)
-{
-
-	/**
-	 * @brief Libera uma árvore binária que outrora fora aloca dinamicamente
-	 * de acordo com os padrões definidos por aloca_arvore().
-	 * @param tree Endereço para a raiz da árvore binária.
-	 */
-
-	if(tree == NULL)
- 		return;
-
-	//Caso não seja uma folha o ponteiro character pode ser NULL
-	if(tree->left != NULL && tree->right != NULL)
-		tree->character = NULL;
-
- 	tree_free(tree->left);
-
- 	tree_free(tree->right);
-
- 	if(tree->left == NULL && tree->right == NULL)
- 	{
-		if(tree->character != NULL)
-		{
-			character_free(tree->character);
-			tree->character = NULL;
-		}
-		free(tree);
- 		return;
- 	}
-	free(tree);
-
-}//End tree_free()
-
-
-//--------------------------------------------------------------
 Character* fight (Character* fighter_one, Character* fighter_two,
 int atribute)
 {
