@@ -19,14 +19,18 @@ t_node* torneio, int roundNumero, char* rounds)
 {
 
 	/**
-	 *
+	 * @brief Gerencia todas as lutas do torneio, dando prioridade
+	 * às lutas do usuário.\n
+	 * Observação Pessoal: Acredito que seria melhor remover da
+	 * lista round_anteroir() os envolvidos na luta do usuário;
+	 * contribuiria para a diminuição da quantidade de
+	 * verificações no gerenciamentos dos NPC's.
 	 */
-	//metodo perfeito
-	//remover o usuário e seu adversário da lista non_playable_characters
+
 	var_lista* non_playable_characters = round_anterior(torneio);
+	//LEMBRETE: elemento::dados são t_node**
 
 	user_fight(users_choice, steroids, torneio, roundNumero, rounds);
-	//elemento::dados são t_node**
 
 	t_node* node_pai = busca_pai(torneio, busca_no(torneio, users_choice));
 
@@ -46,7 +50,6 @@ t_node* torneio, int roundNumero, char* rounds)
 			{
 				player_one = (*source_one)->character;
 				player_two = (*source_two)->character;
-				//gambiarra
 				if(! ( player_one == node_pai->left->character
 					|| player_one == node_pai->right->character
 					|| player_two == node_pai->left->character
@@ -69,7 +72,15 @@ t_node* torneio, int roundNumero, char* rounds)
 //--------------------------------------------------------------
 void  user_fight (Character* users_choice, var_lista* steroids, t_node* torneio, int roundNumero, char* rounds)
 {
+
+	/**
+	 * @brief Gerencia a interação com o usuário durante a sua luta,
+	 * filtrando seus inputs e, ao final, atualizando as informações
+	 * do torneio.
+	 */
+
 	t_node* node_pai = busca_pai(torneio, busca_no(torneio, users_choice));
+
 	if( node_pai != NULL )
 	{
 		printf("Seu personagem: ");print_character(users_choice, NERFED, steroids);
@@ -139,6 +150,16 @@ void  user_fight (Character* users_choice, var_lista* steroids, t_node* torneio,
 void  update_nerfs (int codigo_da_acao, Character* character,
 int atributo_usado, var_lista* steroids)
 {
+
+	/**
+	 * @brief Atualiza as modificações, ou restrições no caso,
+	 * do gameplay.\n
+	 * Observação Pessoal: Permite a expansão da dinâmica das
+	 * restrições a todos os envolvidos no torneio, como não
+	 * é o caso, é possível esvaziar a lista de steroids em caso
+	 * de morte do usuário, único presente da lista.
+	 */
+
 	Steroids* setup = ((Steroids*)busca_lista(steroids, character, INFORMACAO_MODS));
 
 	if(codigo_da_acao == TIRED)
@@ -152,9 +173,10 @@ int atributo_usado, var_lista* steroids)
 //--------------------------------------------------------------
 void  update_rounds (Character* player_one, Character* player_two, int atributo_usado, char* src_rounds)
 {
+
 	/**
-	 * @brief Registra uma luta em um arquivo seguindo o padrão
-	 * vencedor(inteiro nomeatributo) vs perdedor(inteiro nomeatributo).
+	 * @brief Registra uma luta em um arquivo seguindo o padrão:\n
+	 * vencedor(inteiro nomeatributo) X perdedor(inteiro nomeatributo).
 	 * @param rounds Nome do arquivo de destino das informações da luta.
 	 */
 
@@ -202,7 +224,15 @@ void  update_rounds (Character* player_one, Character* player_two, int atributo_
 //--------------------------------------------------------------
 void  fight_judge (Character* fighter_one, Character* fighter_two, t_node* torneio, char* rounds)
 {
+
+	/**
+	 * @brief Atua como guia, ou juiz, das lutas dos NPC's; selecionando
+	 * randomicamente o atributo usado na luta.\n
+	 * It's user_fight() without the user.
+	 */
+
 	t_node* node_pai = busca_pai(torneio, busca_no(torneio, fighter_one));
+
 	if( node_pai != NULL )
 	{
 		if(fighter_one != NULL && fighter_two != NULL)
@@ -222,15 +252,17 @@ void  fight_judge (Character* fighter_one, Character* fighter_two, t_node* torne
 			node_pai->character = vencedor;
 		}
 	}
+
 }//End fight_judge()
 
 
 //--------------------------------------------------------------
 var_lista*  round_anterior (t_node* root)
 {
+
 	/**
 	 * @brief Percorre a arvore e caso chegue numa folha, ou em
-	 * uma "pseudo-folha"(rastros de lutas já ocorridas na árvore),
+	 * uma "pseudo-folha" (rastros de lutas já ocorridas na árvore),
 	 * insere na lista.
 	 * @param root Árvore referente ao torneio.
 	 * @return var_lista *round_anterior.
@@ -295,12 +327,20 @@ var_lista*  round_anterior (t_node* root)
 	}
 
 	return resultado;
-}
+
+}//End round_anterior()
 
 
 //--------------------------------------------------------------
 void  print_fight (Character* vencedor, Character* adversario, int atributo)
 {
+
+	/**
+	 * @brief Faz parte do conjunto que define user_fight();\n
+	 * Imprime o resultado da luta na tela, na mesma ordem que
+	 * são salvos no arquivo, e declarando o que saiu vitorioso.
+	 */
+
 	if(vencedor != NULL && adversario != NULL)
 	{
 		char* atributoNome = (char*) malloc((strlen("Intelligence")+1)*sizeof(char));
