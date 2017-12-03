@@ -22,6 +22,7 @@
 Character*  character_create (char* _name, char* _house, int _agility,
 int _strength, int _intelligence, int _health)
 {
+
 	/**
 	 * @brief Aloca dinamicamente memória para estrutura do tipo
 	 * Character, e inicializa por cópia todos os atributos.
@@ -55,121 +56,16 @@ int _strength, int _intelligence, int _health)
 
 
 //--------------------------------------------------------------
-Steroids*  aloca_steroids (void)
-{
-	Steroids* steroids = (Steroids*) malloc(sizeof(Steroids));
-
-	steroids->character = NULL;
-	steroids->nerf = steroids->buff = 0;
-
-	return steroids;
-
-}//End aloca_steroids()
-
-
-//--------------------------------------------------------------
-void  insere_steroids (var_lista* lista, Character* character, int nerf, int buff)
-{
-	var_elemento* elemento = aloca_elemento();
-
-	Steroids* esteroide = aloca_steroids();
-
-	esteroide->character = character;
-	esteroide->nerf = nerf;
-	esteroide->buff = buff;
-
-	elemento->dados = esteroide;
-
-	insere_lista (FINAL, elemento, sizeof(var_elemento), lista, VAR_ELEMENTO);
-
-	free(elemento);
-}//End insere_steroids()
-
-
-//--------------------------------------------------------------
-void  character_free (Character* character)
-{
-	/**
-	 * @brief Libera a memória alocada segundo character_create().
-	 * @param character Ponteiro para estrutura Character.
-	 */
-
-	if(character != NULL)
-	{
-		if(character->name  != NULL)
-			free(character->name);
-		if(character->house != NULL)
-			free(character->house);
-		free(character);
-	}
-
-}//End character_free()
-
-
-//--------------------------------------------------------------
-Character* fight (Character* fighter_one, Character* fighter_two,
-int atribute)
-{
-	/**
-	 * @brief Compara o valor do atributo definido para a luta do
-	 * fighter_one e do fighter_two, retornando o ponteiro para
-	 * o personagem vencedor. Em caso de empate, o ponteiro para
-	 * fighter_one deverá ser retornado;
-	 * @param atribute Atributo escolhido para a luta.
-	 * @return Ponteiro para estrutura Character do vencedor da
-	 * disputa.
-	 */
-
-	Character* vencedor = fighter_one;
-
-	switch(atribute)
-	{
-		case 1: if(fighter_two->agility > fighter_one->agility)
-					vencedor = fighter_two;
-				break;
-		case 2: if(fighter_two->strength > fighter_one->strength)
-					vencedor = fighter_two;
-				break;
-		case 3: if(fighter_two->intelligence > fighter_one->intelligence)
-					vencedor = fighter_two;
-				break;
-		case 4: if(fighter_two->health > fighter_one->health)
-					vencedor = fighter_two;
-				break;
-	}
-
-	return vencedor;
-
-}//End fight()
-
-
-//--------------------------------------------------------------
-bool  esta_vivo (Character* users_choice, var_lista* torneio_status)
-{
-	/**
-	 * @brief Busca o personagem na lista do
-	 * status atual do torneio, caso morto é enviado o
-	 * sinal false.
-	 * @return bool O personagem esta vivo?
-	 */
-
-	if(users_choice != NULL && torneio_status != NULL)
-		return (busca_lista(torneio_status, users_choice, INFORMACAO_ROUND) == users_choice);
-	return false;
-
-}//End esta_vivo()
-
-
-//--------------------------------------------------------------
 var_lista*  loadFromFile (char* src_personagens)
 {
+
 	/**
 	 * @brief Retorna uma lista com todas as estruturas Character
 	 * presentes no arquivo segundo o formato correto (name, house,
 	 * agility, strenght, intelligence, health) montadas e prontas
 	 * para acesso.
 	 * @param personagens Nome do arquivo fonte.
-	 * @return var_lista* personagens_jogaveis.
+	 * @return var_lista *personagens_jogaveis.
 	 */
 
 	FILE *personagens;
@@ -281,6 +177,7 @@ var_lista*  loadFromFile (char* src_personagens)
 //--------------------------------------------------------------
 void  loadFighters (t_node* torneio, var_lista* personagens_jogaveis)
 {
+
 	/**
 	 * Carrega todos os personagens que irão participar do torneio nas
 	 * folhas da arvore binária.
@@ -313,8 +210,30 @@ void  loadFighters (t_node* torneio, var_lista* personagens_jogaveis)
 
 
 //--------------------------------------------------------------
+void  character_free (Character* character)
+{
+
+	/**
+	 * @brief Libera a memória alocada segundo character_create().
+	 * @param character Ponteiro para estrutura Character.
+	 */
+
+	if(character != NULL)
+	{
+		if(character->name  != NULL)
+			free(character->name);
+		if(character->house != NULL)
+			free(character->house);
+		free(character);
+	}
+
+}//End character_free()
+
+
+//--------------------------------------------------------------
 void  free_listaCharacter (var_lista* lista)
 {
+
 	/**
 	 * @brief Libera uma var_lista em que cada elemento::dados
 	 * aponta para um Character.
@@ -356,16 +275,126 @@ void  free_listaCharacter (var_lista* lista)
 
 	free_lista(lista);
 
-}
+}//End free_listaCharacter()
+
+
+//--------------------------------------------------------------
+Character* fight (Character* fighter_one, Character* fighter_two,
+int atribute)
+{
+
+	/**
+	 * @brief Compara o valor do atributo definido para a luta do
+	 * fighter_one e do fighter_two, retornando o ponteiro para
+	 * o personagem vencedor. Em caso de empate, o ponteiro para
+	 * fighter_one deverá ser retornado;
+	 * @param atribute Atributo escolhido para a luta.
+	 * @return Ponteiro para estrutura Character do vencedor da
+	 * disputa.
+	 */
+
+	Character* vencedor = fighter_one;
+
+	switch(atribute)
+	{
+		case 1: if(fighter_two->agility > fighter_one->agility)
+					vencedor = fighter_two;
+				break;
+		case 2: if(fighter_two->strength > fighter_one->strength)
+					vencedor = fighter_two;
+				break;
+		case 3: if(fighter_two->intelligence > fighter_one->intelligence)
+					vencedor = fighter_two;
+				break;
+		case 4: if(fighter_two->health > fighter_one->health)
+					vencedor = fighter_two;
+				break;
+	}
+
+	return vencedor;
+
+}//End fight()
+
+
+//--------------------------------------------------------------
+bool  esta_vivo (Character* users_choice, var_lista* torneio_status)
+{
+
+	/**
+	 * @brief Busca o Character* na lista, caso não encontrado é
+	 * enviado o sinal false.
+	 * @return bool No contexto do jogo se resume a:
+	 * O personagem está vivo?
+	 */
+
+	if(users_choice != NULL && torneio_status != NULL)
+		return (busca_lista(torneio_status, users_choice, INFORMACAO_ROUND) == users_choice);
+	return false;
+
+}//End esta_vivo()
+
+
+//--------------------------------------------------------------
+Steroids*  aloca_steroids (void)
+{
+
+	/**
+	 * @brief Aloca um elemento do tipo Steroids, tipo que
+	 * gerencia as modificações que afetam o gameplay.\n
+	 * Inicializados segundo o seguinte padrão:\n
+	 * Character* character = NULL e modificadores = 0.
+	 * @return Endereço da estrutura Steroids alocada.
+	 */
+
+	Steroids* steroids = (Steroids*) malloc(sizeof(Steroids));
+
+	steroids->character = NULL;
+	steroids->nerf = steroids->buff = 0;
+
+	return steroids;
+
+}//End aloca_steroids()
+
+
+//--------------------------------------------------------------
+void  insere_steroids (var_lista* lista, Character* character, int nerf, int buff)
+{
+
+	/**
+	 * @brief Insere na lista um elemento do tipo Steroids,
+	 * inicializado segundo os parâmetros informados.
+	 */
+
+	var_elemento* elemento = aloca_elemento();
+
+	Steroids* esteroide = aloca_steroids();
+
+	esteroide->character = character;
+	esteroide->nerf = nerf;
+	esteroide->buff = buff;
+
+	elemento->dados = esteroide;
+
+	insere_lista (FINAL, elemento, sizeof(var_elemento), lista, VAR_ELEMENTO);
+
+	free(elemento);
+
+}//End insere_steroids()
 
 
 //--------------------------------------------------------------
 void  print_character (Character* character, int print_code, var_lista* steroids)
 {
+
 	/**
 	 * @brief Imprime estruturas Character alocadas segundo
-	 * character_create() e de acordo com as restrições de
-	 * escolha de atributo, regra imposta a jogabilidade.
+	 * character_create() e dentro das seguintes possibilidades:\n
+	 * NAME_ONLY: imprime apenas o nome e casa do personagem.\n
+	 * ONE_LINE: imprime em uma linha as informações do personagem,\n
+	 * selecionando randomicamente um dos atributos para mostrar ao usuário.\n
+	 * NERFED: imprime todas as informações do personagem de acordo\n
+	 * com as restrições ("atributos exauridos").\n
+	 * FULL: imprime todas as informações do personagem.\n
 	 */
 
 	if(character != NULL)
