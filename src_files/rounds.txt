@@ -1,10 +1,10 @@
 
 Round 1
-Amélie Lacroix née Guillard (70 Agility) X Frank Castle (20 Agility)
-Thércio Lima Menezes (70 Strength) X Ned (60 Strength)
-Lala R. P. (99 Intelligence) X Ryu Hoshi (50 Intelligence)
-Theon (42 Intelligence) X Jon Snow (30 Intelligence)
-The Hound (70 Strength) X Virgil Ovid Hawkins (20 Strength)
-Thales Lima Menezes (35 Strength) X Cercei (26 Strength)
-Bruce Wayne (100 Health) X Sansa (25 Health)
-Rock Lee (100 Agility) X Tyrion (40 Agility)
+Jaime (55 Agility) X Kenneth Masters (50 Agility)
+Hodor (85 Health) X Frank Castle (30 Health)
+Thales Lima Menezes (100 Agility) X Amélie Lacroix née Guillard (70 Agility)
+Ned (80 Health) X Daenerys (32 Health)
+Lala R. P. (100 Agility) X The Mountain (30 Agility)
+Rock Lee (99 Health) X Tyrion (61 Health)
+Bruce Wayne (80 Intelligence) X Raiden (70 Intelligence)
+Ryu Hoshi (50 Agility) X Cercei (35 Agility)

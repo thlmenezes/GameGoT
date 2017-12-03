@@ -13,8 +13,16 @@
 
 
 //TOD:
+//--------------------------------------------------------------
 void  main_menu (char* background)
 {
+
+	/**
+	 * @brief Centro da execução do programa como um todo,
+	 * gerenciando as principais interações com o usuário,
+	 * fora do gameloop() em si.
+	 */
+
 	print_file(background);
 
 	int input = 0;
@@ -79,6 +87,11 @@ void  main_menu (char* background)
 //--------------------------------------------------------------
 int  gameloop (void)
 {
+
+	/**
+	 * @brief Centro da execução do Jogo como um todo.
+	 */
+
 	var_lista* data = loadFromFile("src_files/personagens.txt");
 
 	if(data == NULL)
@@ -96,7 +109,7 @@ int  gameloop (void)
 
 	if(personagensJogaveis == NULL)
 	{
-		freeTreeAutumn(torneio);
+		tree_free(torneio);
 		return-2;
 	}
 
@@ -149,11 +162,12 @@ int  gameloop (void)
 //--------------------------------------------------------------
 Character*  character_selection (var_lista* personagensJogaveis)
 {
+
 	/**
 	 * @brief Imprime na tela todos os personagensJogaveis(PC's)
-	 * ocultando seus nomes e suas casas, mostrando ao
-	 * usuário somente 1 de seus 4 atributos, escolhido
-	 * aleatoriamente. e permite que o usuário selecione o seu
+	 * ocultando seus nomes e suas casas, e mostrando ao usuário
+	 * somente 1 de seus 4 atributos, decisão esta que é
+	 * aleatória; e permite que o usuário selecione o seu
 	 * campeão para o torneio.
 	 * @return Retorna um Character* para o
 	 * personagem escolhido pelo usuário.
@@ -197,6 +211,11 @@ Character*  character_selection (var_lista* personagensJogaveis)
 void  exit_game (t_node* arvore, var_lista* participantes,
 var_lista* modificadores, var_lista* torneio_status)
 {
+
+	/**
+	 * @brief Gerencia a liberação de memória das principais
+	 * estruturas usadas durante a execução do programa.
+	 */
 
 	if(arvore != NULL)
 		tree_free(arvore);

@@ -14,11 +14,13 @@
 
 //TOD
 //--------------------------------------------------------------
-void  limpa_buffer(void)
+void  limpa_buffer (void)
 {
+
 	/**
 	 * Responsável pela limpeza do buffer.
 	 */
+
 	char caractere;
 	while((caractere = getchar()) != '\n');
 
@@ -28,6 +30,7 @@ void  limpa_buffer(void)
 //--------------------------------------------------------------
 void  print_file (char* srcFile)
 {
+
 	/**
 	 * @brief Imprime todos os caracteres presentes
 	 * dentro de um arquivo.
@@ -51,12 +54,17 @@ void  print_file (char* srcFile)
 
 	fclose(arquivo);
 
-}//end print_file()
+}//End print_file()
 
 
 //--------------------------------------------------------------
 void  print_error (FILE* screen)
 {
+
+	/**
+	 * @brief Gerencia a impressão dos erros relacionados a
+	 * arquivos.
+	 */
 
 	if(screen == NULL)
 	{
@@ -73,6 +81,12 @@ void  print_error (FILE* screen)
 //--------------------------------------------------------------
 void  system_comands(int command)
 {
+
+	/**
+	 * @brief Função visando viabilizar portabilidade com outras
+	 * plataformas, além do Linux.
+	 */
+
 	switch(command)
 	{
 		case RESET:
