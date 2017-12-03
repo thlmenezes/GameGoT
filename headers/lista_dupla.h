@@ -44,8 +44,6 @@ void*          pop_lista      (var_lista* lista, int indice);
 
 void           deleta_ultimo  (var_lista* lista);
 
-void           apaga_elemento (var_lista* lista, int posicao);
-
 void           esvazia_lista  (var_lista* lista, bool devo_liberar_memoria);
 
 void*          busca_lista    (var_lista* lista, void* info, int codigo_busca);

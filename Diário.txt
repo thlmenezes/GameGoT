@@ -1,6 +1,6 @@
 ================================================================================
 04/11/2017 22:05
-	Trabalho inicializado, embora o professor ainda não entregou a proposta 
+	Trabalho inicializado, embora o professor ainda não entregou a proposta
 do projeto.
 	Foi inicializado o arquivo estruturas.h e implementadas as funções:
 	var_elemento*  aloca_elemento(void);
@@ -84,7 +84,7 @@ do projeto.
 12/11/2017 15:30
 	Criado um repositório:
 	https://github.com/thaleslim/GameGoT.git
-	
+
 	Pretende-se depurar as seguintes funções:
 	t_node*     node_create(void);
 
@@ -264,7 +264,7 @@ do projeto.
 					Testar tree_print_preorder();
 				6)Escrever mais Smoketests.
 	1) Lógica de vetor funcionou;
-	2) 
+	2)
 ================================================================================
 01/12/2017 21:55
 	IDEIAS de melhorias:
@@ -303,7 +303,7 @@ do projeto.
 
 	Falta implementar update_nerfs() e alguns detalhes;
 	Observação: battle_round não está usando um comportamento 100% ideal
-			
+
 ================================================================================
 03/12/2017 08:30
 	Objetivos:	Implementar update_nerfs(); OK
@@ -312,12 +312,12 @@ do projeto.
 				Criar biblioteca "menu.h"; OK
 					main_menu(); OK
 					character_selection(); OK
-					gameloop();
+					gameloop(); OK
 					print_last_tournament();
 					exit_game(); OK
-				Criar pasta separando arquivos principais do executável;
+				Criar pasta separando arquivos principais do executável; OK
 				Documentar o código;
-	Se loadFromFile retornar NULL finalizar gameloop;
+	Se loadFromFile retornar NULL finalizar gameloop; OK
 	É intencional que o arquivo "rounds.txt" não seja excluído
 	ao final do gameloop;
 	Ampliar depuração do input do usuário; OK
@@ -325,7 +325,8 @@ do projeto.
 	Testar random_roullete com quantidade == lista::tamanho;
 	com if(...){return NULL} permitindo isso
 	Resultado: Erro exceção de ponto flutuante;
-
 	break lista_dupla.c:random_roullete
 
-	Funções de free;
+	Objetivos da noite: Revisar funções de free e seus usos;
+						Tentar compreender esse erro com random_roullete();
+	

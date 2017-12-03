@@ -21,8 +21,8 @@ var_elemento*  aloca_elemento (void)
 
 	/**
 	 * @brief Aloca, dinamicamente, um var_elemento
-	 * seguindo alguns padrões: ponteiros são iniciados
-	 * com valor NULL.
+	 * seguindo alguns padrões:\n
+	 * Todos os ponteiros são iniciados com valor NULL.
 	 * @return Endereço do elemento alocado.
 	 */
 
@@ -44,7 +44,7 @@ var_lista*  aloca_lista (void)
 	/**
 	 * Aloca, dinamicamente, uma lista duplamente
 	 * encadeda de var_elemento, que por sua vez também
-	 * serão alocados dinamicamente, seguindo alguns padrões:
+	 * serão alocados dinamicamente, seguindo alguns padrões:\n
 	 * var_lista::primeiro e var_lista::ultimo são
 	 * inicializados com o valor NULL.
 	 * @return Endereço da lista alocada.
@@ -271,7 +271,7 @@ void  deleta_ultimo (var_lista* lista)
 
 	/**
 	 * Apaga o último var_elemento de uma lista; e
-	 * caso a lista esteja vazia não faz nada.
+	 * caso lista_vazia(var_lista* lista) seja true não faz nada.
 	 */
 
 	if(lista_vazia(lista))	//Caso tenha 0 elementos
@@ -302,48 +302,6 @@ void  deleta_ultimo (var_lista* lista)
 	lista->tamanho--;
 
 }//End erase_ultimo()
-
-
-//--------------------------------------------------------------
-void  apaga_elemento (var_lista* lista, int posicao){
-	/**
-	 * @autor Fernanda Macedo de Sousa
-	 * @brief Apaga um elemento em uma certa posicao da lista
-	 */
-
-	if(posicao == 1){
-		var_elemento* lixeira     = lista->primeiro;
-		lista->primeiro           = lixeira->proximo;
-		lista->primeiro->anterior = NULL;
-		free(lixeira->dados);
-		free(lixeira);
-	}else if(posicao > 1){
-		var_elemento* atual = lista->primeiro;
-		int i;
-
-		for(i = 0; i < (posicao-2) && atual != NULL; i++ )
-			atual = atual->proximo;
-
-		if(atual != NULL){
-			var_elemento* lixeira = atual->proximo;
-
-			atual->proximo = lixeira->proximo;
-
-			if(lixeira == lista->ultimo){
-				lista->ultimo = atual;
-				atual->proximo = NULL; // Thales: Redundante mas ok
-			}else{
-				lixeira->proximo->anterior = atual;
-			}
-
-			free(lixeira->dados);
-			free(lixeira);
-
-		}//end if
-
-	}//end else
-
-}//end apaga_elemento
 
 
 //--------------------------------------------------------------
@@ -382,6 +340,25 @@ void  esvazia_lista (var_lista* lista, bool devo_liberar_memoria)
 //--------------------------------------------------------------
 void*  busca_lista (var_lista* lista, void* info, int codigo_busca)
 {
+
+	/**
+	 * @brief Realiza buscas na lista de acordo com o código
+	 * fornecido.\n
+	 * Observação pessoal: A função mais "zoneada" e mais específica de todo o
+	 * código.
+	 * @param codigo_busca Busca de acordo com os seguintes comportamentos:\n
+	 * POSICAO: retorna o endereço de elemento::dados na posição informada.\n
+	 * void* info == int* posicao;\n
+	 * INFORMACAO_MODS: retorna o endereço do elemento::dados que possue a mesma
+	 * informação que o parâmetro.\n
+	 * void* info == Character* character;\n
+	 * INFORMACAO_ROUND: comportamento igual ao anterior entretanto trabalha com
+	 * uma lista de t_node**.\n
+	 * void* info == Character* character;\n
+	 * SEARCH: recebe uma informação e retorna sua posição dentro da lista.\n
+	 * void* info == t_node* node;\n
+	 */
+
 	if(lista != NULL && info != NULL)
 	{
 		if( codigo_busca == POSICAO)
@@ -396,6 +373,7 @@ void*  busca_lista (var_lista* lista, void* info, int codigo_busca)
 				return cursor->dados;
 			else
 				return cursor;
+
 		}
 		if( codigo_busca == INFORMACAO_MODS)
 		{
@@ -421,6 +399,7 @@ void*  busca_lista (var_lista* lista, void* info, int codigo_busca)
 				return cursor->dados;
 			else
 				return NULL;
+
 		}
 		if( codigo_busca == INFORMACAO_ROUND)
 		{
@@ -446,6 +425,7 @@ void*  busca_lista (var_lista* lista, void* info, int codigo_busca)
 				return informacao;
 			else
 				return NULL;
+
 		}
 		if( codigo_busca == SEARCH )
 		{
@@ -476,9 +456,12 @@ void*  busca_lista (var_lista* lista, void* info, int codigo_busca)
 				return indice;
 			else
 				return NULL;
+
 		}
 	}
+
 	return NULL;
+
 }//End busca_lista()
 
 
