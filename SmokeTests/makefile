@@ -13,8 +13,8 @@ testa_lista: ../obj/informacoes_uso_geral.o ../obj/lista_dupla.o
 testa_fila:	../obj/informacoes_uso_geral.o ../obj/lista_dupla.o ../obj/fila.o
 	$(CC) $(LFLAGS) testa_fila.c ../obj/informacoes_uso_geral.o ../obj/lista_dupla.o ../obj/fila.o
 
-testa_arvore: ../obj/lista_dupla.o ../obj/character.o ../obj/fila.o ../obj/arvore.o 
-	$(CC) $(LFLAGS) testa_arvore.c ../obj/lista_dupla.o ../obj/character.o ../obj/fila.o ../obj/arvore.o -lm
+testa_arvore: ../obj/informacoes_uso_geral.o ../obj/lista_dupla.o ../obj/character.o ../obj/fila.o ../obj/arvore.o 
+	$(CC) $(LFLAGS) testa_arvore.c ../obj/informacoes_uso_geral.o ../obj/lista_dupla.o ../obj/character.o ../obj/fila.o ../obj/arvore.o -lm
 
 testa_loadFromFile: ../obj/informacoes_uso_geral.o ../obj/character.o ../obj/lista_dupla.o ../obj/fila.o ../obj/arvore.o 
 	$(CC) $(LFLAGS) testa_loadFromFile.c ../obj/informacoes_uso_geral.o ../obj/character.o ../obj/lista_dupla.o ../obj/fila.o ../obj/arvore.o -lm

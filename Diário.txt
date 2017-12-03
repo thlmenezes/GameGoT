@@ -307,3 +307,16 @@
 	Falta implementar update_nerfs() e alguns detalhes;
 	Observação: battle_round não está usando um comportamento 100%ideal
 				como queria
+================================================================================
+03/12/2017 08:30
+	Objetivos:	Implementar update_nerfs(); OK
+				Criar biblioteca "battle.h" para separar
+					algumas funções da "character.h";
+				Criar biblioteca "menu.h";
+					main_menu();
+					character_selection();
+					gameloop();
+					last_battle();
+					exit_game();
+				Criar pasta separando arquivos principais do executável;
+				Documentar o código;

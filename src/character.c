@@ -564,6 +564,20 @@ void  print_fight (Character* vencedor, Character* adversario, int atributo)
 
 
 //--------------------------------------------------------------
+void  update_nerfs (int codigo_da_acao, Character* character,
+int atributo_usado, var_lista* esteroids)
+{
+	Steroids* setup = ((Steroids*)busca_lista(esteroids, character, INFORMACAO_MODS));
+
+	if(codigo_da_acao == TIRED)
+		setup->nerf = atributo_usado;
+	if(codigo_da_acao == DEAD)
+		esvazia_lista(esteroids,true);
+
+}//End update_nerfs()
+
+
+//--------------------------------------------------------------
 void  user_fight (Character* users_choice, var_lista* esteroids, t_node* torneio, int roundNumero, char* rounds)
 {
 	t_node* node_pai = busca_pai(torneio, busca_no(torneio, users_choice));
@@ -602,6 +616,7 @@ void  user_fight (Character* users_choice, var_lista* esteroids, t_node* torneio
 		{
 			system("reset");
 			update_rounds(vencedor,adversario,atributo,rounds);
+			update_nerfs(TIRED,users_choice,atributo,esteroids);
 			printf("Round %d: Resultado\n\n", roundNumero);
 			printf("You Win\n\n");
 			print_fight(vencedor,adversario,atributo);
@@ -610,6 +625,7 @@ void  user_fight (Character* users_choice, var_lista* esteroids, t_node* torneio
 		{
 			system("reset");
 			update_rounds(vencedor,users_choice,atributo,rounds);
+			update_nerfs(DEAD,users_choice,atributo,esteroids);
 			printf("Round %d: Resultado\n\n", roundNumero);
 			printf("You Lose\n\n");
 			print_fight(vencedor,users_choice,atributo);

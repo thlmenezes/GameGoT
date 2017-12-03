@@ -32,6 +32,10 @@ enum codigo_busca_lista
   INFORMACAO_ROUND,
   SEARCH};
 
+enum acoes_update_nerfs
+{ TIRED,
+  DEAD};
+
 void  limpa_buffer(void);
 
 void  print_file  (char* file);

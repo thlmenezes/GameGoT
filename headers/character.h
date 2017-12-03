@@ -66,6 +66,9 @@ Character* character_selection(var_lista* personagensJogaveis);
 void       print_fight        (Character* vencedor, Character* adversario,
 int atributo);
 
+void       update_nerfs       (int codigo_da_acao, Character* character,
+int atributo_usado, var_lista* esteroids);
+
 void       user_fight         (Character* users_choice, var_lista* esteroids,
 t_node* torneio, int roundNumero, char* rounds);
 

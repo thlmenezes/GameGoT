@@ -13,7 +13,7 @@ int main (void)
 
 	while(cursor != NULL)
 	{
-		print_character(cursor->dados,NULL);
+		print_character(cursor->dados,FULL,NULL);
 		printf("\n");
 		cursor = cursor->proximo;
 	}

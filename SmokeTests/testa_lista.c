@@ -12,11 +12,11 @@ int main (void){
 
 	*(int*) elemento->dados = 3;
 
-	insere_lista(INSERE_FINAL, elemento->dados, sizeof(int), lista, INSERE_DADO_HEAP);
+	insere_lista(FINAL, elemento->dados, sizeof(int), lista, DADO_HEAP);
 	// Insere informações ou elementos na lista por cópia
 	*(int*) elemento->dados = 6;
 
-	insere_lista(INSERE_FINAL, elemento, sizeof(var_elemento), lista, INSERE_VAR_ELEMENTO);
+	insere_lista(FINAL, elemento, sizeof(var_elemento), lista, VAR_ELEMENTO);
 	// Insere informações ou elementos na lista por cópia
 
 	free(elemento);

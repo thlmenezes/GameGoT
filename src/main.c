@@ -27,10 +27,10 @@
 int main (void)
 {
 
-	print_file("main_menu.txt");
+	print_file("src_files/main_menu.txt");
 	while(getchar() != '\n');
 
-	var_lista* data = loadFromFile("personagens.txt");
+	var_lista* data = loadFromFile("src_files/personagens.txt");
 
 	t_node* torneio = tree_create();
 
@@ -56,7 +56,7 @@ int main (void)
 	var_lista* torneio_status = round_anterior(torneio);
 	// lembre-se cada elemento::dados é um t_node**
 
-	char nomeArquivoRounds[] = "rounds.txt";
+	char nomeArquivoRounds[] = "src_files/rounds.txt";
 	remove(nomeArquivoRounds);
 
 	FILE* rounds;
