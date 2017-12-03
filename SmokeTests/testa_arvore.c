@@ -1,4 +1,3 @@
-#include "../headers/character.h"
 #include "../headers/arvore.h"
 
 int main(void)

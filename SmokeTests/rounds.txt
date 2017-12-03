@@ -1,10 +1,10 @@
 
 Round 1:
-Frank Castle (99 Strength) X Chun Li (95 Strength)
-Samus Aran (70 Strength) X Ryu Hoshi (50 Strength)
-Bruce Wayne (99 Strength) X Kung Lao (90 Strength)
-Lúcio Correia dos Santos (20 Strength) X Kenneth Masters (50 Strength)
-Hodor (70 Strength) X Amélie Lacroix née Guillard (20 Strength)
-Raiden (100 Agility) X Lala R. P. (100 Agility)
-Virgil Ovid Hawkins (100 Agility) X Rock Lee (100 Agility)
-T. L. M. (99 Intelligence) X Thales Lima Menezes (99 Intelligence)
+Lúcio Correia dos Santos (20 Strength) X Lala R. P. (40 Strength)
+Hodor (25 Agility) X Kung Lao (100 Agility)
+V. R. (100 Intelligence) X Samus Aran (100 Intelligence)
+Frank Castle (20 Agility) X Rock Lee (100 Agility)
+Chun Li (100 Health) X Raiden (20 Health)
+Ryu Hoshi (50 Strength) X T. L. M. (100 Strength)
+Bruce Wayne (100 Health) X Virgil Ovid Hawkins (40 Health)
+Kenneth Masters (50 Strength) X Amélie Lacroix née Guillard (20 Strength)

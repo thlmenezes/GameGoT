@@ -185,7 +185,7 @@ t_node* busca_no( t_node* tree, Character* target )
 		return node_return;
 	}
 
-	return target;
+	return NULL;
 
 }//End busca_no()
 
