@@ -13,13 +13,15 @@
 #include "character.h"
 #include "lista_dupla.h"
 
-void       main_menu           (char* background);
+void       main_menu          (char* background);
 
-Character* character_selection (var_lista* personagensJogaveis);
+Character* character_selection(var_lista* personagensJogaveis);
 
-int        gameloop            (void);
+int        gameloop           (void);
 
-void       exit_game           (t_node* arvore, var_lista* participantes,
+void       last_tournament    (void);
+
+void       exit_game          (t_node* arvore, var_lista* participantes,
 var_lista* modificadores, var_lista* torneio_status);
 
 #endif

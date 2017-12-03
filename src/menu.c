@@ -47,6 +47,12 @@ void  main_menu (char* background)
 				main_menu(background);
 			}
 			else if(input == 3)
+			{
+				last_tournament();
+				system_comands(RESET);
+				main_menu(background);
+			}
+			else if(input == 4)
 				exit(0);
 		}
 	}while(!valido);
@@ -158,6 +164,27 @@ int  gameloop (void)
 
 }//End gameloop()
 
+void  last_tournament (void)
+{
+	/**
+	 * @brief Imprime o último torneio que se tem registrado.
+	 */
+
+	FILE* rounds;
+	rounds = fopen("src_files/rounds.txt","r");
+
+	if(rounds == NULL)
+		printf("\nI'm sorry\nNo previous tournament data found\n");
+	else
+	{
+		fclose(rounds);
+		print_file("src_files/rounds.txt");
+	}
+	printf("Pressione 'Enter' para prosseguir");
+
+	limpa_buffer();getchar();
+
+}//End last_tornament
 
 //--------------------------------------------------------------
 Character*  character_selection (var_lista* personagensJogaveis)
