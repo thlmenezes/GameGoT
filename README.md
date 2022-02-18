@@ -1,11 +1,12 @@
-/** 
- * CIC 116319 - Estruturas de Dados - Turma A
- * Prof.: Marcos F. Caetano
- * Alun.: Fernanda Macedo de Sousa
- * Matr.: 17/0010058
- * Alun.: Thales Lima Menezes
- * Matr.: 17/0045919
- */
+# GameGOT
+
+Inspirado em Game of Thrones, um jogo de cli para exercitar estruturas de dados ao representar a disputa pelo trono de ferro; trabalho final da disciplina CIC 116319 - Estruturas de Dados - Turma A, ministrada pelo Prof. Dr. Marcos F. Caetano.
+
+## Participantes
+ - Fernanda Macedo de Sousa (17/0010058)
+ - Thales Lima Menezes (17/0045919)
+
+## Compilação
 
 Para compilar o programa executar no terminal
 o comando "make".
