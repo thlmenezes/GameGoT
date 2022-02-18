@@ -1,10 +1,10 @@
 # GameGOT
 
-Inspirado em Game of Thrones, um jogo de cli para exercitar estruturas de dados ao representar a disputa pelo trono de ferro; trabalho final da disciplina CIC 116319 - Estruturas de Dados - Turma A, ministrada pelo Prof. Dr. Marcos F. Caetano.
+Inspirado em Game of Thrones, um jogo de cli para exercitar estruturas de dados ao representar a disputa pelo trono de ferro; trabalho final da disciplina CIC 116319 - Estruturas de Dados - Turma A, ministrada pelo [Prof. Dr. Marcos F. Caetano](https://github.com/mfcaetano)
 
 ## Participantes
- - Fernanda Macedo de Sousa (17/0010058)
- - Thales Lima Menezes (17/0045919)
+ - Fernanda Macedo de Sousa (17/0010058) [@fernandams](https://github.com/fernandams)
+ - Thales Lima Menezes (17/0045919) [@thlmenezes](https://github.com/thlmenezes)
 
 ## Compilação
 
